@@ -1,0 +1,166 @@
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+.containerRegister {
+    background:#fff;
+    width:450px;
+    padding:1.5rem;
+    margin:50px auto;
+    border-radius:10px;
+    box-shadow:0 20px 35px rgba(0,0,1,0.9);
+}
+.containerRegister form{
+    margin:0 2rem;
+}
+
+.containerRegister h3
+{
+    font-size:25px;
+    font-weight:bold;
+    text-align:center;
+    padding:1.3rem;
+    margin-bottom:0.4rem;
+}
+
+.containerRegister .messageDiv
+{
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.containerRegister .register-input
+{
+    padding:2% 0;
+    position:relative;
+}
+
+.containerRegister .register-input input
+{
+    color:inherit;
+    width:100%;
+    background-color:transparent;
+    border:none;
+    border-bottom:1px solid #757575;
+    padding-left:1.5rem;
+    font-size:15px;
+}
+
+.containerRegister .register-input svg
+{
+    position: absolute;
+}
+
+.containerRegister .register-input input:focus
+{
+    background-color: transparent;
+    outline:transparent;
+    border-bottom:2px solid #27aae2;
+}
+
+.containerRegister .register-input input::placeholder
+{
+    color:transparent;
+}
+
+.containerRegister .register-input label
+{
+    color:#757575;
+    position:relative;
+    left:1.2em;
+    top:-2.3em;
+    cursor:auto;
+    transition:0.3s ease all;
+}
+
+.register-input input:focus~label,input:not(:placeholder-shown)~label
+{
+    top:-3em;
+    color:#27aae2;
+    font-size:15px;
+}
+
+.containerRegister button
+{
+    font-size:20px;
+    padding:8px 0;
+    border-radius:5px;
+    outline:none;
+    border:none;
+    width:100%;
+    background:#27aae2;
+    color:white;
+    cursor:pointer;
+    transition:0.9s;
+}
+
+button:hover
+{
+    background:#fed700;
+    color:#27aae2;
+}
+
+.containerRegister .or
+{
+    font-size:18px;
+    margin-top:5px;
+    text-align:center;
+    margin-bottom: 10px;
+}
+
+.containerRegister .icons
+{
+    text-align:center;
+}
+
+.containerRegister .icons svg
+{
+    padding:15px;
+    border-radius:10px;
+    font-size:25px;
+    cursor:pointer;
+    border:2px solid #dfe9f5;
+    margin:0 15px;
+    transition:1s;
+}
+
+.containerRegister .icons svg:first-child
+{
+    color: #3b5998;
+}
+
+.containerRegister .icons svg:nth-child(2)
+{
+    color:#eb4034;
+}
+
+.containerRegister .icons svg:hover
+{
+    background:#fed700;
+    font-size:27px;
+    border:2px solid rgb(125,125,235);
+}
+
+.containerRegister .links
+{
+    display:flex;
+    justify-content:space-around;
+    padding:0 4rem;
+    margin-top:15px;
+    font-weight:bold;
+}
+.containerRegister .links a
+ {
+    color:rgb(125,125,235);
+    border:none;
+    background-color:transparent;
+    font-size:15px;
+    font-weight:bold;
+}
+#register .links a:hover
+{
+    text-decoration:underline;
+    color:#27aae2;
+} 

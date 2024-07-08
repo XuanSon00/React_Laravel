@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.user
+{
+    display: flex;
+    background-color: #F3F3F3;
+}
+
+.user .user-page
+{
+    height: 100vh;
+}
+
+
+.user .user-content
+{
+    width: 100%;
+    background-color: rgb(235,239,242);
+    height: fit-content;
+    overflow: auto;
+    height: 100vh;
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 430px) 
+{
+    .user .user-page
+    {
+        height: 240vh;
+    }
+
+    .user .user-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        height: 240vh;
+        overflow: auto;
+    }
+
+    .user-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+}
+
+
+@media screen and (width: 344px) 
+{
+
+    .user .user-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        overflow: auto;
+    }
+
+    .user-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+}

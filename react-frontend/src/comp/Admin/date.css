@@ -1,0 +1,172 @@
+.schedule
+{
+    width: 100%;
+}
+
+.schedule .scheduleData
+{
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    height: 100vh;
+}
+
+.schedule .scheduleData h3
+{
+    font-size: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.schedule .scheduleData .scheduleData
+{
+    width: 100%;
+}
+
+.schedule .scheduleData .data
+{
+    width: 100%;
+}
+
+.schedule .scheduleData .data .btnData
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.schedule .scheduleData .data .btnData .scheduleAdd button
+{
+    padding: 10px;
+    background-color: #f6f7f8;
+    border-radius: 10px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.5s;
+    border: none;
+}
+
+.schedule .scheduleData .data .btnData .scheduleAdd button:hover
+{
+    background: #27aae2;
+    color:#fed700;
+}
+
+.schedule .scheduleData .data .btnData .searchBox input
+{
+    padding: 10px 10px;
+    background: none;
+    background-color:#ddd;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 80%;
+    transition: 0.5s;
+    font-size: 15px;
+}
+
+.schedule .scheduleData .data .btnData .searchBox input:hover
+{
+    width: 100%;
+}
+
+.schedule .scheduleData .data .btnData .searchBox input::placeholder
+{
+    color:gray;
+}
+
+
+.schedule .scheduleData .data .btnData .scheduleDelete button
+{
+    padding: 10px;
+    background-color: #f6f7f8;
+    border-radius: 10px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border: none;
+}
+
+.schedule .scheduleData .data .btnData .scheduleDelete button:first-child
+{
+    margin-right: 20px;
+}
+
+.schedule .scheduleData .data .btnData .scheduleDelete button:hover
+{
+    background: #27aae2;
+    color:#fed700;
+}
+
+
+
+
+/*---------------------DataTable--------------------------*/
+.schedule .table
+{
+    width: 100%;
+}
+
+.sc-cwHqhk
+{
+    color: #232323;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.btncheck
+{
+    height: 30px;
+    width: 30px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.tableText
+{
+    font-size: 18px;
+    font-weight: 300;
+    color:#232323;
+}
+
+.editForm, .deleteBtn
+{
+    background: none;
+    outline: none;
+    padding: 10px;
+    background: #f6f7f8;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.5s;
+    border-radius: 10px;
+    border: none;
+}
+
+.editForm:hover, .deleteBtn:hover
+{
+    background-color: #27aae2;
+    color: #fed600;
+}
+
+.gdBOih
+{
+    width: fit-content;
+}
+
+@media (max-width: 480px) {
+    .btnData 
+    {
+        flex-wrap: wrap;
+    }
+
+    .btnData .scheduleAdd
+    {
+        width: 200px;
+    }
+}

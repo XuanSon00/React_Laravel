@@ -1,0 +1,73 @@
+.user-account
+{
+    width: 100%;
+    padding: 50px;
+}
+
+.user-account .user-container
+{
+    padding: 30px;
+    background-color: #ddd;
+}
+
+.user-account .user-container .user-title
+{
+    display: flex;
+    padding: 5px;
+}
+
+.user-account .user-container .user-title h1
+{
+    margin-right: 15px;
+    text-transform: uppercase;
+    font-size: 36px;
+    color:#232323;
+}
+
+.user-account .user-container .user-title svg
+{
+    font-size: 30px;
+    margin-top: 5px;
+    cursor: pointer;
+    color:  #232323;
+}
+
+.user-account .user-container .user-title svg:hover
+{
+    color:#fed600;
+}
+
+.user-account .user-container .input-account
+{
+    display: flex;
+    width: 500px;
+    margin: 20px 20px;
+    padding: 10px;
+}
+
+.user-account .user-container .input-account .input-accountName
+{
+    display: flex;
+}
+
+.input-account .id
+{
+    margin-left: 30%;
+}
+
+.user-account .user-container .input-account h3
+{
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin-right: 30px;
+}
+
+.user-account .user-container .input-account p
+{
+    font-size: 25px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-top: 3px;
+}

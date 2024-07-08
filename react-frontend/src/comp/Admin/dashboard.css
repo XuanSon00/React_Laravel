@@ -1,0 +1,165 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.dashboard
+{
+    height: fit-content;
+}
+
+.dashboard .admin
+{
+    display: flex;
+    width: 100%;   
+    height: 100%;
+}
+
+.dashboard .admin .admin-up 
+{
+    padding: 60px;
+}
+
+
+.dashboard .admin .admin-up .admin-up-left
+{
+    display: flex;
+    flex-wrap: wrap;
+    padding:10px
+}
+
+/****/
+.total-user, .total-subject, .total-student, .total-teacher, .total-price
+{
+    width: 500px;
+    height: 40%;
+    padding: 50px;
+    box-sizing: border-box;
+    border: none;  
+    outline: none;
+    margin: 20px;
+    border-radius: 10px;
+    color: #fff;
+    box-shadow:0 20px 35px rgba(0,0,1,0.9);
+
+}
+
+.total-user
+{
+    background: linear-gradient(to right, #007f00, #8dc63f);
+}
+
+.total-subject
+{
+    background: linear-gradient(to right, #ff1493, #DB4CEB);
+}
+
+.total-student
+{
+    background: linear-gradient(to right, #0072ff, #4496EC);
+
+}
+
+.total-teacher
+{
+    background: linear-gradient(to right, #EEB71F, #ffd700);
+}
+
+.total-price
+{
+    background: linear-gradient(to right, #a5200f, rgb(211, 23, 23))
+}
+
+.total-user .total-user-up, 
+.total-subject .total-subject-up,
+.total-student .total-student-up, 
+.total-teacher .total-teacher-up,
+.total-price .total-price-up
+
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-user .total-user-up , .total-user-up-left h3,
+.total-subject .total-subject-up , .total-subject-up-left h3,
+.total-student .total-student-up , .total-student-up-left h3,
+.total-teacher .total-teacher-up , .total-teacher-up-left h3,
+.total-price .total-price-up , .total-price-up-left h3
+{
+    font-size: 30px;
+    align-items: center;
+    margin-bottom: 15px;
+    font-family: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.total-user .total-user-up , .total-user-up-left p,
+.total-subject .total-subject-up , .total-subject-up-left p,
+.total-student .total-student-up , .total-student-up-left p,
+.total-teacher .total-teacher-up , .total-teacher-up-left p,
+.total-price .total-price-up , .total-price-up-left p
+{
+    text-align: center;
+    font-size: 30px;
+}
+
+.total-user .total-user-up .total-user-up-right svg,
+.total-subject .total-subject-up .total-subject-up-right svg,
+.total-student .total-student-up .total-student-up-right svg,
+.total-teacher .total-teacher-up .total-teacher-up-right svg,
+.total-price .total-price-up .total-price-up-right svg
+{
+    font-size: 70px;
+    filter: blur(1.5px);
+    background: rgb(47, 46, 46);
+    border-radius: 15px;
+}
+
+.total-user .total-user-down,
+.total-subject .total-subject-down,
+.total-student .total-student-down,
+.total-teacher .total-teacher-down,
+.total-price .total-price-down
+
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-user .total-user-down h3,
+.total-subject .total-subject-down h3,
+.total-student .total-student-down h3,
+.total-teacher .total-teacher-down h3,
+.total-price .total-price-down h3
+
+{
+    align-items: center;
+    margin-top: 15px;
+    font-family: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.total-user .total-user-down p,
+.total-subject .total-subject-down p,
+.total-student .total-student-down p,
+.total-teacher .total-teacher-down p,
+.total-price .total-price-down p
+
+{
+    align-items: center;
+    margin-top: 15px;
+    font-family: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+/******************************/
+.dashboard .admin  
+{
+    margin-right: 50px;
+}

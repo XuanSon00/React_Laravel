@@ -1,0 +1,157 @@
+.subject
+{
+    width: 100%;
+    padding: 30px; 
+}
+
+.subject .subjectData
+{
+    width: 100%;
+    padding: 20px 20px;
+    background-color: #fff;
+    height: 800px;
+}
+
+.subject .subjectData h3
+{
+    font-size: 25px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.subject .subjectData .subjectData
+{
+    width: 100%;
+}
+
+.subject .subjectData .data
+{
+    width: 100%;
+}
+
+.subject .subjectData .data .btnData
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.subject .subjectData .data .btnData .subjectAdd button
+{
+    padding: 10px;
+    background-color: #f6f7f8;
+    border-radius: 10px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.5s;
+    border: none;
+}
+
+.subject .subjectData .data .btnData .subjectAdd button:hover
+{
+    background: #27aae2;
+    color:#fed700;
+}
+
+.subject .subjectData .data .btnData .searchBox input
+{
+    padding: 10px 10px;
+    background: none;
+    background-color:#ddd;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 80%;
+    transition: 0.5s;
+    font-size: 15px;
+}
+
+.subject .subjectData .data .btnData .searchBox input:hover
+{
+    width: 100%;
+}
+
+.subject .subjectData .data .btnData .searchBox input::placeholder
+{
+    color:gray;
+}
+
+
+.subject .subjectData .data .btnData .subjectDelete button
+{
+    padding: 10px;
+    background-color: #f6f7f8;
+    border-radius: 10px;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border: none;
+}
+
+.subject .subjectData .data .btnData .subjectDelete button:first-child
+{
+    margin-right: 20px;
+}
+
+.subject .subjectData .data .btnData .subjectDelete button:hover
+{
+    background: #27aae2;
+    color:#fed700;
+}
+
+
+
+
+/*---------------------DataTable--------------------------*/
+.table
+{
+    width: 100%;
+}
+
+.sc-cwHqhk
+{
+    color: #232323;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.btncheck
+{
+    height: 30px;
+    width: 30px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.tableText
+{
+    font-size: 18px;
+    font-weight: 300;
+    color:#232323;
+}
+
+.editForm, .deleteBtn
+{
+    background: none;
+    outline: none;
+    padding: 10px;
+    background: #f6f7f8;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.5s;
+    border-radius: 10px;
+    border: none;
+}
+
+.editForm:hover, .deleteBtn:hover
+{
+    background-color: #27aae2;
+    color: #fed600;
+}
+

@@ -1,0 +1,84 @@
+.listStudent 
+{
+    height:fit-content;
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    background: rgb(175, 173, 173);
+    border:3px solid #f6f7f8;
+    box-shadow: rgba(104, 76, 76, 0.24) 0px 4px 10px;
+    padding: 20px, 15px;
+    z-index: 20;
+    border-radius: 10px;
+    transition: 0.5s;
+    
+}
+
+.burForm
+{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0.5;
+    z-index: 10;
+}
+
+.listStudent .close_btn
+{
+    border:none;
+    outline: none;
+    background: none;
+    color:#232323;
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+}
+
+.listStudent .close_btn:hover
+{
+    color:#fed600
+}
+
+.listStudent .scheduleData
+{
+    padding: 15px;
+    text-align: center;
+}
+
+.listStudent .scheduleData h3
+{
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 10px;
+}
+
+.listStudent .scheduleData .searchBox input
+{
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 5px
+}
+
+
+.studentList
+{
+    padding: 10px;
+    width: 50px;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.studentList:hover
+{
+    color:#27aae2;
+}

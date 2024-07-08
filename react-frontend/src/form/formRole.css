@@ -1,0 +1,193 @@
+/*---------------------Thêm/Sửa Form--------------------------*/
+.form_detail_role .container
+{
+    height:fit-content;
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    background: rgb(175, 173, 173);
+    border:3px solid #f6f7f8;
+    box-shadow: rgba(104, 76, 76, 0.24) 0px 4px 10px;
+    padding: 20px, 15px;
+    z-index: 20;
+    border-radius: 10px;
+    transition: 0.5s;
+    
+}
+
+.form_detail_role .container .close_btn
+{
+    border:none;
+    outline: none;
+    background: none;
+    color:#232323;
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+}
+
+.form_detail_role .container .close_btn:hover
+{
+    color:#fed600
+}
+
+.form_detail_role .container h2
+{
+    text-align: center;
+    color:#232323;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-size: 25px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.form_detail_role .container .form
+{
+    width: 100%;
+    padding: 20px 20px;
+}
+
+.form_detail_role .container .form .input_name,
+.form_detail_role .container .form .input_active,
+.form_detail_role .container .form .input_grade,
+.form_detail_role .container .form .input_price,
+.form_detail_role .container .form .input_img
+{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+
+}
+
+.form_detail_role .container .form .input_name label,
+.form_detail_role .container .form .input_grade label,
+.form_detail_role .container .form .input_img label
+{
+    font-size: 20px;
+    color:#232323;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.form_detail_role .container .form .input_active label
+{
+    font-size: 20px;
+    color:#232323;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-right:100px;
+}
+
+.form_detail_role .container .form .input_price label
+{
+    font-size: 20px;
+    color:#232323;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-right:100px;
+}
+
+.form_detail_role .container .form .input_grade label
+{
+    font-size: 20px;
+    color:#232323;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-right:100px;
+}
+
+.form_detail_role .container .form .input_name input
+{
+    padding: 10px;
+    outline: none;
+    background: none;
+    border-radius: 5px;
+    width: 180px;
+    border:none;
+    background: #EBEFF2;
+    transition: 0.5s;
+    color:#232323;
+    margin-right: 20px;
+    width: max-content;
+}
+
+.form_detail_role .container .form .input_name input:hover
+{
+}
+
+.form_detail_role .container .form .input_active select
+{
+    margin-right: 20px;
+    width: fit-content;
+    padding: 10px;
+}
+
+.form_detail_role .container .form .input_grade select
+{
+    margin-right: 20px;
+    width: fit-content;
+    padding: 10px;
+}
+
+.form_detail_role .container .form .input_price select
+{
+    margin-right: 10px;
+    width: fit-content;
+    padding: 10px;
+}
+
+.form_detail_role .container .form .input_img input[type='file']
+{
+    margin-top: 10px;
+    color:rebeccapurple;
+}
+
+.form_detail_role .container .form .btn_add
+{
+    display: flex;
+    justify-content: center;
+
+}
+
+.form_detail_role .container .form .btn_add button
+{
+    border: none;
+    padding:5px 20px;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin-top: 25px;
+    cursor: pointer;
+    background-color: #fed600;
+    transition: 0.5s;
+    width: fit-content;
+}
+
+.form_detail_role .container .form .btn_add button:hover
+{
+    color:#cd1e76;
+}
+
+.form_detail_role .burForm
+{
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0.5;
+    z-index: 10;
+}

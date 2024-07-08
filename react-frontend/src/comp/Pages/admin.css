@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.admin
+{
+    display: flex;
+    background-color: #E8E6E6;
+}
+
+.admin .admin-page
+{
+    height: 100vh;
+}
+
+.admin .admin-content
+{
+    width: 100%;
+    background-color: #E8E6E6;
+    height: fit-content;
+    height: 100vh;
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 430px) 
+{
+    .admin .admin-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        overflow: auto;
+    }
+    
+    .admin-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+
+}
+
+@media screen and (min-width: 330px) and (max-width: 374px) 
+{
+    .admin .admin-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        overflow: auto;
+    }
+    
+    .admin-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+
+}
+
+@media screen and (min-width: 431px) and (max-width: 1890px) 
+{
+    .admin .admin-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        overflow: auto;
+    }
+    
+    .admin-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+
+}

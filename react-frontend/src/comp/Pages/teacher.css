@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.teacher
+{
+    display: flex;
+    background-color: #F3F3F3;
+}
+
+.teacher .teacher-page
+{
+    height: 100vh;
+}
+
+
+.teacher .teacher-content
+{
+    width: 100%;
+    background-color: rgb(235,239,242);
+    height: fit-content;
+    overflow: auto;
+    height: 100vh;
+
+}
+
+@media screen and (min-width: 375px) and (max-width: 430px) 
+{
+    .teacher .teacher-page
+    {
+        height: 240vh;
+    }
+
+    .teacher .teacher-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        height: 240vh;
+        overflow: auto;
+    }
+
+    .teacher-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+}
+
+
+@media screen and (width: 344px) 
+{
+
+    .teacher .teacher-content
+    {
+        width: fit-content;
+        background-color: #E8E6E6;
+        overflow: auto;
+    }
+
+    .teacher-content .subject .subjectData
+    {
+        width: fit-content;
+        height: fit-content;
+    }
+}
