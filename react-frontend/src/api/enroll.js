@@ -23,7 +23,7 @@ const createEnroll = async (data) => {
 const getEnroll = async () => {
     try {
         const response = await axios.get('http://localhost:8000/api/enroll', getAuthHeaders());
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Lỗi khi tạo lịch giảng dạy:', error);
         throw error;

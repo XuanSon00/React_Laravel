@@ -43,9 +43,9 @@ const columns = [
   },
   {
     name: 'Trạng thái',
-    selector: row => row.subjectScheduled ? "đã xếp lớp" : "chưa xếp lớp",
+    selector: row => row.isScheduled ? "đã xếp lớp" : "chưa xếp lớp",
     sortable: true,
-    cell: row => <div>{row.subjectScheduled ? "đã xếp lớp" : "chưa xếp lớp"}</div>,
+    cell: row => <div>{row.isScheduled ? "đã xếp lớp" : "chưa xếp lớp"}</div>,
   },
 ];
 

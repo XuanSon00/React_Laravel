@@ -11,7 +11,7 @@ const List = () => {
   const fetchEnroll = async () => {
     try {
       const response = await getEnroll(); 
-      setEnrolls(response);
+      setEnrolls(response.data);
       setLoading(false);
     } catch (error) {
       console.error('lỗi lấy dữ liệu:', error);
@@ -111,7 +111,6 @@ const List = () => {
     (enroll.user.name && enroll.user.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (enroll.subject.name && enroll.subject.name.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
     (enroll.subject.grade && enroll.subject.grade.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (enroll.teacher.name && enroll.teacher.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (enroll.schedule.startTime && enroll.schedule.startTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (enroll.schedule.endTime && enroll.schedule.endTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (enroll.schedule.schedule && enroll.schedule.schedule.toLowerCase().includes(searchTerm.toLowerCase()))

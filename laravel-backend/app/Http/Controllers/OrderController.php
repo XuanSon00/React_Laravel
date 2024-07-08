@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Schedule;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -80,10 +81,12 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        $orders = Order::where('idUser', $user->id)->with(['subject', 'subjectScheduled'])->get();
+        $orders = Order::where('idUser', $user->id)->with(['subject',])->get();
 
         $orders->each(function ($order) {
-            $order->isScheduled = $order->subjectScheduled ? true : false;
+            $subject = $order->subject;
+            $schedule = Schedule::where('idSubject', $subject->id)->first();
+            $order->isScheduled = $schedule ? true : false;
         });
 
         return response()->json($orders);
