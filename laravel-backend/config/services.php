@@ -30,15 +30,6 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'facebook' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => 'http://localhost:8000/api/auth/facebook/callback',
-    ],
-    'google' => [
-        'client_id' => env('880798137528-7potkmjpooksskiv952kc4nqtegfe4gi.apps.googleusercontent.com'),
-        'client_secret' => env('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'),
-        'redirect' => 'http://localhost:3000/auth/google/callback',
-    ],
+    
 
 ];
