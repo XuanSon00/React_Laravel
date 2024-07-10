@@ -22,11 +22,11 @@ class SubjectController extends Controller
 
     public function show($id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::findOrFail($id);
         if (!$subject) {
             return response()->json(['message' => 'không tìm được khóa học'], 404);
         }
-        return response()->json($subject, 200);
+        return response()->json($subject);
     }
 
     public function update(Request $request, $id)

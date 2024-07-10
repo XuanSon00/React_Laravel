@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Nav from '../Home/nav';
-import HistoryIcon from '@mui/icons-material/History';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/cartContext';
 import './cart.css';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-
+import { toast } from 'react-toastify';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 const Cart = () => {
   const {
     cart,
@@ -72,7 +73,8 @@ const Cart = () => {
   useEffect(() => {
     if (success) {
       confirmPayment();
-      alert("Payment successful!!");
+      //alert("Payment successful!!");
+      toast.success('Thanh toán thành công',{ autoClose: 2000 });
       console.log('Order successful. Your order id is--', orderID);
     }
   }, [success]);
@@ -82,15 +84,21 @@ const Cart = () => {
       <Nav />
       <PayPalScriptProvider options={{ "client-id": "AQl_qO0FIPzUQIk_0QYsAPx33mlhSIzyTcUgwjk6RMA3xELjcCA35_WJF0JJqKgVxPe3VzyypAQu6UCI" }}>
         <div className='cart'>
-          <h3><ShoppingCartIcon /> Giỏ hàng</h3>
-          <Link to='/history'><HistoryIcon /> Lịch sử mua hàng</Link>
-          {cart.length === 0 && 
+          <h3 className='cart-title'><ShoppingCartIcon /> Giỏ hàng</h3>
+          {
+            cart.length === 0 && 
             <div className='empty_cart'>
               <h2>Giỏ hàng của bạn chưa có sản phẩm được thêm vào!!</h2>
               <Link to='/'><button>Đặt hàng ngay</button></Link>
             </div>
           }
           <div className='container'>
+            <div className='title'>
+              <h3 className='subject-title'>Khóa học</h3>
+              <h3 className='price-title'>Học phí</h3>
+              <h3 className='quantity-title'>Số lượng</h3>
+              <h3 className='totalPrice-title'>Tổng</h3>
+            </div>
             {cart.map((subject) => {
               const price = parseFloat(subject.price.replace(/\./g, '').replace(',', '.')); // Chuyển đổi chuỗi sang số
               const quantity = subject.quantity;
@@ -101,22 +109,25 @@ const Cart = () => {
               return (
                 <div className='box' key={subject.id}>
                   <div className='img_box'>
-                    <h4>{subject.name}</h4>
+                    <img src={subject.image} />
+                    <div className=''>
+                      <h3>{subject.name}</h3>
+                      <h3>{subject.grade}</h3>
+                      <button onClick={() => removeProduct(subject)}><DeleteIcon /></button>
+                    </div>
                   </div>
-                  <div className='detail'>
-                    <div className='info'>
-                      <h4> {subject.grade}</h4>
-                      <span>{priceA} <sup>đ</sup></span>
-                      <p>Tổng cộng: <span>{totalPriceString}<sup>đ</sup></span> </p>
+                  <div className=''>
+                    <span>{priceA} <sup>đ</sup></span>
+                  </div>
+                  <div className='quantity-box'>
+                    <button onClick={() => increaseQuantity(subject)}><AddIcon /></button>
+                    <div className='count'>
+                      <p>{quantity}</p>
                     </div>
-                    <div className='quantity'>
-                      <button onClick={() => increaseQuantity(subject)}>+</button>
-                      <input type='number' value={quantity} readOnly/>
-                      <button onClick={() => decreaseQuantity(subject)}>-</button>
-                    </div>
-                    <div className='icon'>
-                      <p onClick={() => removeProduct(subject)}><DeleteIcon /></p>
-                    </div>
+                    <button onClick={() => decreaseQuantity(subject)}><RemoveIcon /></button>
+                  </div>
+                  <div className='total-box'>
+                    <span>{totalPriceString}<sup>đ</sup></span>
                   </div>
                 </div>
               )
@@ -127,31 +138,34 @@ const Cart = () => {
               <>
                 <div className='Total' >
                   <h4>Tổng cộng: </h4>
-                  <p>{totalPriceProduct.toLocaleString('vi-VN')} <sup>đ</sup></p>
+                  <b>{totalPriceProduct.toLocaleString('vi-VN')} <sup>đ</sup></b>
                 </div>
                 {discount > 0 && (
                   <div className='discount'>
                     <h4>Giảm giá: </h4>
-                    <p>- {discount.toLocaleString('vi-VN')} <sup>đ</sup></p>
+                    <i>- {discount.toLocaleString('vi-VN')} <sup>đ</sup></i>
                   </div>
                 )}
                 <div className='shipping-fee'>
                   <h4>Phí vận chuyển: </h4>
-                  <p>+ {shippingFee.toLocaleString('vi-VN')}<sup>đ</sup></p>
+                  <i>+ {shippingFee.toLocaleString('vi-VN')}<sup>đ</sup></i>
                 </div>
                 <div className='total-discount'>
-                  <h4>Tổng cộng : </h4>
+                  <h4>Tổng Thanh toán : </h4>
                   <p>{(totalPriceProduct - discount + shippingFee).toLocaleString('vi-VN')} <sup>đ</sup></p>
                 </div>
-                <button onClick={() => setShowPayPal(true)}>Thanh toán</button>
-                {showPayPal && (
-                  <PayPalButtons
-                    style={{ layout: "vertical" }}
-                    createOrder={createOrder}
-                    onApprove={onApprove}
-                    onError={onError}
-                  />
-                )}
+                <div className='pay'>
+                  <button onClick={() => setShowPayPal(true)}>Thanh toán</button>
+                  {showPayPal && (
+                    <PayPalButtons
+                      style={{ layout: "vertical" }}
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                      onError={onError}
+                    />
+                  )}
+                </div>
+                
               </>
             }
           </div>

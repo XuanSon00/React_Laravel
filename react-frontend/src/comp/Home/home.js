@@ -5,6 +5,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import './home.css';
 import { CartContext } from '../context/cartContext';
 import { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);
@@ -37,6 +38,7 @@ const Home = () => {
       subject.name.toLowerCase().includes(searchTerm.toLowerCase())
     ));
   };
+  
   /* const filteredSubjects = subjects.filter(subject =>
     subject.name.toLowerCase().includes(searchTerm.toLowerCase()) 
   ); */
@@ -60,7 +62,7 @@ const Home = () => {
             <div className='left_box'>
               <div className='header'>
                 <div className='heading'>
-                  <h2 onClick={() => loadSubjects()}> Tất cả Môn học</h2>
+                  <h2 onClick={() => loadSubjects()}> Tất cả Khóa học</h2>
                 </div>
                 <div className='cate'>
                   <h3 onClick={() => filterGrade('10')}>Lớp 10</h3><p>||</p>
@@ -74,14 +76,15 @@ const Home = () => {
                   {filteredGrade.map((subject) => {
                     return (
                       <div className='box' key={subject.id}>
-                        <div className='img_box'>
+                        <Link to={`/subjects/${subject.id}`} className='img_box' >
                           <img src={subject.image} alt='' style={{ height: 180 }} />
                           <div className='icon'>
                             <div className='icon_box'>
                               <InfoIcon />
                             </div>
                           </div>
-                        </div>
+                        </Link>
+
                         <div className='info'>
                           <div className='info-subject'>
                             <h3>{subject.name}</h3>

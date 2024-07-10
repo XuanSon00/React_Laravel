@@ -58,7 +58,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Tài khoản không hợp lệ'], 401);
+            return response()->json(['message' => 'Tài khoản hoặc mật khẩu không đúng'], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;

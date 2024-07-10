@@ -14,6 +14,10 @@ import ResetPassword from "./comp/Auth/resetPassword";
 import { useCookies } from 'react-cookie'
 import PrivateRoute from "./private/privateRoute";
 import Class from "./comp/Pages/class";
+import SubjectDetail from "./comp/Pages/detail";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 function App() {
   const [cookies] = useCookies(['user']);
   const { setCart } =useContext(CartContext)
@@ -28,41 +32,42 @@ function App() {
 
   
   return (
-
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/login" element={cookies.user ? <Navigate to="/" /> : <Login />} />
-    <Route path="/register" element={cookies.user ? <Navigate to="/" /> : <Register />} />
-    <Route path='/forgot-password' element={<SendEmail />} />
-    <Route path="/reset-password/" element={<ResetPassword />} />
-    {/**********************************************/}
-    <Route path="/admin/*" element={
-      <PrivateRoute allowedRoles={['Admin']}>
-        <Admin />
-      </PrivateRoute>
-    } />
-    <Route path="/teacher/*" element={
-      <PrivateRoute allowedRoles={['Teacher']}>
-        <Teacher />
-      </PrivateRoute>
-    } />
-    <Route path="/user/*" element={
-      <PrivateRoute allowedRoles={['Student', '']}>
-        <User />
-      </PrivateRoute>
-    } />
-    <Route path="/class" element={
-      <PrivateRoute allowedRoles={['Admin','Student']}>
-        <Class />
-      </PrivateRoute>
-    } />
-    {/**********************************************/}
-    <Route path="/cart" element={<Cart />} />
-    <Route path="/history" element={<History />} />
-    <Route path="*" element={<h2>Không có trang cần tìm</h2>} />
-
-
-  </Routes>
+  <>
+    <ToastContainer />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={cookies.user ? <Navigate to="/" /> : <Login />} />
+      <Route path="/register" element={cookies.user ? <Navigate to="/" /> : <Register />} />
+      <Route path='/forgot-password' element={<SendEmail />} />
+      <Route path="/reset-password/" element={<ResetPassword />} />
+      {/**********************************************/}
+      <Route path="/admin/*" element={
+        <PrivateRoute allowedRoles={['Admin']}>
+          <Admin />
+        </PrivateRoute>
+      } />
+      <Route path="/teacher/*" element={
+        <PrivateRoute allowedRoles={['Teacher']}>
+          <Teacher />
+        </PrivateRoute>
+      } />
+      <Route path="/user/*" element={
+        <PrivateRoute allowedRoles={['Student', '']}>
+          <User />
+        </PrivateRoute>
+      } />
+      <Route path="/class" element={
+        <PrivateRoute allowedRoles={['Admin','Student']}>
+          <Class />
+        </PrivateRoute>
+      } />
+      {/**********************************************/}
+      <Route path="/subjects/:id" element={<SubjectDetail />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/history" element={<History />} />
+      <Route path="*" element={<h2>Không có trang cần tìm</h2>} />
+    </Routes>
+  </>
   );
 }
 

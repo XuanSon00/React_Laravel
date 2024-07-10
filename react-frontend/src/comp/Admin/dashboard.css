@@ -163,3 +163,8 @@
 {
     margin-right: 50px;
 }
+
+@media screen and (min-width: 375px) and (max-width: 430px) 
+{
+    
+}

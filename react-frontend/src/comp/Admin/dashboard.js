@@ -64,9 +64,7 @@ const Dashboard = () => {
           console.error('lỗi lấy dữ liệu tổng hóa đơn:', error);
       }
   };
-
-
-
+  
   fetchTotalUsers();
   fetchTotalSubjects();
   fetchTotalStudents();

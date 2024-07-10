@@ -3,7 +3,7 @@ import './nav.css'
 import SchoolIcon from '@mui/icons-material/School';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import SearchIcon from '@mui/icons-material/Search';
+import HistoryIcon from '@mui/icons-material/History';
 import ClassIcon from '@mui/icons-material/Class';
 import PersonIcon from '@mui/icons-material/Person';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
@@ -36,7 +36,7 @@ if (userRole === 'Admin') {
       <div className='info'>
         <div className='icon'>
           <SchoolIcon /> 
-          <span>Giảm 10% học phí đăng ký khi đạt giá trị  <b>5.000.000</b><sup>đ</sup></span>
+          <span>Giảm 10% học phí đăng ký + Freeship khi đạt giá trị  <b>5.000.000</b><sup>đ</sup></span>
         </div>
         {
           userEmail ?
@@ -62,7 +62,15 @@ if (userRole === 'Admin') {
                       <ClassIcon />
                     </div>
                     <div className='cartHistory'>
-                      <Link to='/class'>Khóa Học</Link>
+                      <Link to='/class'>Lớp Học</Link>
+                    </div>
+                  </li>
+                  <li>
+                    <div className='icon'>
+                      <HistoryIcon />
+                    </div>
+                    <div className='cartHistory'>
+                      <Link to='/history'>Lịch sử </Link>
                     </div>
                   </li>
                   <li>
@@ -87,7 +95,7 @@ if (userRole === 'Admin') {
                 </div>
                 <b>||</b>
                 <div className='btn'>
-                  <Link to ='/login'><button>Đăng ký</button></Link>
+                  <Link to ='/register'><button>Đăng ký</button></Link>
                 </div>
               </div>
             }

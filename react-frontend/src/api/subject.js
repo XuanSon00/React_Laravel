@@ -71,15 +71,16 @@ const totalSubject = async () => {
   }
 };
 
-const searchSubject = async (search) => {
+const detailSubject = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:8000/api/search-subjects?query=${search}`);
-    return response.data;
+    const response = await axios.get(`http://localhost:8000/api/subjects/${id}`,);
+    return response;
   } catch (error) {
     console.error('Lỗi khi gọi API:', error);
     throw error;
   }
 };
 
+
   
-export { getSubjects, createSubject, updateSubject, deleteSubject ,deleteAllSubjects, totalSubject, searchSubject }
+export { getSubjects, createSubject, updateSubject, deleteSubject ,deleteAllSubjects, totalSubject, detailSubject}

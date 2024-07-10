@@ -130,6 +130,7 @@ const logout = async () => {
       removeCookie('user', { path: '/' });
       setToken(null);
       setUser(null);
+      toast.success('Đăng xuất thành công!');
       //navigate('/');
       window.location.reload();
     }

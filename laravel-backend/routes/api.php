@@ -24,6 +24,9 @@ Route::post('password/email', [PasswordResetController::class, 'sendResetLinkEma
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 //Khóa học
 Route::get('/subjects', [SubjectController::class, 'index']);
+//chi tiết khóa học
+Route::get('/subjects/{id}', [SubjectController::class, 'show']);
+
 //Middleware login
 Route::group(['middleware' => 'auth:api'], function () {
     //Khóa học

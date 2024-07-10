@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './history.css';
+import './test.css';
 import { getOrderHistory } from '../../api/order';
 import { userInfo } from '../../api/account';
 import HistoryIcon from '@mui/icons-material/History';
@@ -63,7 +63,7 @@ const History = () => {
                           <p>Giá: {order.price} <sup>đ</sup></p>
                         </div>
                         <div className='item-infoX'>
-                          <p>Thời gian mua: {new Date(order.created_at).toLocaleString()}</p>
+                          <i>Thời gian mua: {new Date(order.created_at).toLocaleString()}</i>
                           <h3>Tổng tiền: {order.price * order.quantity}<sup>đ</sup></h3>
                         </div>
                         

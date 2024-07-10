@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import './formAccount.css';
+import { toast } from 'react-toastify';
 
 const FormUser = ({ onClose, onSubmit, selectedAccount }) => {
   const [userName, setUserName] = useState('');
@@ -17,7 +18,9 @@ const FormUser = ({ onClose, onSubmit, selectedAccount }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userPassword !== userConfirmPassword) {
-      alert('Mật khẩu không khớp');
+      //alert('Mật khẩu không khớp');
+      toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
+
       return;
     }
     onSubmit({

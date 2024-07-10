@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { userInfo } from "../../api/account";
+import { toast } from 'react-toastify';
 
 const CartContext = createContext();
 const CartProvider = ({ children }) =>{
@@ -31,13 +32,17 @@ const CartProvider = ({ children }) =>{
           updatedCart[exist].quantity += 1;
           setCart(updatedCart);
           localStorage.setItem('cart', JSON.stringify(updatedCart));
-          alert('Đã thêm sản phẩm vào giỏ')
+          //alert('Đã thêm sản phẩm vào giỏ')
+          toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
+
       } else {
           // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm vào giỏ hàng
           const newCart = [...cart, { ...product, quantity: 1 }];
           setCart(newCart);
           localStorage.setItem('cart', JSON.stringify(newCart));
-          alert('Đã thêm sản phẩm vào giỏ hàng')
+          //alert('Đã thêm sản phẩm vào giỏ hàng')
+          toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
+
       }
     }
 //tăng số lượng
@@ -55,7 +60,8 @@ const decreaseQuantity = (product) => {
         if (item.quantity > 1) {
           return { ...item, quantity: item.quantity - 1 };
         } else {
-          alert("Số lượng tối thiểu là 1");
+          //alert("Số lượng tối thiểu là 1");
+          toast.warning('Số lượng tối thiểu là 1',{ autoClose: 2000 });
         }
       }
       return item;
@@ -86,7 +92,7 @@ const clearCart = () => {
     localStorage.removeItem('cart'); 
   }
 //thông tin người dùng đang đăng nhập
-useEffect(() => {
+/* useEffect(() => {
   const fetchUser = async () => {
     try {
       const data = await userInfo();
@@ -98,18 +104,20 @@ useEffect(() => {
 
   fetchUser();
 }, []);
-
+ */
 //xác nhận thanh toán
 const shippingFee = totalPriceProduct < 5000000 ? 100000 : 0;
 const confirmPayment = async (orderID) => {
   const token = sessionStorage.getItem('token');
   if (!token) {
-      alert('Cần đăng nhập để thực hiện thanh toán');
+      //alert('Cần đăng nhập để thực hiện thanh toán');
+      toast.warning('Cần đăng nhập để thực hiện thanh toán',{ autoClose: 2000 });
       return;
   }
 
   if (cart.length === 0) {
-      alert('Giỏ hàng đang trống');
+      //alert('Giỏ hàng đang trống');
+      toast.warning('Giỏ hàng đang trống',{ autoClose: 2000 });
       return;
   }
 
@@ -128,9 +136,10 @@ const confirmPayment = async (orderID) => {
     
   } catch (error) {
     console.error('Lỗi khi thanh toán:', error);
-    alert('Có lỗi khi thanh toán. Vui lòng thử lại sau.');
-  }
+    //alert('Có lỗi khi thanh toán. Vui lòng thử lại sau.');
+    toast.warning('Có lỗi khi thanh toán. Vui lòng thử lại sau',{ autoClose: 2000 });
 
+  }
   clearCart();
 };
 
