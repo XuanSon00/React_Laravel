@@ -96,7 +96,7 @@
     margin-left: 30px;
 }
 
-.detail-product  .container .detail-box button
+.detail-product  .container .detail-box .addTocart .btn
 {
     border: none;
     background: none;
@@ -111,10 +111,26 @@
     transition: 0.5s;
 }
 
-.detail-product  .container .detail-box button:hover
+.detail-product  .container .detail-box .addTocart .btn:hover
 {
     background: #27aae2;
     color:#fed600;
+}
+
+.detail-product  .container .detail-box .addTocart .btn-disable
+{
+    border: none;
+    background: none;
+    outline: none;
+    padding: 10px;
+    background: gray;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 80px;
+    height: 50px;
+    transition: 0.5s;
+    color: #fff;
 }
 
 .handleback

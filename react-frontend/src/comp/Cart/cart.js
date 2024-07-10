@@ -12,7 +12,6 @@ import RemoveIcon from '@mui/icons-material/Remove';
 const Cart = () => {
   const {
     cart,
-    setCart,
     increaseQuantity,
     decreaseQuantity,
     removeProduct,

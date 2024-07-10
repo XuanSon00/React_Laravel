@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Nav from '../Home/nav'
 import InfoIcon from '@mui/icons-material/Info';
 import './class.css'
-import { createEnroll, getUserEnrollments,  } from '../../api/enroll';
+import { createEnroll, getEnroll, getUserEnrollments,  } from '../../api/enroll';
 import { getSchedule } from '../../api/schedule';
 import { userInfo } from '../../api/account';
 import toast, { Toaster } from 'react-hot-toast';
@@ -12,11 +12,12 @@ const Class = () => {
   const [filteredGrade, setFilteredGrade] = useState([]);
   const [user, setUsers] = useState(null); 
   const [searchTerm, setSearchTerm] = useState('');
+  const [enrollments, setEnrollments] = useState([]); 
 
   const loadSchedule = async () => {
     try {
       const response = await getSchedule();
-      console.log('Dữ liệu nhận từ API:', response.data);
+      //console.log('Dữ liệu nhận từ API:', response.data);
       setSchedules(response.data);
       setFilteredGrade(response.data);
     } catch (error) {
@@ -33,10 +34,23 @@ const Class = () => {
     }
   };
 
+  const loadEnrollment = async () => {
+    try {
+      const response = await getEnroll(user.id); 
+      setEnrollments(response.data); 
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin người dùng:', error);
+    }
+  };
+
   useEffect(() => {
     loadSchedule();
     loadUser();
-  }, []); 
+  }, []);
+  useEffect(() => {
+    loadEnrollment();
+  }, [user]); 
+
   const filterGrade = (selectedGrade) => {
     if (selectedGrade === "") {
       setFilteredGrade(schedules);
@@ -53,7 +67,7 @@ const Class = () => {
         idSchedule: idSchedule,
       };
       const response = await createEnroll(enrollData);
-      console.log('Đăng ký lớp học thành công', response.data);
+      //console.log('Đăng ký lớp học thành công', response.data);
       toast.success('Đăng ký lớp học thành công!');
       loadSchedule();
     } catch (error) {
@@ -71,14 +85,20 @@ const Class = () => {
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);
     setFilteredGrade(schedules.filter(schedule =>
-      schedule.name.toLowerCase().includes(e.target.value.toLowerCase())
+      schedule.subject.name && schedule.subject.name.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
+
+  
+  
+const isEnrolled = (idSchedule) => {
+    return enrollments.some(enrollment => enrollment.idSchedule === idSchedule);
+  };
+
 
   return (
     <>
       <div><Toaster position="top-center" reverseOrder={false} /></div>
-
       <Nav handleFilterChange={handleFilterChange}/>
       <div className='class'>
         <div className='top_banner'></div>
@@ -114,17 +134,23 @@ const Class = () => {
                             <h3>{schedule.subject.name}</h3>
                             <span>{schedule.grade}</span>
                           </div>
-                          <div className='info-price'>
-                            <span>giảng viên:</span>
+                          <div className='info-teacher'>
+                            <span>Giảng viên:</span>
                             <p>{schedule.teacher.name}</p>
                           </div>
                           <div className='info-price'>
                             <span>Số lượng:</span>
                             <p>0/10</p>
                           </div>
-                          <button className='btn' onClick={() => handleEnroll(schedule.id, schedule.subject.id)}>
-                            Đăng ký lớp
-                          </button>
+                          <div className='addTocart'>
+                            {isEnrolled(schedule.id) ? (
+                              <button className='btn-disable' disabled>Đã Đăng ký</button>
+                            ) : (
+                              <button className='btn' onClick={() => handleEnroll(schedule.id, schedule.subject.id)}>
+                                Đăng ký lớp
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     );
@@ -132,7 +158,6 @@ const Class = () => {
                 </div>
               </div>
             </div>
-            <div className='right_box'></div>
           </div>
         </div>
       </div>

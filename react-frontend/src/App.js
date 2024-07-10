@@ -20,44 +20,56 @@ import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [cookies] = useCookies(['user']);
-  const { setCart } =useContext(CartContext)
-
+  const { setCart } =useContext(CartContext);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
       if (savedCart) {
         setCart(JSON.parse(savedCart));//chuyển đổi chuỗi
       }
-    }, []); 
+  }, []);
+
+  const redirectRole = (role) =>{
+    switch (role) {
+      case 'Admin':
+        return <Navigate to = '/admin' />
+      case 'Teacher':
+        return <Navigate to = '/teacher' />
+      default:
+        return <Home />
+    }
+  }
+
 
   
   return (
   <>
     <ToastContainer />
     <Routes>
-      <Route path="/" element={<Home />} />
+      {/* <Route path="/" element={<Home />} /> */}
       <Route path="/login" element={cookies.user ? <Navigate to="/" /> : <Login />} />
       <Route path="/register" element={cookies.user ? <Navigate to="/" /> : <Register />} />
       <Route path='/forgot-password' element={<SendEmail />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
       {/**********************************************/}
+      <Route path="/" element={ cookies.user ? redirectRole(cookies.user.role) : <Home /> } />
       <Route path="/admin/*" element={
-        <PrivateRoute allowedRoles={['Admin']}>
+        <PrivateRoute allowedRoles={['Admin']} redirectPath='/'>
           <Admin />
         </PrivateRoute>
       } />
       <Route path="/teacher/*" element={
-        <PrivateRoute allowedRoles={['Teacher']}>
+        <PrivateRoute allowedRoles={['Teacher']} redirectPath='/'>
           <Teacher />
         </PrivateRoute>
       } />
       <Route path="/user/*" element={
-        <PrivateRoute allowedRoles={['Student', '']}>
+        <PrivateRoute allowedRoles={['Student', '']} redirectPath='/'>
           <User />
         </PrivateRoute>
       } />
       <Route path="/class" element={
-        <PrivateRoute allowedRoles={['Admin','Student']}>
+        <PrivateRoute allowedRoles={['Student']} redirectPath='/'>
           <Class />
         </PrivateRoute>
       } />

@@ -6,12 +6,14 @@ import './home.css';
 import { CartContext } from '../context/cartContext';
 import { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { getOrderUser } from '../../api/order';
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);
   const [filteredGrade, setFilteredGrade] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [searchTerm, setSearchTerm] = useState('');
+  const [orders, setOrders] = useState([]);
 
   const loadSubjects = async () => {
     try {
@@ -24,9 +26,21 @@ const Home = () => {
       setSubjects([]);
     }
   };
+  
+  const loadOrders = async () => {
+    try {
+      const response = await getOrderUser();
+      //console.log('Dữ liệu nhận từ API:', response.data);
+      setOrders(response.data);
+    } catch (error) {
+      //console.error('Lỗi khi lấy lịch sửmôn học:', error);
+      setOrders([]);
+    }
+  };
 
   useEffect(() => {
     loadSubjects();
+    loadOrders();
   }, []);
 
   const filterGrade = (selectedGrade) => {
@@ -49,6 +63,9 @@ const Home = () => {
       subject.name.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
+  const isPurchased = (id) =>{
+    return orders.some( order => order.idSubject === id )
+  }
 
   
   return (
@@ -83,8 +100,7 @@ const Home = () => {
                               <InfoIcon />
                             </div>
                           </div>
-                        </Link>
-
+                        </Link> 
                         <div className='info'>
                           <div className='info-subject'>
                             <h3>{subject.name}</h3>
@@ -94,7 +110,14 @@ const Home = () => {
                             <span>Học Phí: </span>
                             <p>{Math.floor(parseFloat(subject.price.replace(/\./g, '').replace(',', '.'))).toLocaleString('vi-VN')} <sup>đ</sup></p>
                           </div>
-                          <button className='btn' onClick={() => addToCart(subject)}>Đăng ký</button>
+                          <div className='addTocart'>
+                            {isPurchased(subject.id) ? (
+                              <button className='btn-disable' disabled> Đã mua</button>
+                            ) :(
+                              <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
+                            )
+                            }
+                          </div>
                         </div>
                       </div>
                     );

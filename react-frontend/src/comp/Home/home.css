@@ -100,8 +100,8 @@
 
 .home .trending .container .left_box .subject .container .box
 {
-    width: 200px;
-    height: 350px;
+    width: 210px;
+    height: fit-content;
     border: 4px solid #f6f7f8;
     margin-top: 20px;
     margin-left: auto;
@@ -171,6 +171,7 @@
 {
     display: flex;
     justify-content: space-between;
+    height: 50px;
 }
 
 .home .trending .container .left_box .subject .container .box .info .info-price span
@@ -192,12 +193,19 @@
     letter-spacing: 1px;
 }
 
-.home .trending .container .left_box .subject .container .box .info .btn
+
+.home .trending .container .left_box .subject .container .box .info .addTocart
 {
-    margin-top: 10px;
+    align-items: text;
+    text-align: center;
+    width: 100%;
+}
+
+
+.home .trending .container .left_box .subject .container .box .info .addTocart button
+{
     align-items: center;
     padding: 5px 20px;
-    margin-left: 23%;
     border: none;
     background: #fed700;
     outline: none;
@@ -207,7 +215,21 @@
     color: #232323;
 }
 
-.home .trending .container .left_box .subject .container .box .info .btn:hover
+.home .trending .container .left_box .subject .container .box .info .addTocart .btn-disable
+{
+    align-items: center;
+    padding: 5px 20px;
+    border: none;
+    background: gray;
+    outline: none;
+    text-transform: capitalize;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+.home .trending .container .left_box .subject .container .box .info .addToCart button:hover
 {
     color:#27aae2;
 }
