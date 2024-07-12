@@ -53,15 +53,31 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 
 -- Dumping data for table level-3-database.failed_jobs: ~0 rows (approximately)
 
+-- Dumping structure for table level-3-database.lessions
+CREATE TABLE IF NOT EXISTS `lessions` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `idSubject` bigint unsigned NOT NULL,
+  `lession` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lessions_idsubject_foreign` (`idSubject`),
+  CONSTRAINT `lessions_idsubject_foreign` FOREIGN KEY (`idSubject`) REFERENCES `subjects` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table level-3-database.lessions: ~1 rows (approximately)
+INSERT INTO `lessions` (`id`, `idSubject`, `lession`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'a', '2024-07-12 05:27:09', '2024-07-12 05:27:09');
+
 -- Dumping structure for table level-3-database.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.migrations: ~65 rows (approximately)
+-- Dumping data for table level-3-database.migrations: ~64 rows (approximately)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '2014_10_12_000000_create_users_table', 1),
 	(2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
@@ -127,7 +143,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(62, '2024_07_04_144742_add_available_seats_and_schedule_schedules_table', 59),
 	(63, '2024_07_04_163556_create_enrollments_table', 60),
 	(64, '2024_07_04_164056_create_enrollments_table', 61),
-	(65, '2024_07_08_000448_add_order_i_d_to_orders_table', 62);
+	(65, '2024_07_08_000448_add_order_i_d_to_orders_table', 62),
+	(66, '2024_07_12_104810_create_lessons_table', 63),
+	(67, '2024_07_12_115711_create_lessons_table', 64),
+	(68, '2024_07_12_143835_remove_order_i_d_from_orders_table', 65);
 
 -- Dumping structure for table level-3-database.orders
 CREATE TABLE IF NOT EXISTS `orders` (
@@ -138,7 +157,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `quantity` smallint NOT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `orderID` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -146,28 +164,31 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `orders_idsubject_foreign` (`idSubject`),
   CONSTRAINT `orders_idsubject_foreign` FOREIGN KEY (`idSubject`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
   CONSTRAINT `orders_iduser_foreign` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.orders: ~18 rows (approximately)
-INSERT INTO `orders` (`id`, `idUser`, `idSubject`, `price`, `quantity`, `payment_method`, `payment_status`, `orderID`, `created_at`, `updated_at`) VALUES
-	(1, 14, 4, '500000', 2, 'PayPal', 'Completed', NULL, '2024-07-03 01:46:49', '2024-07-03 01:46:49'),
-	(2, 14, 3, '1500000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:46:49', '2024-07-03 01:46:49'),
-	(3, 14, 4, '500000', 2, 'PayPal', 'Completed', NULL, '2024-07-03 01:47:26', '2024-07-03 01:47:26'),
-	(4, 14, 3, '1500000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:47:26', '2024-07-03 01:47:26'),
-	(5, 14, 4, '500000', 2, 'PayPal', 'Completed', NULL, '2024-07-03 01:49:03', '2024-07-03 01:49:03'),
-	(6, 14, 3, '1500000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:49:03', '2024-07-03 01:49:03'),
-	(7, 14, 11, '2500000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
-	(8, 14, 21, '2500000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
-	(9, 14, 28, '3000000', 1, 'PayPal', 'Completed', NULL, '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
-	(10, 5, 1, '500000', 1, 'PayPal', 'Completed', NULL, '2024-07-05 06:38:15', '2024-07-05 06:38:15'),
-	(11, 14, 1, '500000', 4, 'PayPal', 'Completed', NULL, '2024-07-05 08:10:14', '2024-07-05 08:10:14'),
-	(12, 14, 3, '1500000', 1, 'PayPal', 'Completed', NULL, '2024-07-05 08:10:14', '2024-07-05 08:10:14'),
-	(13, 4, 4, '500000', 2, 'PayPal', 'Completed', NULL, '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
-	(14, 4, 3, '1500000', 2, 'PayPal', 'Completed', NULL, '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
-	(15, 4, 2, '1000000', 1, 'PayPal', 'Completed', NULL, '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
-	(16, 4, 1, '500000', 2, 'PayPal', 'Completed', NULL, '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
-	(17, 4, 4, '500000', 1, 'PayPal', 'Completed', NULL, '2024-07-07 17:13:02', '2024-07-07 17:13:02'),
-	(18, 4, 22, '500000', 1, 'PayPal', 'Completed', NULL, '2024-07-07 17:18:04', '2024-07-07 17:18:04');
+-- Dumping data for table level-3-database.orders: ~19 rows (approximately)
+INSERT INTO `orders` (`id`, `idUser`, `idSubject`, `price`, `quantity`, `payment_method`, `payment_status`, `created_at`, `updated_at`) VALUES
+	(1, 14, 4, '500000', 2, 'PayPal', 'Completed', '2024-07-03 01:46:49', '2024-07-03 01:46:49'),
+	(2, 14, 3, '1500000', 1, 'PayPal', 'Completed', '2024-07-03 01:46:49', '2024-07-03 01:46:49'),
+	(3, 14, 4, '500000', 2, 'PayPal', 'Completed', '2024-07-03 01:47:26', '2024-07-03 01:47:26'),
+	(4, 14, 3, '1500000', 1, 'PayPal', 'Completed', '2024-07-03 01:47:26', '2024-07-03 01:47:26'),
+	(5, 14, 4, '500000', 2, 'PayPal', 'Completed', '2024-07-03 01:49:03', '2024-07-03 01:49:03'),
+	(6, 14, 3, '1500000', 1, 'PayPal', 'Completed', '2024-07-03 01:49:03', '2024-07-03 01:49:03'),
+	(7, 14, 11, '2500000', 1, 'PayPal', 'Completed', '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
+	(8, 14, 21, '2500000', 1, 'PayPal', 'Completed', '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
+	(9, 14, 28, '3000000', 1, 'PayPal', 'Completed', '2024-07-03 01:50:47', '2024-07-03 01:50:47'),
+	(10, 5, 1, '500000', 1, 'PayPal', 'Completed', '2024-07-05 06:38:15', '2024-07-05 06:38:15'),
+	(11, 14, 1, '500000', 4, 'PayPal', 'Completed', '2024-07-05 08:10:14', '2024-07-05 08:10:14'),
+	(12, 14, 3, '1500000', 1, 'PayPal', 'Completed', '2024-07-05 08:10:14', '2024-07-05 08:10:14'),
+	(13, 4, 4, '500000', 2, 'PayPal', 'Completed', '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
+	(14, 4, 3, '1500000', 2, 'PayPal', 'Completed', '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
+	(15, 4, 2, '1000000', 1, 'PayPal', 'Completed', '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
+	(16, 4, 1, '500000', 2, 'PayPal', 'Completed', '2024-07-07 16:51:52', '2024-07-07 16:51:52'),
+	(17, 4, 4, '500000', 1, 'PayPal', 'Completed', '2024-07-07 17:13:02', '2024-07-07 17:13:02'),
+	(18, 4, 22, '500000', 1, 'PayPal', 'Completed', '2024-07-07 17:18:04', '2024-07-07 17:18:04'),
+	(19, 4, 9, '1000000', 1, 'PayPal', 'Completed', '2024-07-12 07:43:53', '2024-07-12 07:43:53'),
+	(20, 15, 3, '1500000', 1, 'PayPal', 'Completed', '2024-07-12 08:06:31', '2024-07-12 08:06:31'),
+	(21, 15, 2, '1000000', 1, 'PayPal', 'Completed', '2024-07-12 08:11:01', '2024-07-12 08:11:01');
 
 -- Dumping structure for table level-3-database.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
@@ -177,7 +198,9 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.password_reset_tokens: ~0 rows (approximately)
+-- Dumping data for table level-3-database.password_reset_tokens: ~1 rows (approximately)
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+	('a@gmail.com', '$2y$12$WltKnrgoCdSxOzEKRd.jhu3rYWIlIBvvHvBbuksgyOxAx8chwu/0O', '2024-07-08 07:19:56');
 
 -- Dumping structure for table level-3-database.personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
@@ -194,9 +217,9 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.personal_access_tokens: ~255 rows (approximately)
+-- Dumping data for table level-3-database.personal_access_tokens: ~263 rows (approximately)
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
 	(6, 'App\\Models\\User', 5, 'auth_token', 'bcb2d3ee009eba54524f09ad2ce072ce90846abb5028575cd12134f31adc0cd2', '["*"]', NULL, NULL, '2024-06-17 07:08:22', '2024-06-17 07:08:22'),
 	(7, 'App\\Models\\User', 5, 'auth_token', '28cd7d6e26c1318290aa2efbf2cfba64912a4fcedb8b5a079b23adea232b3291', '["*"]', NULL, NULL, '2024-06-17 07:08:24', '2024-06-17 07:08:24'),
@@ -453,8 +476,31 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 	(288, 'App\\Models\\User', 3, 'auth_token', '63c548bc51bc44332d0e28fe9e5fff8951c7f7403e906ea6a930bef569e8b25e', '["*"]', '2024-07-07 16:21:14', NULL, '2024-07-07 16:15:41', '2024-07-07 16:21:14'),
 	(289, 'App\\Models\\User', 14, 'auth_token', 'c7196faaf30d2baca183a8190ac1bf953f9f4a5a8720e49fcad3a65151dce0c3', '["*"]', '2024-07-07 16:27:29', NULL, '2024-07-07 16:21:26', '2024-07-07 16:27:29'),
 	(290, 'App\\Models\\User', 4, 'auth_token', 'd5461dfd877dcd4b22ea64dc535398f19cbb40081554083088bfad3d16f63d8f', '["*"]', '2024-07-07 19:52:09', NULL, '2024-07-07 16:28:21', '2024-07-07 19:52:09'),
-	(291, 'App\\Models\\User', 4, 'auth_token', '67b8c0bd7b3579d5e126976f6c949c4749e0585760af395a6b282d1affe7150a', '["*"]', '2024-07-08 06:14:23', NULL, '2024-07-08 04:57:44', '2024-07-08 06:14:23'),
-	(292, 'App\\Models\\User', 4, 'auth_token', 'aafa334bc5cf298e36f4103f80f9b59ffee448b54ec01806a56bc71228aac5b7', '["*"]', '2024-07-08 06:04:12', NULL, '2024-07-08 05:09:12', '2024-07-08 06:04:12');
+	(291, 'App\\Models\\User', 4, 'auth_token', '67b8c0bd7b3579d5e126976f6c949c4749e0585760af395a6b282d1affe7150a', '["*"]', '2024-07-08 07:15:47', NULL, '2024-07-08 04:57:44', '2024-07-08 07:15:47'),
+	(292, 'App\\Models\\User', 4, 'auth_token', 'aafa334bc5cf298e36f4103f80f9b59ffee448b54ec01806a56bc71228aac5b7', '["*"]', '2024-07-12 06:49:57', NULL, '2024-07-08 05:09:12', '2024-07-12 06:49:57'),
+	(293, 'App\\Models\\User', 14, 'auth_token', '58e271b02a40370cfd19bbbe817a57305ebf3a64b39ab66d24051cfb31accc38', '["*"]', '2024-07-08 07:16:00', NULL, '2024-07-08 07:15:54', '2024-07-08 07:16:00'),
+	(294, 'App\\Models\\User', 14, 'auth_token', 'f58a11943cda2aa5cc0d9f8a6724ac8d3b2744f10a5ef3fefa9f03c9b3cea149', '["*"]', '2024-07-08 07:18:45', NULL, '2024-07-08 07:15:56', '2024-07-08 07:18:45'),
+	(295, 'App\\Models\\User', 3, 'auth_token', '8c2636730023951e302c830c70fce954fdbd3e2dd9f3701a34407cc33ad348c1', '["*"]', '2024-07-08 07:19:00', NULL, '2024-07-08 07:18:57', '2024-07-08 07:19:00'),
+	(296, 'App\\Models\\User', 3, 'auth_token', '1be3737f408713c3343013a0bdc6379a2363f4af54a188927023ef7990d7a18b', '["*"]', '2024-07-08 07:19:21', NULL, '2024-07-08 07:18:59', '2024-07-08 07:19:21'),
+	(297, 'App\\Models\\User', 4, 'auth_token', '56665a3e9ec8e68a5d0d72d941de16a55fe2e47e3f59adf18fdd6e48bf2650c3', '["*"]', '2024-07-08 07:51:58', NULL, '2024-07-08 07:30:07', '2024-07-08 07:51:58'),
+	(298, 'App\\Models\\User', 13, 'auth_token', '5c93a11dbf61701f6fc3b11e98f66591909d5570864e1f2d349c53adbe51b141', '["*"]', '2024-07-08 08:01:33', NULL, '2024-07-08 08:01:23', '2024-07-08 08:01:33'),
+	(299, 'App\\Models\\User', 14, 'auth_token', '758c6c3e0a70baa16d3cf095758dfff44838e32ae467fe4c530ec380ae80bc69', '["*"]', '2024-07-08 08:13:07', NULL, '2024-07-08 08:02:57', '2024-07-08 08:13:07'),
+	(300, 'App\\Models\\User', 14, 'auth_token', '5f2819b502a6f9ab7dd6261a19d46fd669ec05a12add24333cc14d6e0db19305', '["*"]', '2024-07-09 20:55:11', NULL, '2024-07-09 16:23:21', '2024-07-09 20:55:11'),
+	(301, 'App\\Models\\User', 14, 'auth_token', '49193711aaa6f2a5b0cf50547e876378f753b684b2123a7a5f70127b9bdf10d7', '["*"]', '2024-07-09 23:39:09', NULL, '2024-07-09 20:55:20', '2024-07-09 23:39:09'),
+	(302, 'App\\Models\\User', 4, 'auth_token', '280e1d4cf9cdd9c0a66608886a60e2a6d5b0fb5da862fe212876fa7217fd266c', '["*"]', '2024-07-09 23:42:36', NULL, '2024-07-09 23:42:15', '2024-07-09 23:42:36'),
+	(303, 'App\\Models\\User', 11, 'auth_token', '879eabd7185b487d06f8ce028759247e35d3460e3012aa89044a2dc5b8a967e8', '["*"]', '2024-07-10 05:05:50', NULL, '2024-07-10 05:05:47', '2024-07-10 05:05:50'),
+	(304, 'App\\Models\\User', 14, 'auth_token', 'ef217ac3a4356d1f4de9f7158a89419250a1076757e1971bdd33c4b08ed0ae4d', '["*"]', '2024-07-10 06:46:49', NULL, '2024-07-10 06:06:55', '2024-07-10 06:46:49'),
+	(305, 'App\\Models\\User', 4, 'auth_token', '2bed2e7f0a8b45f3febf48489e18ccc8eb3385a6b570ab4324f4bc532a8677e4', '["*"]', '2024-07-10 06:49:48', NULL, '2024-07-10 06:49:45', '2024-07-10 06:49:48'),
+	(306, 'App\\Models\\User', 14, 'auth_token', '7b40a94932e45357e45efc880f795a183b889ae83149475881e59a0d5d23067c', '["*"]', '2024-07-10 06:55:00', NULL, '2024-07-10 06:53:51', '2024-07-10 06:55:00'),
+	(307, 'App\\Models\\User', 4, 'auth_token', '7b546e78170ae1fddc06787d896fab24dcd825ec9dbf7794958a1c3295d45f45', '["*"]', '2024-07-10 12:47:17', NULL, '2024-07-10 07:20:49', '2024-07-10 12:47:17'),
+	(308, 'App\\Models\\User', 14, 'auth_token', '4cef5738d782764c37476b24a8abcb054c1fbe8a91846a8fc835d419497aa9c4', '["*"]', '2024-07-12 06:14:41', NULL, '2024-07-12 04:10:16', '2024-07-12 06:14:41'),
+	(309, 'App\\Models\\User', 4, 'auth_token', '3b9ad557aedecaa5d9aa6b76bac4a6a27fd52b5310bbc8d2a54bccf6fc7327d6', '["*"]', '2024-07-12 06:31:18', NULL, '2024-07-12 06:27:15', '2024-07-12 06:31:18'),
+	(310, 'App\\Models\\User', 15, 'auth_token', '43ee5f462a953e974e5aeb640863aa6a8ce78f746bf7dd8e6be296224c0a92a5', '["*"]', NULL, NULL, '2024-07-12 06:53:06', '2024-07-12 06:53:06'),
+	(311, 'App\\Models\\User', 15, 'auth_token', 'f5ed6fc7fc04f28aa0df739d8a7292331d0e091ed0d4ccd0d98b1bb7bfadba49', '["*"]', '2024-07-12 07:00:11', NULL, '2024-07-12 06:53:32', '2024-07-12 07:00:11'),
+	(312, 'App\\Models\\User', 14, 'auth_token', 'a70801ffd17ee445e956de7206263e40dc0a64019ac9b2d523b893248f9a4b8b', '["*"]', '2024-07-12 07:25:58', NULL, '2024-07-12 07:25:54', '2024-07-12 07:25:58'),
+	(313, 'App\\Models\\User', 4, 'auth_token', 'eff30056b973af8866f5f23ff084a13f9fe22bddb52b422b605d7efa9074bc67', '["*"]', '2024-07-12 07:26:09', NULL, '2024-07-12 07:26:05', '2024-07-12 07:26:09'),
+	(314, 'App\\Models\\User', 4, 'auth_token', 'a157ae24f97d64f88274405f25b9dc178a395accc6aea4f57bff3564c2e820c3', '["*"]', '2024-07-12 07:43:59', NULL, '2024-07-12 07:27:59', '2024-07-12 07:43:59'),
+	(315, 'App\\Models\\User', 15, 'auth_token', '49a728c6efb197f1e4ac3927734814f52591f40435885c824a84455b6403c612', '["*"]', '2024-07-12 08:11:31', NULL, '2024-07-12 07:46:31', '2024-07-12 08:11:31');
 
 -- Dumping structure for table level-3-database.roles
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -491,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `schedules` (
   CONSTRAINT `schedules_idteacher_foreign` FOREIGN KEY (`idTeacher`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.schedules: ~4 rows (approximately)
+-- Dumping data for table level-3-database.schedules: ~3 rows (approximately)
 INSERT INTO `schedules` (`id`, `idTeacher`, `grade`, `startTime`, `endTime`, `schedule`, `available_seats`, `created_at`, `updated_at`, `idSubject`) VALUES
 	(6, 7, 'Nâng Cao', '01/12/2024', '10-05-2024', '3-5-7', 3, '2024-07-05 04:38:04', '2024-07-07 16:54:13', 28),
 	(7, 3, '11', '01/12/2024', '10-05-2024', '3-5-7', 8, '2024-07-05 04:38:19', '2024-07-07 19:46:38', 4),
@@ -564,9 +610,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_api_token_unique` (`api_token`),
   KEY `users_idrole_foreign` (`idRole`),
   CONSTRAINT `users_idrole_foreign` FOREIGN KEY (`idRole`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table level-3-database.users: ~12 rows (approximately)
+-- Dumping data for table level-3-database.users: ~13 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `api_token`, `remember_token`, `created_at`, `updated_at`, `idRole`, `status`, `role`, `google_id`, `avatar`) VALUES
 	(3, 'Lê Văn A', 'a@gmail.com', NULL, '$2y$12$EDFOaRXyeQAu9MeWChIMIOY7dlfbH8e00Dg25dvypTuCmqr7einSC', NULL, NULL, '2024-06-26 03:34:38', '2024-07-02 14:05:11', 1, 1, 'Teacher', NULL, NULL),
 	(4, 'Lê Văn B', 'b@gmail.com', NULL, '$2y$12$TYzKI/XIEkw0AM7fFmO0febO1y.88imXu9EjVcBZJcHk5uoOakRMG', NULL, NULL, '2024-06-26 03:34:54', '2024-06-26 13:47:32', 1, 1, 'Student', NULL, NULL),
@@ -579,7 +625,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ap
 	(11, 'Lê Văn ABC', 'abc@gmail.com', NULL, '$2y$12$k26Iath3D8cZW.3cHLrDzeZH5QeeOM/cs0E/OZfbOL4d1tY.lqQPq', NULL, NULL, '2024-06-29 09:50:54', '2024-07-02 15:07:55', 1, 1, 'Teacher', NULL, NULL),
 	(12, 'Lê Văn CCC', 'ccc@gmail.com', NULL, '$2y$12$79JaXdU6krLYgveWh9xC0eEAbaXennYEVsXYieyJncPLTaFrPnwhi', NULL, NULL, '2024-06-29 09:52:21', '2024-07-02 15:08:33', 1, 1, 'Admin', NULL, NULL),
 	(13, 'Lê Văn ZZZ', 'zzz@gmail.com', NULL, '$2y$12$IYm8pUnssdj/Jkw3CyKIe.ukqDNKC8sGcK7ZOVqxU8alhmXlvgUea', NULL, NULL, '2024-06-29 09:58:15', '2024-07-02 15:08:24', 1, 1, 'Admin', NULL, NULL),
-	(14, 'Sơn', 'kawaken95@gmail.com', NULL, '$2y$12$5pBF3UrqGwcSu/44MG8bQ.0hLfVWhZbVgofLPgKIFIpsXh77Afs5u', NULL, NULL, '2024-07-02 04:39:23', '2024-07-02 15:08:20', 1, 1, 'Admin', NULL, NULL);
+	(14, 'Sơn', 'kawaken95@gmail.com', NULL, '$2y$12$5pBF3UrqGwcSu/44MG8bQ.0hLfVWhZbVgofLPgKIFIpsXh77Afs5u', NULL, NULL, '2024-07-02 04:39:23', '2024-07-02 15:08:20', 1, 1, 'Admin', NULL, NULL),
+	(15, NULL, 'student@gmail.com', NULL, '$2y$12$0xoHS6a/8D33XbB.IHvLsOnwbGp3efbSvoC8lk1N4/Vjikri/78lC', NULL, NULL, '2024-07-12 06:53:06', '2024-07-12 08:11:01', 1, 0, 'Student', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

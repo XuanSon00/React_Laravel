@@ -12,6 +12,7 @@ import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
 import SchoolIcon from '@mui/icons-material/School';
 import PaidIcon from '@mui/icons-material/Paid';
 import HomeIcon from '@mui/icons-material/Home';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 const SidebarData = [
     {
         title: "Home",
@@ -37,6 +38,11 @@ const SidebarData = [
         title: "Khóa học",
         icon: <SubjectIcon />,
         link: '/admin/subject'
+    },
+    {
+        title: "Bài học",
+        icon: <ImportContactsIcon />,
+        link: '/admin/lession'
     },
     {
         title: "Lớp học",

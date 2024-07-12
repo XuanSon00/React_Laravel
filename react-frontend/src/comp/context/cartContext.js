@@ -92,7 +92,7 @@ const clearCart = () => {
     localStorage.removeItem('cart'); 
   }
 //thông tin người dùng đang đăng nhập
-/* useEffect(() => {
+useEffect(() => {
   const fetchUser = async () => {
     try {
       const data = await userInfo();
@@ -104,23 +104,15 @@ const clearCart = () => {
 
   fetchUser();
 }, []);
- */
 //xác nhận thanh toán
 const shippingFee = totalPriceProduct < 5000000 ? 100000 : 0;
 const confirmPayment = async (orderID) => {
-  const token = sessionStorage.getItem('token');
-  if (!token) {
-      //alert('Cần đăng nhập để thực hiện thanh toán');
-      toast.warning('Cần đăng nhập để thực hiện thanh toán',{ autoClose: 2000 });
-      return;
-  }
-
+  console.log(user.id)
   if (cart.length === 0) {
       //alert('Giỏ hàng đang trống');
       toast.warning('Giỏ hàng đang trống',{ autoClose: 2000 });
       return;
   }
-
   try {
     const response = await axios.post('http://localhost:8000/api/orders', {
       idUser: user.id, 
@@ -131,14 +123,13 @@ const confirmPayment = async (orderID) => {
       })),
       payment_method: 'PayPal',
       payment_status: 'Completed',
-      orderID: orderID, 
+      //orderID: orderID, 
     });
     
   } catch (error) {
     console.error('Lỗi khi thanh toán:', error);
     //alert('Có lỗi khi thanh toán. Vui lòng thử lại sau.');
     toast.warning('Có lỗi khi thanh toán. Vui lòng thử lại sau',{ autoClose: 2000 });
-
   }
   clearCart();
 };

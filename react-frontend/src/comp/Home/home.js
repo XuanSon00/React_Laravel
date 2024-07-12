@@ -93,7 +93,7 @@ const Home = () => {
                   {filteredGrade.map((subject) => {
                     return (
                       <div className='box' key={subject.id}>
-                        <Link to={`/subjects/${subject.id}`} className='img_box' >
+                        <Link to={`/subjects/${subject.id}`} className='img_box'>
                           <img src={subject.image} alt='' style={{ height: 180 }} />
                           <div className='icon'>
                             <div className='icon_box'>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Schedule;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,7 @@ class OrderController extends Controller
 
         return response()->json($orders);
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -37,7 +39,7 @@ class OrderController extends Controller
             'items.*.quantity' => 'required|integer',
             'payment_method' => 'required|string',
             'payment_status' => 'required|string',
-            'orderID' => 'required|string',
+            //'orderID' => 'required|string',
         ]);
 
         $totalPrice = 0;
@@ -52,15 +54,19 @@ class OrderController extends Controller
                     'quantity' => $item['quantity'],
                     'payment_method' => $validatedData['payment_method'],
                     'payment_status' => $validatedData['payment_status'],
-                    'orderID' => $validatedData['orderID'],
+                    //'orderID' => $validatedData['orderID'],
                 ]);
             } else {
                 return response()->json(['message' => 'Khóa học không khả dụng'], 400);
             }
         }
+        $user = User::find($validatedData['idUser']);
+        $user->role = "Student";
+        $user->save();
+
         return response()->json([
             'message' => 'Đơn hàng tạo thành công',
-            'orderID' => $validatedData['orderID'],
+            //'orderID' => $validatedData['orderID'],
             'total_price' => $totalPrice,
         ], 201);
     }

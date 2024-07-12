@@ -9,7 +9,7 @@
     width: 100%;
     padding: 20px 20px;
     background-color: #fff;
-    height: 800px;
+    height: fit-content;
 }
 
 .subject .subjectData h3

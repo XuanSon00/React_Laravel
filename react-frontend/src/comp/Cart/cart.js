@@ -9,6 +9,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from 'react-toastify';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useCookies } from 'react-cookie';
 const Cart = () => {
   const {
     cart,
@@ -28,6 +29,7 @@ const Cart = () => {
   const [success, setSuccess] = useState(false);
   const [orderID, setOrderID] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState("");
+  const [cookies] = useCookies(['user']);
 
   useEffect(() => {
     calculateTotalPrice();
@@ -78,6 +80,11 @@ const Cart = () => {
     }
   }, [success]);
 
+  const payButton = () =>{
+    if(!cookies.user) {
+      toast.warning(' Cần đăng nhập để thực hiện thanh toán', {autoClose: 2000})
+    }
+  }
   return (
     <>
       <Nav />
@@ -92,12 +99,6 @@ const Cart = () => {
             </div>
           }
           <div className='container'>
-            <div className='title'>
-              <h3 className='subject-title'>Khóa học</h3>
-              <h3 className='price-title'>Học phí</h3>
-              <h3 className='quantity-title'>Số lượng</h3>
-              <h3 className='totalPrice-title'>Tổng</h3>
-            </div>
             {cart.map((subject) => {
               const price = parseFloat(subject.price.replace(/\./g, '').replace(',', '.')); // Chuyển đổi chuỗi sang số
               const quantity = subject.quantity;
@@ -106,6 +107,13 @@ const Cart = () => {
               const totalPriceString = Math.floor(totalPrice).toLocaleString('vi-VN'); // làm tròn số - phân cách số hàng nghin
 
               return (
+                <>
+                <div className='title'>
+                  <h3 className='subject-title'>Khóa học</h3>
+                  <h3 className='price-title'>Học phí</h3>
+                  <h3 className='quantity-title'>Số lượng</h3>
+                  <h3 className='totalPrice-title'>Tổng</h3>
+                </div>
                 <div className='box' key={subject.id}>
                   <div className='img_box'>
                     <img src={subject.image} />
@@ -129,6 +137,7 @@ const Cart = () => {
                     <span>{totalPriceString}<sup>đ</sup></span>
                   </div>
                 </div>
+                </>
               )
             })}
           </div>
@@ -153,17 +162,26 @@ const Cart = () => {
                   <h4>Tổng Thanh toán : </h4>
                   <p>{(totalPriceProduct - discount + shippingFee).toLocaleString('vi-VN')} <sup>đ</sup></p>
                 </div>
-                <div className='pay'>
-                  <button onClick={() => setShowPayPal(true)}>Thanh toán</button>
-                  {showPayPal && (
-                    <PayPalButtons
-                      style={{ layout: "vertical" }}
-                      createOrder={createOrder}
-                      onApprove={onApprove}
-                      onError={onError}
-                    />
+                {
+                  cookies.user ? (
+                    <div className='pay'>
+                    <button onClick={() => setShowPayPal(true)}>Thanh toán</button>
+                    {showPayPal && (
+                      <PayPalButtons
+                        style={{ layout: "vertical" }}
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                        onError={onError}
+                      />
                   )}
-                </div>
+                  </div>
+                  ) : (
+                    <div className='no-pay'>
+                      <button onClick={payButton} style={{backgroundColor:"gold"}}>Thanh Toán</button>
+                    </div>
+                  )
+                }
+                
                 
               </>
             }

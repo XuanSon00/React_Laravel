@@ -8,6 +8,7 @@ import Subject from '../Admin/subject';
 import Date from '../Admin/date';
 import List from '../Admin/list';
 import './admin.css'
+import Lession from '../Admin/lession';
 const Admin = () => {
   
 
@@ -25,6 +26,7 @@ const Admin = () => {
         <Route path="/AccountType" element={<AccountType />} />
         <Route path="/Account" element={<Account />} />
         <Route path="/subject" element={<Subject />} />
+        <Route path="/lession" element={<Lession />} />
         <Route path="/date" element={<Date />} />
         <Route path="/list" element={<List />} />
       </Routes>

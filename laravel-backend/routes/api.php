@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\enrollConrtoller;
+use App\Http\Controllers\LessionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoleController;
@@ -74,6 +75,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     //lớp học đăng ký
     Route::get('/totalEnroll/{idUser}', [enrollConrtoller::class, 'totalEnroll']);
     Route::get('/ordersUser', [OrderController::class, 'getOrderUser']);
+    //bài học
+    Route::get('/lessions', [LessionController::class, 'index']);
+    Route::post('/lessions', [LessionController::class, 'store']);
+    Route::put('/lessions/{id}', [LessionController::class, 'update']);
+    Route::delete('/lessions/{id}', [LessionController::class, 'destroy']);
 });
 
 //thanh toán(paypal)

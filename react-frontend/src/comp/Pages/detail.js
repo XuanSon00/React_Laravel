@@ -15,7 +15,7 @@ const SubjectDetail = () => {
     const loadSubjectDetail = async () => {
         try {
           const response = await detailSubject(id); // Truyền id vào hàm
-          console.log('Dữ liệu nhận từ API:', response.data);
+          //console.log('Dữ liệu nhận từ API:', response.data);
           setSubject(response.data);
           setLoading(false);
         } catch (error) {
@@ -27,7 +27,7 @@ const SubjectDetail = () => {
     const loadOrders = async () => {
         try {
           const response = await getOrderUser();
-          console.log('Dữ liệu nhận từ API:', response.data);
+          //console.log('Dữ liệu nhận từ API:', response.data);
           setOrders(response.data);
         } catch (error) {
           //console.error('Lỗi khi lấy lịch sửmôn học:', error);
@@ -40,11 +40,12 @@ const SubjectDetail = () => {
         loadOrders();
     }, [id]);
 
-    const isPurchased = () =>{
-        return  orders.map(order => order.idSubject === id);
+    const isPurchased = (id) =>{
+        // console.log('orders:', orders);
+        // console.log('subject id:', id);
+        return  orders.some(order => order.idSubject === id);
       }
     
-
     if (loading) return <div>Loading...</div>;
     if (!subject) return <div><h1>không tìm thấy khóa học</h1></div>;
 

@@ -48,7 +48,7 @@ const getOrderUser = async () => {
         const response = await axios.get('http://localhost:8000/api/ordersUser', getAuthHeaders());
         return response;
     } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
+        //console.error('Lỗi khi gọi API:', error);
         throw error;
     }
 };
