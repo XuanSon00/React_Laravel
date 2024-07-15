@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './dashboard.css'
 import { TotalUser, TotalSubject, TotalTeacher, TotalStudent, TotalPrice } from './adminData'
-import { totalUser, totalStudent, totalTeacher,  } from '../../api/account'
-import { totalSubject } from '../../api/subject'
-import { totalPriceX } from '../../api/order'
+import { totalUser, totalStudent, totalTeacher, totalSubject, totalPriceX } from '../../api/account'
 const Dashboard = () => {
 
   const [totalUsers, setTotalUsers] = useState(0);

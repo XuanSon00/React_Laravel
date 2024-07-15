@@ -60,6 +60,25 @@ class OrderController extends Controller
                 return response()->json(['message' => 'Khóa học không khả dụng'], 400);
             }
         }
+        /* $totalPrice = collect($validatedData['items'])->sum(fn ($item) => $item['price'] * $item['quantity']);
+        $orders = collect($validatedData['items'])
+            ->filter(fn ($item) => Subject::find($item['idSubject']))
+            ->map(function ($item) use ($validatedData) {
+                return [
+                    'idUser' => $validatedData['idUser'],
+                    'idSubject' => $item['idSubject'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'payment_method' => $validatedData['payment_method'],
+                    'payment_status' => $validatedData['payment_status'],
+                ];
+            })->toArray();
+
+        if ($orders->isEmpty()) {
+            return response()->json(['message' => 'Khóa học không khả dụng'], 400);
+        } */
+
+        //Order::insert($orders);
         $user = User::find($validatedData['idUser']);
         $user->role = "Student";
         $user->save();
@@ -67,7 +86,7 @@ class OrderController extends Controller
         return response()->json([
             'message' => 'Đơn hàng tạo thành công',
             //'orderID' => $validatedData['orderID'],
-            'total_price' => $totalPrice,
+            //'total_price' => $totalPrice,
         ], 201);
     }
 
@@ -85,6 +104,10 @@ class OrderController extends Controller
 
     public function getOrderUser()
     {
+        if (!Auth::check()) {
+            return response()->json([]);
+        }
+
         $user = Auth::user();
 
         $orders = Order::where('idUser', $user->id)->with(['subject',])->get();

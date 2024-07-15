@@ -13,7 +13,7 @@ const Home = () => {
   const [filteredGrade, setFilteredGrade] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const [orders, setOrders] = useState([]);
+  //const [orders, setOrders] = useState([]);
 
   const loadSubjects = async () => {
     try {
@@ -27,7 +27,7 @@ const Home = () => {
     }
   };
   
-  const loadOrders = async () => {
+/*   const loadOrders = async () => {
     try {
       const response = await getOrderUser();
       //console.log('Dữ liệu nhận từ API:', response.data);
@@ -37,10 +37,10 @@ const Home = () => {
       setOrders([]);
     }
   };
-
+ */
   useEffect(() => {
     loadSubjects();
-    loadOrders();
+    //loadOrders();
   }, []);
 
   const filterGrade = (selectedGrade) => {

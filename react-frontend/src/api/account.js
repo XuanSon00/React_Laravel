@@ -101,9 +101,28 @@ const updateUserInfo = async () => {
   }
 };
 
+const totalSubject = async () => {
+  try {
+      const response = await axios.get('http://localhost:8000/api/total-subjects', getAuthHeaders());
+      return response.data; 
+  } catch (error) {
+      console.error('Lỗi khi gọi API:', error);
+      throw error;
+  }
+};
+// tổng số hóa đơn
+const totalPriceX = async () => {
+  try {
+      const response = await axios.get('http://localhost:8000/api/orders',getAuthHeaders());
+      return response.data; 
+  } catch (error) {
+      console.error('Error calling API:', error);
+      throw error;
+  }
+};
 
 
 
 
   
-  export { getUsers, deleteUser, deleteAllUser, updateUser, totalUser, totalStudent, totalTeacher,userInfo,updateUserInfo }
+  export { getUsers, deleteUser, deleteAllUser, updateUser, totalUser, totalStudent, totalSubject, totalPriceX, totalTeacher,userInfo,updateUserInfo }

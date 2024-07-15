@@ -9,7 +9,7 @@ import { CookiesProvider } from 'react-cookie';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
     <CookiesProvider>
     <BrowserRouter>
     <GoogleOAuthProvider clientId="880798137528-7potkmjpooksskiv952kc4nqtegfe4gi.apps.googleusercontent.com">
@@ -21,7 +21,7 @@ root.render(
     </GoogleOAuthProvider>
     </BrowserRouter>
     </CookiesProvider>
-  </React.StrictMode>,
+  //</React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -10,16 +10,6 @@ const getToken = () => {
     };
   };
 
-// tổng số hóa đơn
-const totalPriceX = async () => {
-    try {
-        const response = await axios.get('http://localhost:8000/api/orders',getAuthHeaders());
-        return response.data; 
-    } catch (error) {
-        console.error('Error calling API:', error);
-        throw error;
-    }
-  };
   
   
   const getOrderHistory = async () => {
@@ -55,4 +45,4 @@ const getOrderUser = async () => {
 
   
 
-export {totalPriceX, getOrderHistory,getRecipt, getOrderUser }
+export { getOrderHistory,getRecipt, getOrderUser }

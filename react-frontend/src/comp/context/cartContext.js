@@ -9,9 +9,8 @@ const CartProvider = ({ children }) =>{
     const [cart, setCart] = useState([]);
     const [totalSubject, setTotalSubject] = useState(0);
     const [discount, setDiscount] = useState({});
-    const [user, setUser] = useState({});
     const [cookies, setCookie] = useCookies(['user']) 
-
+    //const userId = cookies.id;
     useEffect(() => {
       const totalItems = new Set(cart.map(item => item.id)); //set: tập hợp các id từng mảng->size:lấy số phần tử
       setTotalSubject(totalItems.size);
@@ -94,7 +93,7 @@ const clearCart = () => {
     localStorage.removeItem('cart'); 
   }
 //thông tin người dùng đang đăng nhập
-useEffect(() => {
+/* useEffect(() => {
   const fetchUser = async () => {
     try {
       const data = await userInfo();
@@ -105,11 +104,11 @@ useEffect(() => {
   };
 
   fetchUser();
-}, []);
+}, []); */
 //xác nhận thanh toán
 const shippingFee = totalPriceProduct < 5000000 ? 100000 : 0;
 const confirmPayment = async (orderID) => {
-  console.log(user.id)
+  console.log(cookies.user.id)
   if (cart.length === 0) {
       //alert('Giỏ hàng đang trống');
       toast.warning('Giỏ hàng đang trống',{ autoClose: 2000 });
@@ -117,7 +116,7 @@ const confirmPayment = async (orderID) => {
   }
   try {
     const response = await axios.post('http://localhost:8000/api/orders', {
-      idUser: user.id, 
+      idUser: cookies.user.id, 
       items: cart.map(item => ({
         idSubject: item.id,
         price: parseFloat(item.price.replace(/\./g, '').replace(',', '.')), 
@@ -141,8 +140,6 @@ const confirmPayment = async (orderID) => {
   }
   clearCart();
 };
-
-
 
 
 

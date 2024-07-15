@@ -12,8 +12,10 @@ class UserController extends Controller
     //lấy tất cả dữ liệu bảng User
     public function getAllUsers()
     {
-        $users = User::all();
-        return response()->json($users);
+        //$users = User::all();
+        $users = User::paginate(20);
+
+        return response()->json($users->items());
     }
 
     public function show($id)
@@ -100,6 +102,10 @@ class UserController extends Controller
     //người dùng đăng nhập hiện tại
     public function getCurrentUser(Request $request)
     {
+        if (!$request->user()) {
+            return response()->json(['message' => '', 401]);
+        }
+
         return response()->json($request->user());
     }
 }

@@ -60,16 +60,6 @@ const deleteAllSubjects = async () => {
   }
 };
 
-const totalSubject = async () => {
-  try {
-      const response = await axios.get('http://localhost:8000/api/total-subjects', getAuthHeaders());
-      return response.data; 
-  } catch (error) {
-      console.error('Lỗi khi gọi API:', error);
-      throw error;
-  }
-};
-
 const detailSubject = async (id) => {
   try {
     const response = await axios.get(`http://localhost:8000/api/subjects/${id}`,);
@@ -85,4 +75,4 @@ const detailSubject = async (id) => {
 
 
   
-export { getSubjects, createSubject, updateSubject, deleteSubject ,deleteAllSubjects, totalSubject, detailSubject}
+export { getSubjects, createSubject, updateSubject, deleteSubject ,deleteAllSubjects, detailSubject}
