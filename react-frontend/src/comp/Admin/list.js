@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { deleteAllEnroll, deleteEnroll, getEnroll } from '../../api/enroll';
 import DataTable from 'react-data-table-component';
 import './date.css'
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const List = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +103,7 @@ const List = () => {
       name: '',
       cell: row => (
         <>
-          <button className='deleteBtn' onClick={() => handleDelete(row.id)}>Xóa</button>
+          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
         </>
       ),
       sortable: false,

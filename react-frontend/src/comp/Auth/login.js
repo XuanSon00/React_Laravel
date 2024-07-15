@@ -13,7 +13,6 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await login(email, password);
-    toast.success('Đăng nhập thành công',{ autoClose: 2000 });
   };
 
  return (

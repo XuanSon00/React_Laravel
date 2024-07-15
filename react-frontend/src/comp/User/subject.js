@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { getOrderUser } from '../../api/order';
-
+import './subject.css'
 const Subject = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [subjects, setSubjects] = useState([]);
@@ -35,17 +35,13 @@ const columns = [
       name: 'Tên Môn học',
       selector: row => row.subject.name,
       sortable: true,
-  },
-  {
-      name: 'Lớp',
-      selector: row => row.subject.grade,
-      sortable: true,
+      cell: row => <div>{row.subject.name} {row.subject.grade}</div>,
   },
   {
     name: 'Trạng thái',
     selector: row => row.isScheduled ? "đã xếp lớp" : "chưa xếp lớp",
     sortable: true,
-    cell: row => <div>{row.isScheduled ? "đã xếp lớp" : "chưa xếp lớp"}</div>,
+    cell: row => <div>{row.isScheduled ? <p className='checked-register'>đã xếp lớp </p> : <p className='uncheck-register'>chưa xếp lớp </p>}</div>,
   },
 ];
 

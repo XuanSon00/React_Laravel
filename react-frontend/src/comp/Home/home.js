@@ -63,9 +63,9 @@ const Home = () => {
       subject.name.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
-  const isPurchased = (id) =>{
+  /* const isPurchased = (id) =>{
     return orders.some( order => order.idSubject === id )
-  }
+  } */
 
   
   return (
@@ -94,6 +94,9 @@ const Home = () => {
                     return (
                       <div className='box' key={subject.id}>
                         <Link to={`/subjects/${subject.id}`} className='img_box'>
+                          <p className='educationType' style={{background: subject.education_type.type==="Classroom" ? "orange" : "blue"}}>
+                            {subject.education_type.type}
+                          </p>
                           <img src={subject.image} alt='' style={{ height: 180 }} />
                           <div className='icon'>
                             <div className='icon_box'>
@@ -111,12 +114,13 @@ const Home = () => {
                             <p>{Math.floor(parseFloat(subject.price.replace(/\./g, '').replace(',', '.'))).toLocaleString('vi-VN')} <sup>đ</sup></p>
                           </div>
                           <div className='addTocart'>
-                            {isPurchased(subject.id) ? (
+                            {/* {isPurchased(subject.id) ? (
                               <button className='btn-disable' disabled> Đã mua</button>
                             ) :(
                               <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
                             )
-                            }
+                            } */}
+                            <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
                           </div>
                         </div>
                       </div>

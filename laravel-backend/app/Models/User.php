@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,12 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'status',
-        'role',
-        'idRole',
+        'name', 'email', 'password', 'status', 'role', 'idRole',
     ];
 
     /**
@@ -52,13 +46,14 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'idRole'); // Liên kết với bảng roles thông qua idRole
+        return $this->belongsTo(Role::class, 'idRole');
     }
 
     public function schedulesAsTeacher()
     {
         return $this->hasMany(Schedule::class, 'idTeacher', 'id');
     }
+
     // sau khi cập nhật role là 'Teacher'
     protected static function boot()
     {
@@ -75,7 +70,10 @@ class User extends Authenticatable
         });
     }
 
-
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'idUser');
+    }
 
     public $timestamps = true;
 

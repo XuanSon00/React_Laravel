@@ -3,6 +3,9 @@ import { deleteUser, deleteAllUser, getUsers, updateUser } from '../../api/accou
 import DataTable from 'react-data-table-component';
 import FormAccount from '../../form/formAccount';
 import './account.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 const Account = () => {
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -99,8 +102,8 @@ const Account = () => {
       name: '',
       cell: (row) => (
         <>
-          <button className='editForm' onClick={() => handleEdit(row)}>Sửa</button>
-          <button className='deleteBtn' onClick={() => handleDelete(row.id)}>Xóa</button>
+          <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
+          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
         </>
       ),
       sortable: false,

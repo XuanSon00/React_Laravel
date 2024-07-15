@@ -1,46 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import './formSubject.css'
+import { getEducation } from '../api/edu';
 const FormSubject = ({ onClose, onSubmit, selectedSubject }) => {
-    const [subjectName, setSubjectName] = useState('');
-    const [subjectActive, setSubjectActive] = useState('');
-    const [subjectGrade, setSubjectGrade] = useState('');
-    const [subjectPrice, setSubjectPrice] = useState('');
-    const [imageBase64, setImageBase64] = useState('');
-    const [subjectMaxStudents, setSubjectMaxStudents] = useState('');
+  const [subjectName, setSubjectName] = useState('');
+  const [subjectActive, setSubjectActive] = useState('');
+  const [subjectGrade, setSubjectGrade] = useState('');
+  const [subjectPrice, setSubjectPrice] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
+  const [subjectMaxStudents, setSubjectMaxStudents] = useState('');
+  const [educationTypes, setEducationTypes]= useState([]);
+  const [selectedEducationType, setSelectedEducationType] = useState('');
 
-    useEffect(() => {
-      if (selectedSubject) {
-        setSubjectName(selectedSubject.name);
-        setSubjectActive(selectedSubject.active);
-        setSubjectGrade(selectedSubject.grade);
-        setSubjectPrice(selectedSubject.price);
-        setImageBase64(selectedSubject.image);
-        setSubjectMaxStudents(selectedSubject.max_students);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getEducation();
+        setEducationTypes(response.data);
+      } catch (error) {
+        console.error('Lỗi lấy dữ liệu:', error);
       }
-    }, [selectedSubject]);
-  
-    const handleImageChange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageBase64(reader.result);
-      };
-      reader.readAsDataURL(file);
     };
+
+    fetchData();
+
+    if (selectedSubject) {
+      setSubjectName(selectedSubject.name);
+      setSubjectActive(selectedSubject.active);
+      setSubjectGrade(selectedSubject.grade);
+      setSubjectPrice(selectedSubject.price);
+      setImageBase64(selectedSubject.image);
+      setSubjectMaxStudents(selectedSubject.max_students);
+      setSelectedEducationType(selectedSubject.idEducationType);
+    }
+  }, [selectedSubject]);
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      onSubmit({
-        name: subjectName,
-        active: subjectActive,
-        grade: subjectGrade,
-        price: subjectPrice,
-        image: imageBase64,
-        max_students: subjectMaxStudents
-      });
-      onClose();
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageBase64(reader.result);
     };
+    reader.readAsDataURL(file);
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({
+      name: subjectName,
+      active: subjectActive,
+      grade: subjectGrade,
+      price: subjectPrice,
+      image: imageBase64,
+      max_students: subjectMaxStudents,
+      idEducationType: selectedEducationType
+    });
+    onClose();
+  };
   
     return (
       <div className='form_detail'>
@@ -90,6 +106,15 @@ const FormSubject = ({ onClose, onSubmit, selectedSubject }) => {
             <div className='input_max'>
               <label htmlFor='maxStudents' className='label'>Số lượng Học viên: </label>
               <input type='number' name='maxStudents' className='input' value={subjectMaxStudents} onChange={(e) => setSubjectMaxStudents(e.target.value)} required />
+            </div>
+            <div className='input_grade'>
+              <label htmlFor='educationType' className='label'>Loại hình: </label>
+              <select id="educationType" required value={selectedEducationType} onChange={(e) => setSelectedEducationType(e.target.value)} >
+                <option value="">--</option>
+                {educationTypes.map((educationType) => (
+                  <option key={educationType.id} value={educationType.id}>{educationType.type}</option>
+                ))}
+            </select>
             </div>
             <div className='btn_add'>
               <button className='confirmAdd' type='submit'>{selectedSubject ? 'Sửa' : 'Thêm'}</button>

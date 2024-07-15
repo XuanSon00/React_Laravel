@@ -4,6 +4,9 @@ import AddIcon from '@mui/icons-material/Add';
 import DataTable from 'react-data-table-component';
 import { getSchedule, deleteDate, deleteAllDate } from '../../api/schedule';
 import './date.css'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 const Date = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,11 +91,6 @@ const Date = () => {
       sortable: true,
     },
     {
-      name: 'Lớp',
-      selector: row => row.grade,
-      sortable: true,
-    },
-    {
       name: 'Thời gian bắt đầu',
       selector: row => row.startTime,
       sortable: true,
@@ -130,8 +128,8 @@ const Date = () => {
       name: '',
       cell: row => (
         <>
-          <button className='editForm' onClick={() => handleEdit(row)}>Sửa</button>
-          <button className='deleteBtn' onClick={() => handleDelete(row.id)}>Xóa</button>
+          <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
+          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
         </>
       ),
       sortable: false,
@@ -140,7 +138,6 @@ const Date = () => {
 
   const filteredSchedules = schedules.filter(schedule =>
     (schedule.subject.name && schedule.subject.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (schedule.grade && schedule.grade.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
     (schedule.startTime && schedule.startTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (schedule.endTime && schedule.endTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (schedule.teacher.name && schedule.teacher.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -160,7 +157,7 @@ const Date = () => {
       )}
       <div className='schedule'>
         <div className='scheduleData'>
-          <h3>Môn học </h3>
+          <h3>Lớp học </h3>
           <div className='data'>
             <div className='btnData'>
               <div className='scheduleAdd'>

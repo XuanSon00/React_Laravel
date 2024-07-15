@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\EduTypeController;
 use App\Http\Controllers\enrollConrtoller;
-use App\Http\Controllers\LessionController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RoleController;
@@ -36,12 +37,19 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy']);
     Route::delete('subjects', [SubjectController::class, 'destroyAll']);
     Route::get('/total-subjects', [SubjectController::class, 'totalSubject']);
+    Route::get('/online-subjects/{id}', [SubjectController::class, 'checkOnlineEnrollment']);
     //vai trò
     Route::get('/roles', [RoleController::class, 'index']);
     Route::post('/roles', [RoleController::class, 'store']);
     Route::put('/roles/{id}', [RoleController::class, 'update']);
     Route::delete('roles/{id}', [RoleController::class, 'destroy']);
     Route::delete('roles', [RoleController::class, 'destroyAll']);
+    //loại hình giáo dục
+    Route::get('/educations', [EduTypeController::class, 'index']);
+    Route::post('/educations', [EduTypeController::class, 'store']);
+    Route::put('/educations/{id}', [EduTypeController::class, 'update']);
+    Route::delete('educations/{id}', [EduTypeController::class, 'destroy']);
+    Route::delete('educations', [EduTypeController::class, 'destroyAll']);
     //Người dùng
     Route::get('/users', [UserController::class, 'getAllUsers']);
     Route::put('/users/{id}', [UserController::class, 'update']);
@@ -76,10 +84,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/totalEnroll/{idUser}', [enrollConrtoller::class, 'totalEnroll']);
     Route::get('/ordersUser', [OrderController::class, 'getOrderUser']);
     //bài học
-    Route::get('/lessions', [LessionController::class, 'index']);
-    Route::post('/lessions', [LessionController::class, 'store']);
-    Route::put('/lessions/{id}', [LessionController::class, 'update']);
-    Route::delete('/lessions/{id}', [LessionController::class, 'destroy']);
+    Route::get('/lessons', [LessonController::class, 'index']);
+    Route::post('/lessons', [LessonController::class, 'store']);
+    Route::put('/lessons/{id}', [LessonController::class, 'update']);
+    Route::delete('/lessons/{id}', [LessonController::class, 'destroy']);
+    //chi tiết (online)
+    Route::get('/online/subjects/{id}', [LessonController::class, 'show']);
 });
 
 //thanh toán(paypal)

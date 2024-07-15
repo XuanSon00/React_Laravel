@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './test.css';
+import './history.css';
+
 import { getOrderHistory } from '../../api/order';
 import { userInfo } from '../../api/account';
 import HistoryIcon from '@mui/icons-material/History';
 import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import './history.css'
 const History = () => {
   const [history, setHistory] = useState([]);
   const [user, setUser] = useState(null);
@@ -56,15 +56,22 @@ const History = () => {
                   </div>
                   <div className='order-items'>
                     <div className='order-item'>
-                      <img src={order.subject.image} alt={order.subject.name} style={{width:"200px", height:"200px"}}/>
+                      <img src={order.subject.image} alt={order.subject.name} />
                       <div className='item-info'>
                         <div className='item-infoX'>
-                          <p>Số lượng: {order.quantity}</p>
-                          <p>Giá: {order.price} <sup>đ</sup></p>
+                          <i>Số lượng: {order.quantity}</i>
+                          <p>Giá: {order.price.toLocaleString('vi-VN')} <sup>đ</sup></p>
                         </div>
                         <div className='item-infoX'>
-                          <i>Thời gian mua: {new Date(order.created_at).toLocaleString()}</i>
-                          <h3>Tổng tiền: {order.price * order.quantity}<sup>đ</sup></h3>
+                            <div className='infoX-price'>
+                              <h3>Tổng:</h3>
+                              <p>{(order.price * order.quantity).toLocaleString('vi-VN')}<sup>đ</sup></p>
+                            </div>
+                            <div className='infoX-time'>
+                              <i>Thời gian mua:</i>
+                              <i> {new Date(order.created_at).toLocaleString()}</i>
+                            </div>
+
                         </div>
                         
                       </div>

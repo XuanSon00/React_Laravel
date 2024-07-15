@@ -6,6 +6,7 @@
 
 .role .roleData
 {
+    max-width: 100%;
     padding: 20px 20px;
     background-color: #fff;
     height: 800px;
@@ -109,6 +110,7 @@
 .table
 {
     width: 100%;
+    overflow-x: auto;
 }
 
 .sc-cwHqhk
@@ -158,5 +160,13 @@
     .btnData 
     {
         flex-wrap: wrap;
+    }
+}
+
+
+@media (max-width: 1680px) {
+    .roleData
+    {
+        width: 100vw;
     }
 }

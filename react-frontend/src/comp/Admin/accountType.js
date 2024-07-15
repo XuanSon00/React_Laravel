@@ -4,6 +4,8 @@ import './accountType.css';
 import AddIcon from '@mui/icons-material/Add';
 import { createRole, deleteAllRoles, deleteRole, getRoles, updateRole } from '../../api/accountType'
 import DataTable from 'react-data-table-component';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 const AccountType = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [roles, setRoles] = useState([]);
@@ -80,8 +82,8 @@ const columns = [
       name: '',
       cell: row => (
           <>
-              <button className='editForm' onClick={() => handleEdit(row)}>Sửa</button>
-              <button className='deleteBtn' onClick={() => handleDelete(row.id)}>Xóa</button>
+              <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
+              <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
           </>
       ),
       sortable: false,
@@ -116,48 +118,47 @@ const handleFilterChange = (e) => {
   setSearchTerm(e.target.value);
 };
 
-  return (
-    <>
-      {addFormVisible  &&
-        <FormRole
-          onClose={handleFormClose}
-          onSubmit={handleFormSubmit}
-          selectedRole={selectedRole}
-
-        />
-      }
-      <div className='role'>
-        <div className='roleData'>
-          <h3>Loại tài khoản</h3>
-          <div className='data'>
-            <div className='btnData'>
-              <div className='roleAdd'>
-                <button onClick={() => setAddFormVisible(true)}><AddIcon /> Thêm</button>
-              </div>
-              <div className='searchBox'>
-                <input type='text' value={searchTerm} onChange={handleFilterChange} placeholder='Tìm kiếm môn học...' />
-              </div>
-              <div className='roleDelete'>
-                <button onClick={handleDeleteSelected}>Xóa chọn</button>
-                <button onClick={handleDeleteAll}>Xóa tất cả</button>
-              </div>
+return (
+  <>
+    {addFormVisible  &&
+      <FormRole
+        onClose={handleFormClose}
+        onSubmit={handleFormSubmit}
+        selectedRole={selectedRole}
+      />
+    }
+    <div className='role'>
+      <div className='roleData'>
+        <h3>Loại Tài khoản</h3>
+        <div className='data'>
+          <div className='btnData'>
+            <div className='roleAdd'>
+              <button onClick={() => setAddFormVisible(true)}><AddIcon /> Thêm</button>
             </div>
-            <div className='table'>
-              <DataTable
-                className='tableData'
-                columns={columns}
-                data={filteredRoles}
-                pagination
-                paginationPerPage={5}
-                progressPending={loading}
-                highlightOnHover
-                fixedHeader
-              />
+            <div className='searchBox'>
+              <input type='text' value={searchTerm} onChange={handleFilterChange} placeholder='Tìm kiếm môn học...' />
             </div>
+            <div className='roleDelete'>
+              <button onClick={handleDeleteSelected}>Xóa chọn</button>
+              <button onClick={handleDeleteAll}>Xóa tất cả</button>
+            </div>
+          </div>
+          <div className='table'>
+            <DataTable
+              className='tableData'
+              columns={columns}
+              data={filteredRoles}
+              pagination
+              paginationPerPage={5}
+              progressPending={loading}
+              highlightOnHover
+              fixedHeader
+            />
           </div>
         </div>
       </div>
-    </>
+    </div>
+  </>
   )
 }
 

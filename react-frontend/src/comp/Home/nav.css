@@ -7,7 +7,7 @@
 
 .header
 {
-    width: 100%;
+   width: 100%;
 }
 
 .header .top_header
@@ -285,35 +285,84 @@
     color:red;
 }
 
-@media screen and (max-width: 414px) 
+/* @media screen and (max-width: 414px) 
 {
     .header {
-      width: 235vw;
+      width: 80vh;
     }
 }
+
 @media only screen and (max-width: 360px) 
 {
     .header {
-        width: 245vw;
-    }
-}
-@media screen and (min-width: 415px) and (max-width: 430px) 
-{
-    .header {
-        width: 200vw;
+        width: 10px;
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 820px) 
+@media screen and (min-width: 414px) and (max-width: 480px)
 {
     .header {
-        width: 115vw;
+        width: 195vw;
     }
 }
 
-@media screen and (width: 540px)
+@media only screen and (max-width: 768px) 
 {
     .header {
-        width: 160vw;
+        width: 120vw;
     }
 }
+
+@media screen and (min-width: 320px) and (max-width: 375px)
+{
+    .header {
+        width: 270vw;
+    }
+} */
+
+@media (max-width: 1200px) 
+{
+    .header 
+    {
+        width: 98vw;
+    }
+} 
+
+@media (max-width: 800px) 
+{
+    .header 
+    {
+        width: 97vw;
+    }
+} 
+
+@media (max-width: 500px) 
+{
+    .header 
+    {
+        width: 96vw;
+    }
+    .header .top_header .info
+    {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .header .top_header .userDropdown
+    {
+        float: right;
+    }
+
+    .header .mid_header 
+    {
+        padding: 0;
+        width: 100%;
+    }
+    
+    .header .mid_header .cartList
+    {
+        margin-left: 15px;
+        margin-top: 15px;
+
+    }
+} 

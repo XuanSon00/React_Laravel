@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Nav from '../Home/nav'
 import InfoIcon from '@mui/icons-material/Info';
 import './class.css'
-import { createEnroll, getEnroll, getUserEnrollments,  } from '../../api/enroll';
+import { checkEnrollment, createEnroll, getEnroll,   } from '../../api/enroll';
 import { getSchedule } from '../../api/schedule';
 import { userInfo } from '../../api/account';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const Class = () => {
   const [schedules, setSchedules] = useState([]);
@@ -13,6 +14,7 @@ const Class = () => {
   const [user, setUsers] = useState(null); 
   const [searchTerm, setSearchTerm] = useState('');
   const [enrollments, setEnrollments] = useState([]); 
+  const navigate = useNavigate();
 
   const loadSchedule = async () => {
     try {
@@ -89,12 +91,22 @@ const Class = () => {
     ));
   };
 
-  
-  
 const isEnrolled = (idSchedule) => {
     return enrollments.some(enrollment => enrollment.idSchedule === idSchedule);
-  };
+};
 
+const handleLinkCheck = async (idSubject) => {
+  try {
+    const response = await checkEnrollment(idSubject);
+    if (response.status === 200) {
+      navigate(`/online/subjects/${idSubject}`);
+    } else {
+      toast.error('Bạn không có quyền truy cập vào lớp học này.');
+    }
+  } catch (error) {
+    toast.error('Bạn không có quyền truy cập vào lớp học này.');
+  }
+};
 
   return (
     <>
@@ -121,6 +133,10 @@ const isEnrolled = (idSchedule) => {
                   {filteredGrade.map((schedule) => {
                     return (
                       <div className='box' key={schedule.id}>
+                      <div className='img_box' >
+                        <p className='educationType' style={{background: schedule.subject.education_type.type ==="Classroom" ? "orange" : "blue"}}>
+                          {schedule.subject.education_type.type}
+                        </p>
                         <div className='img_box'>
                           <img src={schedule.subject.image} alt='' style={{ height: 180 }} />
                           <div className='icon'>
@@ -129,6 +145,8 @@ const isEnrolled = (idSchedule) => {
                             </div>
                           </div>
                         </div>
+                        </div> 
+                        
                         <div className='info'>
                           <div className='info-subject'>
                             <h3>{schedule.subject.name}</h3>
@@ -140,7 +158,7 @@ const isEnrolled = (idSchedule) => {
                           </div>
                           <div className='info-price'>
                             <span>Số lượng:</span>
-                            <p>0/10</p>
+                            <p>{schedule.available_seats}/{schedule.subject.max_students}</p>
                           </div>
                           <div className='addTocart'>
                             {isEnrolled(schedule.id) ? (
@@ -148,6 +166,11 @@ const isEnrolled = (idSchedule) => {
                             ) : (
                               <button className='btn' onClick={() => handleEnroll(schedule.id, schedule.subject.id)}>
                                 Đăng ký lớp
+                              </button>
+                            )}
+                            {schedule.subject.education_type.type === "Online" && (
+                              <button className='btn' onClick={() => handleLinkCheck(schedule.subject.id)}>
+                                Xem Chi Tiết
                               </button>
                             )}
                           </div>

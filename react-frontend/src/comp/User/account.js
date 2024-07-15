@@ -3,7 +3,6 @@ import { updateUserInfo, userInfo } from '../../api/account';
 import FormUser from '../../form/formUser';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './account.css'
-import { getTotalEnroll } from '../../api/enroll';
 
 const Account = () => {
   const [user, setUser] = useState({});

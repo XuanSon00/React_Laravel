@@ -18,60 +18,43 @@ const Dashboard = () => {
   const [lastUpdatedBill, setLastUpdatedBill] = useState('');
 
   useEffect(() => {
-    const fetchTotalUsers = async () => {
+    const fetchData = async () => {
       try {
-        const data = await totalUser();
-        setTotalUsers(data.totalUsers);
-        setLastUpdatedUsers(data.lastUpdatedUser);
+        const [
+          userResponse,
+          subjectResponse,
+          studentResponse,
+          teacherResponse,
+          priceResponse,
+        ] = await Promise.all([
+          totalUser(),
+          totalSubject(),
+          totalStudent(),
+          totalTeacher(),
+          totalPriceX(),
+        ]);
+
+        setTotalUsers(userResponse.totalUsers);
+        setLastUpdatedUsers(userResponse.lastUpdatedUser);
+
+        setTotalSubjects(subjectResponse.totalSubjects);
+        setLastUpdatedSubjects(subjectResponse.lastUpdatedSubject);
+
+        setTotalStudents(studentResponse.totalStudents);
+        setLastUpdatedStudents(studentResponse.lastUpdatedStudent);
+
+        setTotalTeachers(teacherResponse.totalTeachers);
+        setLastUpdatedTeachers(teacherResponse.lastUpdatedTeacher);
+
+        setTotalPrices(priceResponse.total);
+        setLastUpdatedBill(priceResponse.lastUpdatedPrice);
       } catch (error) {
-        console.error('lỗi lấy tổng người dùng:', error);
-      }
-    };
-    const fetchTotalSubjects = async () => {
-      try {
-        const data = await totalSubject();
-        setTotalSubjects(data.totalSubjects);
-        setLastUpdatedSubjects(data.lastUpdatedSubject);
-      } catch (error) {
-          console.error('lỗi lấy tổng môn học:', error);
-      }
-    };
-    const fetchTotalStudents = async () => {
-      try {
-        const data = await totalStudent();
-        setTotalStudents(data.totalStudents);
-        setLastUpdatedStudents(data.lastUpdatedStudent);
-      } catch (error) {
-          console.error('lỗi lấy tổng học sinh:', error);
-      }
-    };
-    const fetchTotalTeachers = async () => {
-      try {
-          const data = await totalTeacher();
-          setTotalTeachers(data.totalTeachers);
-          setLastUpdatedTeachers(data.lastUpdatedTeacher);
-      } catch (error) {
-          console.error('Lỗi lấy tổng giáo viên:', error);
+        console.error('Lỗi khi lấy dữ liệu:', error);
       }
     };
 
-    const fetchTotalPrices = async () => {
-      try {
-          const data = await totalPriceX();
-          setTotalPrices(data.total);
-          setLastUpdatedBill(data.lastUpdatedPrice);
-      } catch (error) {
-          console.error('lỗi lấy dữ liệu tổng hóa đơn:', error);
-      }
-  };
-  
-  fetchTotalUsers();
-  fetchTotalSubjects();
-  fetchTotalStudents();
-  fetchTotalTeachers();
-  fetchTotalPrices();
+  fetchData();
 }, []);
-
 
   return (
     <>

@@ -9,7 +9,6 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
   const [teachers, setTeachers] = useState([]);
   const [formData, setFormData] = useState({
     idSubject: '',
-    grade: '',
     startTime: '',
     endTime: '',
     idTeacher: '',
@@ -34,7 +33,6 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
     if (selectedDate) {
       setFormData({
         idSubject: selectedDate.idSubject.toString(),
-        grade: selectedDate.grade,
         startTime: selectedDate.startTime,
         endTime: selectedDate.endTime,
         idTeacher: selectedDate.idTeacher.toString(),
@@ -80,11 +78,7 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
     }
   };
 
-  let uniqueSubjects = subjects.filter((subject, index, self) =>
-    index === self.findIndex((s) => (
-      s.name === subject.name
-    ))
-  );
+  
 
   return (
     <div className='form_detail_date'>
@@ -97,19 +91,9 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
             <label htmlFor='subject' className='label'>Môn Học: </label>
             <select id="idSubject" name="idSubject" value={formData.idSubject} required onChange={handleSelectChange}>
               <option value="">-- Chọn môn học --</option>
-              {uniqueSubjects.map((subject) => (
-                <option key={subject.id} value={subject.id}>{subject.name}</option>
+              {subjects.map((subject) => (
+                <option key={subject.id} value={subject.id}>{subject.name} {subject.grade}</option>
               ))}
-            </select>
-          </div>
-          <div className='input_grade'>
-            <label htmlFor='grade' className='label'>Lớp: </label>
-            <select id="grade" name="grade" required value={formData.grade} onChange={handleChange}>
-              <option value="">-- Chọn lớp --</option>
-              <option value="Nâng Cao">Nâng Cao</option>
-              <option value="10">Lớp 10</option>
-              <option value="11">Lớp 11</option>
-              <option value="12">Lớp 12</option>
             </select>
           </div>
           <div className='input_date'>

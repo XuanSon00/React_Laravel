@@ -10,7 +10,7 @@ const SubjectDetail = () => {
     const [subject, setSubject] = useState(null);
     const [loading, setLoading] = useState(true);
     const { addToCart } = useContext(CartContext)
-    const [orders, setOrders] = useState([]);
+    //const [orders, setOrders] = useState([]);
 
     const loadSubjectDetail = async () => {
         try {
@@ -24,7 +24,7 @@ const SubjectDetail = () => {
           setLoading(false);
         }
     };
-    const loadOrders = async () => {
+    /* const loadOrders = async () => {
         try {
           const response = await getOrderUser();
           //console.log('Dữ liệu nhận từ API:', response.data);
@@ -33,18 +33,18 @@ const SubjectDetail = () => {
           //console.error('Lỗi khi lấy lịch sửmôn học:', error);
           setOrders([]);
         }
-      };
+      }; */
 
     useEffect(()=>{
         loadSubjectDetail();
-        loadOrders();
+        //loadOrders();
     }, [id]);
 
-    const isPurchased = (id) =>{
+    /* const isPurchased = (id) =>{
         // console.log('orders:', orders);
         // console.log('subject id:', id);
         return  orders.some(order => order.idSubject === id);
-      }
+    } */
     
     if (loading) return <div>Loading...</div>;
     if (!subject) return <div><h1>không tìm thấy khóa học</h1></div>;
@@ -69,6 +69,15 @@ const SubjectDetail = () => {
                     <div className='detail-price'>
                         <p>Lớp: {subject.grade}</p>
                         <p>Tối đa: {subject.max_students} người</p>
+                        <p>Loại hình giảng dạy: 
+                            <span style={{
+                                padding: "5px", 
+                                borderRadius: '10px', 
+                                color:"#fff", 
+                                marginLeft:"5px",
+                                background: subject.education_type.type === "Classroom" ? "orange" : "blue"
+                            }}>{subject.education_type.type}</span>
+                        </p>
                     </div>
                     <div className='describe'>
                         <p>Mô tả:</p>
@@ -77,12 +86,13 @@ const SubjectDetail = () => {
                         </i>
                     </div>
                     <div className='addTocart'>
-                        {isPurchased(subject.id) ? (
+                        {/* {isPurchased(subject.id) ? (
                             <button className='btn-disable' disabled> Đã mua</button>
                         ) :(
                           <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
                         )
-                        }
+                        } */}
+                        <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
                     </div>
                 </div>
             </div>

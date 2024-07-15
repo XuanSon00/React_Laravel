@@ -56,10 +56,10 @@ const Account = () => {
         </div>
         <div className='input-account'>
           <div className='input-accountName'>
-            <h3>Tên : </h3>
+            <h3>Tên: </h3>
             <p>{user.name}</p>
           </div>
-          <h3 className='id'>ID: 0{user.id}</h3>
+          <h3 className='id'>ID:0{user.id}</h3>
         </div>
         <div className='input-account'>
           <h3>Email : </h3>

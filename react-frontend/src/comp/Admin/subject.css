@@ -1,7 +1,6 @@
 .subject
 {
     width: 100%;
-    padding: 30px; 
 }
 
 .subject .subjectData
@@ -9,7 +8,7 @@
     width: 100%;
     padding: 20px 20px;
     background-color: #fff;
-    height: fit-content;
+    box-sizing: border-box;
 }
 
 .subject .subjectData h3
@@ -35,6 +34,7 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    flex-wrap: wrap; 
 }
 
 .subject .subjectData .data .btnData .subjectAdd button
@@ -110,14 +110,7 @@
 .table
 {
     width: 100%;
-}
-
-.sc-cwHqhk
-{
-    color: #232323;
-    font-size: 20px;
-    letter-spacing: 1px;
-    font-weight: 600;
+    overflow-x: auto;
 }
 
 .btncheck
@@ -155,3 +148,47 @@
     color: #fed600;
 }
 
+.rdt_Table {
+    width: 100%;
+    overflow: auto;
+}
+  
+  .rdt_TableRow {
+    display: flex;
+    flex-wrap: wrap; 
+  }
+  
+  .rdt_TableCell {
+    flex: 1 1 150px;
+    box-sizing: border-box; 
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+ 
+
+/* Điều chỉnh kích thước cột cho các màn hình nhỏ hơn */
+@media (max-width: 1920px) {
+    .rdt_TableCell {
+        flex: 1 1 120px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .rdt_TableCell {
+        flex: 1 1 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rdt_TableCell {
+        flex: 1 1 80px;
+    }
+}
+
+@media screen and (max-width: 1310px) {
+    .subject
+    {
+        padding: 0 30px;
+    }
+}

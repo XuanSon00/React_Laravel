@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $fillable = ['idSubject', 'idTeacher', 'grade', 'startTime', 'endTime', 'schedule', 'available_seats'];
+    protected $fillable = ['idSubject', 'idTeacher', 'startTime', 'endTime', 'schedule', 'available_seats'];
 
     public function subject()
     {

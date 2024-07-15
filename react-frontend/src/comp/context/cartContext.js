@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { userInfo } from "../../api/account";
 import { toast } from 'react-toastify';
+import { useCookies } from "react-cookie";
 
 const CartContext = createContext();
 const CartProvider = ({ children }) =>{
@@ -9,6 +10,7 @@ const CartProvider = ({ children }) =>{
     const [totalSubject, setTotalSubject] = useState(0);
     const [discount, setDiscount] = useState({});
     const [user, setUser] = useState({});
+    const [cookies, setCookie] = useCookies(['user']) 
 
     useEffect(() => {
       const totalItems = new Set(cart.map(item => item.id)); //set: tập hợp các id từng mảng->size:lấy số phần tử
@@ -125,6 +127,12 @@ const confirmPayment = async (orderID) => {
       payment_status: 'Completed',
       //orderID: orderID, 
     });
+    //cập nhật lại role trong cookies sau khi thanh toán
+    if (response.status === 201) {
+      const updatedUser = { ...cookies.user, role: 'Student' };
+      setCookie('user', updatedUser, { path: '/' });
+      toast.success('Thanh toán thành công', { autoClose: 2000 });
+    }
     
   } catch (error) {
     console.error('Lỗi khi thanh toán:', error);

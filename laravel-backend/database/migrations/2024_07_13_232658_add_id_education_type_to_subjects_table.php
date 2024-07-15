@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn("orderID");
+        Schema::table('subjects', function (Blueprint $table) {
+            $table->unsignedBigInteger('idEducationType')->after('max_students')->nullable();
+            $table->foreign('idEducationType')->references('id')->on('education_types')->onDelete('cascade');
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('subjects', function (Blueprint $table) {
             //
         });
     }

@@ -4,6 +4,8 @@ import DataTable from 'react-data-table-component';
 import FormSubject from '../../form/formSubject';
 import './subject.css';
 import { getSubjects, deleteSubject, updateSubject, createSubject,deleteAllSubjects } from '../../api/subject';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Subject = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -12,11 +14,12 @@ const Subject = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [AddForm, setAddForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectAll, setSelectAll] = useState(false);
 
   const loadSubjects = async () => {
     try {
       const response = await getSubjects();
-      console.log('Dữ liệu nhận từ API:', response);
+      //console.log('Dữ liệu nhận từ API:', response);
       setSubjects(response);
       setLoading(false);
     } catch (error) {
@@ -55,55 +58,89 @@ const Subject = () => {
     setAddForm(false);
   };
 
-  const columns = [
-      {
-          name: '',
-          selector: row => <input type='checkbox' className="btncheck" onChange={() => handleCheckboxChange(row.id)} />,
-          sortable: false,
-      },
-      {
-          name: 'Tên Môn học',
-          selector: row => row.name,
-          sortable: true,
-      },
-      {
-          name: 'Lớp',
-          selector: row => row.grade,
-          sortable: true,
-      },
-      {
-          name: 'Học phí',
-          selector: row => row.price,
-          sortable: true,
-          cell: row => <div>{parseFloat(row.price).toLocaleString('vi-VN')}</div>,
-      },
-      {
-          name: 'Trạng thái',
-          selector: row => row.active,
-          sortable: true,
-          cell: row => <div style={{ color: row.active === 'Mở' ? 'red' : 'gray' }}>{row.active}</div>,
-      },
-      {
-        name: 'Số lượng Học viên',
-        selector: row => row.max_students,
-        sortable: true,
+const handleSelectAll = (e) => {
+  const isChecked = e.target.checked;
+  setSelectAll(isChecked);
+  if (isChecked) {
+    setSelectedRows(subjects.map(subject => subject.id));
+  } else {
+    setSelectedRows([]);
+  }
+};
+const customStyles = {
+  table: {
+    style: {
+      width: 'auto',
     },
-      {
-          name: 'Ngày tạo',
-          selector: row => row.created_at,
-          sortable: true,
-          cell: row => <div>{new Date(row.created_at).toLocaleDateString('vi-VN')}</div>,
-        },
-      {
-          name: '',
-          cell: row => (
-              <>
-                <button className='editForm' onClick={() => handleEdit(row)}>Sửa</button>
-                <button className='deleteBtn' onClick={() => handleDelete(row.id)}>Xóa</button>
-              </>
-          ),
-          sortable: false,
-      },
+  },
+  headCells: { 
+    style: {
+      whiteSpace: 'nowrap',
+    }
+  },
+  cells: { 
+    style: {
+      whiteSpace: 'nowrap', 
+    }
+  },
+};
+
+  const columns = [
+    {
+      name: <input type='checkbox' className="btncheck" checked={selectAll} onChange={handleSelectAll} />,
+      selector: row => <input type='checkbox' className="btncheck" checked={selectedRows.includes(row.id)} onChange={() => handleCheckboxChange(row.id)} />,
+      sortable: false,
+    },
+    {
+      name: 'Tên Môn học',
+      selector: row => row.name,
+      sortable: true,
+      
+    },
+    {
+      name: 'Lớp',
+      selector: row => row.grade,
+      sortable: true,
+      
+    },
+    {
+      name: 'Học phí',
+      selector: row => row.price,
+      sortable: true,
+      cell: row => <div>{parseFloat(row.price).toLocaleString('vi-VN')}</div>,
+    },
+    {
+      name: 'Trạng thái',
+      selector: row => row.active,
+      sortable: true,
+      cell: row => <div style={{ color: row.active === 'Mở' ? 'red' : 'gray' }}>{row.active}</div>,
+    },
+    {
+      name: 'Số lượng Học viên',
+      selector: row => row.max_students,
+      sortable: true,
+    },
+    {
+      name: 'Loại hình giáo dục',
+      selector: row =>row.education_type.type , 
+      sortable: true,
+    },
+    {
+      name: 'Ngày tạo',
+      selector: row => row.created_at,
+      sortable: true,
+      cell: row => <div>{new Date(row.created_at).toLocaleDateString('vi-VN')}</div>,
+    },
+    {
+      name: '',
+      cell: row => (
+        <>
+          <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
+          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
+        </>
+      ),
+      sortable: false,
+    },
   ];
   const handleCheckboxChange = (id) => {
     if (selectedRows.includes(id)) {
@@ -119,7 +156,6 @@ const Subject = () => {
     subject.active.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
-
   const handleDeleteSelected = () => {
     selectedRows.forEach(async (id) => {
       await handleDelete(id);
@@ -134,9 +170,6 @@ const Subject = () => {
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
-
-
 
   return (
     <>
@@ -173,6 +206,7 @@ const Subject = () => {
                 progressPending={loading}
                 fixedHeader
                 highlightOnHover
+                customStyles={customStyles}
               />
             </div>
           </div>

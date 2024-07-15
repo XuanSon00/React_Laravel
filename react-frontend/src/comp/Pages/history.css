@@ -11,15 +11,6 @@
     padding:20px 40px;
 }
 
-.list h3
-{
-    font-size: 25px;
-    text-transform: uppercase;
-    color:#232323;
-    letter-spacing: 1px;
-    font-weight: 300;
-}
-
 .list button
 {
     padding: 10px 30px;
@@ -31,25 +22,34 @@
     cursor: pointer;
     transition: 0.5s;
     background: none;
+}
 
+.order-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    flex-wrap: wrap;
 }
 
 .list .container
 {
-    width: 60%;
     padding: 20px;
+    width: 50%;
 }
 
 .list .container .order 
 {
     padding: 5px;
     background-color: #ddd;
+    width: 100%;
 }
 
 .list .container .order .order-details
 {
     padding: 20px;
-    border-bottom: 1px solid black ;
     margin-left: 30px;
 }
 
@@ -67,9 +67,17 @@
     letter-spacing: 1px;
 }
 
+.order-items 
+{
+    width: 100%;
+}
+
 .order-items .order-item img
 {
     padding: 10px;
+    max-width: 100%;
+    width: 200px;
+    height: 200px;
 }
 
 .order-items .order-item .item-info .item-infoX
@@ -77,10 +85,86 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.order-items .order-item .item-info .item-infoX:nth-child(2)
+{
+    margin-top: 80px;
 }
 
 .order-items .order-item .item-info
 {
     font-size: 20px;
     margin : 10px 10px
+    
 }
+
+.order-items .order-item .item-info .item-infoX .infoX-price 
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.list .item-infoX .infoX-price h3
+{
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.list .item-infoX .infoX-price p
+{
+    color:#ED7145;
+}
+
+.order-items .order-item .item-info .item-infoX .infoX-time
+{
+    margin-top: 20px;
+}
+
+
+@media (max-width: 1200px) 
+{
+    .order-items .order-item .item-info .item-infoX
+    {
+        display: block;
+    }
+
+    .order-items .order-item .item-info .item-infoX i
+    {
+        letter-spacing: 1px;
+    }
+
+} 
+
+@media (max-width: 750px) 
+{
+    .order-items .order-item .item-info .item-infoX .infoX-price
+    {
+        display: block;
+        width: 100%;
+    }
+
+    .order-items .order-item .item-info .item-infoX i
+    {
+        letter-spacing: 1px;
+    }
+
+} 
+
+@media (max-width: 500px) 
+{
+    .order-items .order-item .item-info .item-infoX .infoX-price
+    {
+        display: block;
+    }
+
+    .order-items .order-item .item-info .item-infoX i
+    {
+        letter-spacing: 1px;
+    }
+
+
+} 

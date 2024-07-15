@@ -47,6 +47,7 @@ const Recipt = () => {
       name: 'Môn',
       selector: row => row.subject.name,
       sortable: true,
+      cell: row => <div>{row.subject.name} {row.subject.grade}</div>,
     },
     {
       name: 'số lượng',

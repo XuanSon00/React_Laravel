@@ -35,6 +35,11 @@ const SidebarData = [
         link: '/admin/account'
     },
     {
+        title: "Loại hình giáo dục",
+        icon: <SchoolIcon />,
+        link: '/admin/educationType'
+    },
+    {
         title: "Khóa học",
         icon: <SubjectIcon />,
         link: '/admin/subject'
@@ -42,7 +47,7 @@ const SidebarData = [
     {
         title: "Bài học",
         icon: <ImportContactsIcon />,
-        link: '/admin/lession'
+        link: '/admin/lesson'
     },
     {
         title: "Lớp học",

@@ -16,6 +16,14 @@ class enrollConrtoller extends Controller
         return response()->json($enrollment, 200);
     }
 
+    /* public function checkEnroll()
+    {
+        $user = Auth::id();
+        $enrollment = Enrollment::with('subject',)->where('idUser', $user)->get();
+        return response()->json($enrollment, 200);
+    } */
+
+
     public function totalEnroll($idUser)
     {
         $count = Enrollment::where('idUser', $idUser)->count();

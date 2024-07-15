@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-    protected $fillable = ['name', 'active', 'grade', 'price', 'image', 'max_students'];
+    protected $fillable = ['name', 'active', 'grade', 'price', 'image', 'max_students', 'idEducationType'];
 
     public function schedules()
     {
@@ -24,5 +24,15 @@ class Subject extends Model
                 $schedule->save();
             });
         });
+    }
+
+    public function educationType()
+    {
+        return $this->belongsTo(EducationType::class, 'idEducationType');
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class, 'idSubject');
     }
 }

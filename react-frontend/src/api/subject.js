@@ -40,7 +40,6 @@ const updateSubject = async (id, subject) => {
   }
 };
 
-
 const deleteSubject = async (id) => {
   try {
     const response = await axios.delete(`http://localhost:8000/api/subjects/${id}`, getAuthHeaders());
@@ -80,6 +79,9 @@ const detailSubject = async (id) => {
     throw error;
   }
 };
+
+
+
 
 
   

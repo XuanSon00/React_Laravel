@@ -14,15 +14,20 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::with('subject', 'teacher')->get(); // lấy ra dữ liệu 2 bảng
-        return response()->json($schedules, 200);
+        $schedules = Schedule::with('subject.educationType', 'teacher')
+            ->whereHas('subject.educationType', function ($query) {
+                $query->where('type', 'Online');
+            })
+            ->get();
+
+        return response()->json($schedules);
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'idSubject' => 'required|exists:subjects,id',
-            'grade' => 'required',
+            //'grade' => 'required',
             'startTime' => 'required',
             'endTime' => 'required',
             'idTeacher' => 'required|exists:users,id',
@@ -53,7 +58,7 @@ class ScheduleController extends Controller
                     $query->where('id', request()->input('idTeacher'));
                 }),
             ],
-            'grade' => 'required',
+            //'grade' => 'required',
             'startTime' => 'required',
             'endTime' => 'required',
             'schedule' => 'required',

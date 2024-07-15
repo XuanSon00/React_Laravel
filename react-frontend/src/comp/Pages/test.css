@@ -1,12 +1,12 @@
 .list-history {
     padding: 20px;
-    border: 1px solid #eee; /* Đường viền nhẹ */
+    border: 1px solid #eee;
 }
 
 .container-history {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Khoảng cách giữa các đơn hàng */
+    gap: 15px; 
 }
 
 .order-item {

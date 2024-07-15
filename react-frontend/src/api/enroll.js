@@ -59,9 +59,9 @@ const getTotalEnroll = async () => {
     }  
 };
 
-const getListStudent = async () => {
+const checkEnrollment  = async (id) => {
     try {
-        const response = await axios.get('http://localhost:8000/api/getListStudedntEnroll', getAuthHeaders());
+        const response = await axios.get(`http://localhost:8000/api/online-subjects/${id}`, getAuthHeaders());
         return response;
     } catch (error) {
         console.error('Lỗi:', error);
@@ -69,4 +69,4 @@ const getListStudent = async () => {
     }  
 }
 
-export {createEnroll,getTotalEnroll, getEnroll, deleteEnroll, deleteAllEnroll}
+export {createEnroll,getTotalEnroll, getEnroll, deleteEnroll, deleteAllEnroll, checkEnrollment }

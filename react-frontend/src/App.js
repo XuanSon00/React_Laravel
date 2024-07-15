@@ -17,29 +17,18 @@ import Class from "./comp/Pages/class";
 import SubjectDetail from "./comp/Pages/detail";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
+import ClassOnline from "./comp/Pages/classOnline";
 function App() {
   const [cookies] = useCookies(['user']);
-  const { setCart } =useContext(CartContext);
+  const { setCart } =useContext(CartContext)
+
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
       if (savedCart) {
         setCart(JSON.parse(savedCart));//chuyển đổi chuỗi
       }
-  }, []);
-
-  const redirectRole = (role) =>{
-    switch (role) {
-      case 'Admin':
-        return <Navigate to = '/admin' />
-      case 'Teacher':
-        return <Navigate to = '/teacher' />
-      default:
-        return <Home />
-    }
-  }
-
+    }, []); 
 
   
   return (
@@ -52,29 +41,30 @@ function App() {
       <Route path='/forgot-password' element={<SendEmail />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
       {/**********************************************/}
-      <Route path="/" element={ cookies.user ? redirectRole(cookies.user.role) : <Home /> } />
+      <Route path="/" element={(!cookies.user || cookies.user.role === 'Student') ? <Home /> :  <Navigate to={`/${cookies.user.role}`} />} />
       <Route path="/admin/*" element={
-        <PrivateRoute allowedRoles={['Admin']} redirectPath='/'>
+        <PrivateRoute allowedRoles={['Admin']}>
           <Admin />
         </PrivateRoute>
       } />
       <Route path="/teacher/*" element={
-        <PrivateRoute allowedRoles={['Teacher']} redirectPath='/'>
+        <PrivateRoute allowedRoles={['Teacher']}>
           <Teacher />
         </PrivateRoute>
       } />
       <Route path="/user/*" element={
-        <PrivateRoute allowedRoles={['Student', '']} redirectPath='/'>
+        <PrivateRoute allowedRoles={['Student', '']}>
           <User />
         </PrivateRoute>
       } />
       <Route path="/class" element={
-        <PrivateRoute allowedRoles={['Student']} redirectPath='/'>
+        <PrivateRoute allowedRoles={[,'Student']}>
           <Class />
         </PrivateRoute>
       } />
       {/**********************************************/}
       <Route path="/subjects/:id" element={<SubjectDetail />} />
+      <Route path="/online/subjects/:id" element={<ClassOnline />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/history" element={<History />} />
       <Route path="*" element={<h2>Không có trang cần tìm</h2>} />
