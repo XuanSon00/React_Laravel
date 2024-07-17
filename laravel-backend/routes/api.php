@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EduTypeController;
 use App\Http\Controllers\enrollConrtoller;
 use App\Http\Controllers\LessonController;
@@ -25,18 +26,19 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('password/email', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 //Khóa học
-Route::get('/subjects', [SubjectController::class, 'index']);
+Route::get('/subjects', [SubjectController::class, 'index']); //trang home
 //chi tiết khóa học
 Route::get('/subjects/{id}', [SubjectController::class, 'show']);
 
 //Middleware login
 Route::group(['middleware' => 'auth:api'], function () {
     //Khóa học
+    Route::get('/subject', [SubjectController::class, 'indexData']); //admin
     Route::post('/subjects', [SubjectController::class, 'store']);
     Route::put('/subjects/{id}', [SubjectController::class, 'update']);
     Route::delete('subjects/{id}', [SubjectController::class, 'destroy']);
     Route::delete('subjects', [SubjectController::class, 'destroyAll']);
-    Route::get('/total-subjects', [SubjectController::class, 'totalSubject']);
+    //Route::get('/total-subjects', [SubjectController::class, 'totalSubject']);
     Route::get('/online-subjects/{id}', [SubjectController::class, 'checkOnlineEnrollment']);
     //vai trò
     Route::get('/roles', [RoleController::class, 'index']);
@@ -55,9 +57,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::delete('/users', [UserController::class, 'destroyAll']);
-    Route::get('/total-users', [UserController::class, 'totalUser']); //lấy ra tổng số người dùng
-    Route::get('/totalStudents', [UserController::class, 'totalStudent']); // lấy ra tổng số người dùng là "Student"
-    Route::get('/totalTeachers', [UserController::class, 'totalTeacher']); // lấy ra tổng số người dùng là "Teacher"
+    //Route::get('/total-users', [UserController::class, 'totalUser']); //lấy ra tổng số người dùng
+    //Route::get('/totalStudents', [UserController::class, 'totalStudent']); // lấy ra tổng số người dùng là "Student"
+    //Route::get('/totalTeachers', [UserController::class, 'totalTeacher']); // lấy ra tổng số người dùng là "Teacher"
     Route::get('/getTeachers', [UserController::class, 'getTeachers']); // lấy ra người dùng là "Teacher"
     Route::get('/user', [UserController::class, 'getCurrentUser']); //thông tin người dùng đăng nhập
     //lịch
@@ -70,7 +72,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/getScheduleTeacher', [ScheduleController::class, 'getScheduleTeacher']); // lấy lịch giảng dạy 
     Route::get('/teacher/students/{idSchedule}', [ScheduleController::class, 'getStudentsBySchedule']); //lấy danh sách học sinh
     //thanh toán(paypal)
-    Route::get('/orders', [OrderController::class, 'totalPrice']);
+    //Route::get('/orders', [OrderController::class, 'totalPrice']);
     //lịch sử thanh toán
     Route::get('/orders/history', [OrderController::class, 'getOrderHistory']);
     //hóa đơn
@@ -90,6 +92,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/lessons/{id}', [LessonController::class, 'destroy']);
     //chi tiết (online)
     Route::get('/online/subjects/{id}', [LessonController::class, 'show']);
+    //thông tin dashboard
+    Route::get('/dashboard-data', [DashboardController::class, 'getDashboardData']);
 });
 
 //thanh toán(paypal)

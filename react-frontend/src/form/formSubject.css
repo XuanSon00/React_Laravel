@@ -196,34 +196,16 @@
 }
 
 /*********Lession***************/
-.form .input_lession .add-lession
+.form .input_name .subject-lesson
 {
-    display: flex;
-    justify-content: space-between;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 150px;
+    margin-right: 20px;
+    box-sizing: border-box;
 }
 
-.form .input_lession .add-lession p
+.form .input_name .subject-lesson option
 {
-    font-size: 20px;
-    margin-bottom: 15px;
-}
-
-.form .input_lession .add-lession svg
-{
-    font-size: 20px;
-    background-color: beige;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.form .input_lession .add-lession svg:hover
-{
-    color:#fed600;
-    background-color: #27aae2;
-}
-
-.form .input_lession p
-{
-    font-size: 20px;
-    margin-bottom: 15px;
+    width: 100%;
 }

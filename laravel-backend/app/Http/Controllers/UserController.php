@@ -55,10 +55,16 @@ class UserController extends Controller
 
     public function destroyAll()
     {
-        User::truncate();
-        return response()->json(['message' => 'All users deleted'], 200);
+        //User::truncate();
+        $nonAdminUsers = User::where('role', '!=', 'Admin')->get();
+
+        foreach ($nonAdminUsers as $user) {
+            $user->delete();
+        }
+
+        return response()->json(['message' => 'Xóa thành công'], 200);
     }
-    //Tổng số tài khoản
+    /*     //Tổng số tài khoản
     public function totalUser()
     {
         $totalUsers = User::count();
@@ -70,13 +76,15 @@ class UserController extends Controller
             'lastUpdatedUser' => $formattedLastUpdateTeacher
         ]);
     }
+ */
     //lấy ra cột role giá trị = "Teacher"
     public function getTeachers()
     {
         $teachers = User::where('role', 'Teacher')->get(); // Lấy tất cả các giảng viên
         return response()->json($teachers);
     }
-    // tổng người dùng có role = "Student"
+
+    /* // tổng người dùng có role = "Student"
     public function totalStudent()
     {
         $totalStudents = User::where('role', 'Student')->count();
@@ -87,6 +95,8 @@ class UserController extends Controller
             'lastUpdatedStudent' => $formattedLastUpdateStudent
         ]);
     }
+     */
+    /* 
     // tổng người dùng có role = "Teacher"
     public function totalTeacher()
     {
@@ -98,7 +108,8 @@ class UserController extends Controller
             'totalTeachers' => $totalTeachers,
             'lastUpdatedTeacher' => $formattedLastUpdateTeacher
         ]);
-    }
+    } */
+
     //người dùng đăng nhập hiện tại
     public function getCurrentUser(Request $request)
     {

@@ -21,9 +21,9 @@ const getTeachers = async () => {
     }
 };
 
-const getSubjects = async () => {
+const getSubject = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/api/subjects',getAuthHeaders());
+        const response = await axios.get('http://localhost:8000/api/subject',getAuthHeaders());
         return response;
     } catch (error) {
         console.error('Lỗi khi gọi API:', error);
@@ -110,4 +110,4 @@ const getScheduleStudent = async () => {
     }
 };
 
-export { getTeachers, getSchedule,getSubjects, createDate, deleteDate,updateDate, deleteAllDate, getScheduleTeacher,getStudentsBySchedule,getScheduleStudent };
+export { getTeachers, getSchedule,getSubject, createDate, deleteDate,updateDate, deleteAllDate, getScheduleTeacher,getStudentsBySchedule,getScheduleStudent };

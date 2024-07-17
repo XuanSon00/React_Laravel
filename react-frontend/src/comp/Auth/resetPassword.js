@@ -3,7 +3,7 @@ import './login.css'
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { UserContext } from '../context/useContext';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const ResetPassword = () => {
 const {
@@ -34,7 +34,15 @@ useEffect(() => {
 
  const handleSubmit = async (e) => {
     e.preventDefault();
-    await resetPassword();
+    const success = await resetPassword();
+
+    if (success) {
+        setEmail('');
+        setPassword('');
+        setPasswordConfirmation('');
+        setToken('');
+        Navigate('/login');
+    }
     };
 
     return (
@@ -62,7 +70,7 @@ useEffect(() => {
                 <div className="login-input">
                     <input type="hidden" value={token} onChange={(e) => setToken(e.target.value)} />
                 </div>
-                <button type="submit" className="btn">Reset Password</button>
+                <button type="submit" className="btn">Đổi mật khẩu</button>
             </form>
         </div>
     );

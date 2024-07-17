@@ -10,9 +10,19 @@ const getAuthHeaders = () => {
   };
 };
 
-const getSubjects = async () => {
+const getSubjects = async (page = 1 ,limit = 10) => {
   try {
-    const response = await axios.get('http://localhost:8000/api/subjects',);
+    const response = await axios.get(`http://localhost:8000/api/subjects?page=${page}&limit=${limit}`,);
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi gọi API:', error);
+    throw error;
+  }
+};
+
+const getSubject = async (page = 1 ,limit = 10) => {
+  try {
+    const response = await axios.get(`http://localhost:8000/api/subject`,getAuthHeaders());
     return response.data;
   } catch (error) {
     console.error('Lỗi khi gọi API:', error);
@@ -75,4 +85,4 @@ const detailSubject = async (id) => {
 
 
   
-export { getSubjects, createSubject, updateSubject, deleteSubject ,deleteAllSubjects, detailSubject}
+export { getSubjects, getSubject , createSubject, updateSubject, deleteSubject ,deleteAllSubjects, detailSubject}

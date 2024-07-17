@@ -5,6 +5,8 @@ const FormRole = ({onClose, onSubmit, selectedRole }) => {
 /*-------------------Form thông tin loại tài khoản-----------------*/
 const [roleName, setRoleName] = useState('');
 const [roleStatus, setRoleStatus] = useState('');
+const [error, setError] = useState('');
+
 useEffect(() => {
   if(selectedRole) {
     setRoleName(selectedRole.name);
@@ -12,13 +14,31 @@ useEffect(() => {
   }
 }, [selectedRole]);
 
+const validateForm = () => {
+  if (!roleName.trim()) {
+    return "Vui lòng không để trống!";
+  }
+  return "";
+};
+
+
 const handleSubmit = (e) => {
   e.preventDefault();
-  onSubmit({
-    name: roleName,
-    status: roleStatus,
-  });
-  onClose();
+  const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+  try {
+    onSubmit({
+      name: roleName,
+      status: roleStatus,
+    });
+    onClose();
+  
+  } catch (error){
+    setError('Có lỗi xảy ra vui lòng thử lại sau')
+  }
 };
     
 return (
@@ -41,6 +61,7 @@ return (
             <option value="1" style={{color:"red"}}>Đang hoạt động</option>
           </select>
         </div>
+        {error && <div className='error_message' style={{color:'red', marginTop: '20px', textAlign: "center"}}>{error}</div>}
         <div className='btn_add'>
           <button className='confirmAdd' type='submit'>{selectedRole ? 'Sửa' : 'Thêm'}</button>
         </div>

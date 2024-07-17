@@ -47,7 +47,7 @@ const deleteAllUser = async () => {
     }
   };
 //tổng số người dùng
-  const totalUser = async () => {
+  /* const totalUser = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/total-users',getAuthHeaders());
       return response.data; 
@@ -55,9 +55,9 @@ const deleteAllUser = async () => {
       console.error('Lỗi khi gọi API:', error);
       throw error;
   }
-};
+}; */
 // tổng số người dùng "Student"
-const totalStudent = async () => {
+/* const totalStudent = async () => {
   try {
       const response = await axios.get('http://localhost:8000/api/totalStudents',getAuthHeaders());
       return response.data; 
@@ -65,9 +65,9 @@ const totalStudent = async () => {
       console.error('Lỗi khi gọi API:', error);
       throw error;
   }
-};
+}; */
 // tổng số người dùng "Teacher"
-const totalTeacher = async () => {
+/* const totalTeacher = async () => {
   try {
       const response = await axios.get('http://localhost:8000/api/totalTeachers',getAuthHeaders());
       return response.data; 
@@ -75,7 +75,8 @@ const totalTeacher = async () => {
       console.error('Lỗi khi gọi API:', error);
       throw error;
   }
-};
+}; */
+
 //user đang đăng nhập
 const userInfo = async () => {
   try {
@@ -101,7 +102,7 @@ const updateUserInfo = async () => {
   }
 };
 
-const totalSubject = async () => {
+/* const totalSubject = async () => {
   try {
       const response = await axios.get('http://localhost:8000/api/total-subjects', getAuthHeaders());
       return response.data; 
@@ -109,9 +110,9 @@ const totalSubject = async () => {
       console.error('Lỗi khi gọi API:', error);
       throw error;
   }
-};
+}; */
 // tổng số hóa đơn
-const totalPriceX = async () => {
+/* const totalPriceX = async () => {
   try {
       const response = await axios.get('http://localhost:8000/api/orders',getAuthHeaders());
       return response.data; 
@@ -119,10 +120,10 @@ const totalPriceX = async () => {
       console.error('Error calling API:', error);
       throw error;
   }
-};
+}; */
 
 
 
 
   
-  export { getUsers, deleteUser, deleteAllUser, updateUser, totalUser, totalStudent, totalSubject, totalPriceX, totalTeacher,userInfo,updateUserInfo }
+  export { getUsers, deleteUser, deleteAllUser, updateUser ,userInfo,updateUserInfo }

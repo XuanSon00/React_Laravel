@@ -3,6 +3,7 @@ import { deleteAllEnroll, deleteEnroll, getEnroll } from '../../api/enroll';
 import DataTable from 'react-data-table-component';
 import './date.css'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { toast } from 'react-toastify';
 
 const List = () => {
   const [selectedRows, setSelectedRows] = useState([]);
@@ -50,10 +51,21 @@ const List = () => {
       console.error('Error deleting selected items:', error);
     }
   };
+
   const handleDeleteAll = async () => {
-    await deleteAllEnroll();
-    setEnrolls([]);
+    if (window.confirm('Bạn có chắc muốn xóa tất cả lóp học?')) {
+      try {
+        const response = await deleteAllEnroll();
+        setEnrolls([]);
+        fetchEnroll();
+        toast.success(response.data.message,{ autoClose: 500 });
+      } catch (error) {
+        toast.error('có lỗi khi xóa',{ autoClose: 500 });
+      console.error(error);
+      }
+    }
   };
+
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);
   };

@@ -10,7 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
+    {
+        // $subjects = Subject::with('educationType')->get();
+
+        // return response()->json($subjects);
+
+        $limit = $request->input('limit', 10);
+        $subjects = Subject::with('educationType')->paginate($limit);
+
+        return response()->json($subjects);
+    }
+
+    public function indexData()
     {
         $subjects = Subject::with('educationType')->get();
 
@@ -79,7 +91,7 @@ class SubjectController extends Controller
         return response()->json(['message' => 'Đã xóa tất cả khóa học'], 200);
     }
     // tổng số môn học
-    public function totalSubject()
+    /*     public function totalSubject()
     {
         $totalSubjects = Subject::count();
         $lastUpdatedSubject = Subject::latest()->orderBy('updated_at', 'desc')->first()->updated_at;
@@ -90,13 +102,13 @@ class SubjectController extends Controller
             'lastUpdatedSubject' => $formattedLastUpdateTeacher
         ]);
     }
-
+ */
     public function checkOnlineEnrollment($id)
     {
         $user = Auth::user();
         $subjectId = $id;
 
-        // Kiểm tra xem user đã đăng ký lớp học với education_type là "Online"
+        // Kiểm tra user đã đăng ký lớp học với education_type là "Online"
         $isEnrolled = Enrollment::where('idUser', $user->id)
             ->whereHas('subject.educationType', function ($query) {
                 $query->where('type', 'Online');
@@ -110,6 +122,7 @@ class SubjectController extends Controller
 
         return response()->json(['message' => 'Bạn có quyền truy cập.'], 200);
     }
+
     //tìm kiếm môn học
     /*     public function search(Request $request)
     {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies  } from "react-cookie";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
@@ -25,19 +25,33 @@ const register = async (email, password) => {
       password,
     });
     if (response.status === 201) {
-      toast.success('Đăng ký thành công!');
+      toast.success('Đăng ký thành công!',{ autoClose: 500 });
       setTimeout(() => {
         navigate('/login');
       }, 2000); 
     }
   } catch (error) {
     if (error.response && error.response.data) {
-      setErrors(error.response.data.message || 'Đăng ký không thành công');
+      const errorMessage = error.response.data.message || 'Đăng ký không thành công';
+      switch (error.response.status) {
+        case 400:
+          setErrors('Yêu cầu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
+          break;
+        case 401:
+          setErrors('Email hoặc mật khẩu không đúng.');
+          break;
+        case 409:
+          setErrors('Email đã tồn tại. Vui lòng sử dụng email khác.');
+          break;
+        default:
+          setErrors(errorMessage);
+      }
     } else {
       setErrors('Đăng ký không thành công');
     }
   }
 }
+
 //thông tin đăng nhập
 const fetchUserInfo = async (token, setUser) => {
   try {
@@ -92,7 +106,7 @@ const login = async (email, password) => {
       fetchUserInfo(access_token);
       setUser(user);
 
-      toast.success('Đăng nhập thành công!');
+      toast.success('Đăng nhập thành công!',{ autoClose: 500 });
       setTimeout(() => {
         if (user.role === 'Admin') {
           navigate('/admin');
@@ -130,25 +144,36 @@ const logout = async () => {
       removeCookie('user', { path: '/' });
       setToken(null);
       setUser(null);
-      toast.success('Đăng xuất thành công!');
+      toast.success('Đăng xuất thành công!',{ autoClose: 500 });
       //navigate('/');
       window.location.reload();
     }
 };
 //Gửi Email đặt lại mật khẩu
-const sendEmail = async () =>{
+const sendEmail = async () => {
   try {
     const response = await axios.post('http://localhost:8000/api/password/email', { email });
     setMessage(response.data.message);
     setErrors({});
   } catch (error) {
-    if (error.response && error.response.status === 422) {
-      setErrors(error.response.data.errors);
+    if (error.response) {
+      switch (error.response.status) {
+        case 422:
+          //setErrors('error.response.data.errors');
+          setErrors('Thông tin không hợp lệ');
+          break;
+        case 404:
+          //setMessage(error.response.data.message);
+          setMessage('Không tìm thấy người dùng có email này');
+          break;
+        default:
+          setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+      }
     } else {
-      setMessage('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+      setMessage('Gửi email không thành công');
     }
   }
-}
+};
 //Đặt lại mật khẩu
 const resetPassword = async() =>{
   try {

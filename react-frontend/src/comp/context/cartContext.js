@@ -16,7 +16,6 @@ const CartProvider = ({ children }) =>{
       setTotalSubject(totalItems.size);
     }, [cart]);
   
-
 //duy trì trạng thái giỏ hàng khi refesh trang
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -28,24 +27,24 @@ const CartProvider = ({ children }) =>{
     const addToCart = (product) => {
       const exist = cart.findIndex((x) => x.id === product.id);
       if (exist !== -1) {
-          // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng lên 1
+          /* // Nếu sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng lên 1
           const updatedCart = [...cart];
           updatedCart[exist].quantity += 1;
           setCart(updatedCart);
           localStorage.setItem('cart', JSON.stringify(updatedCart));
           //alert('Đã thêm sản phẩm vào giỏ')
-          toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
-
+          toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 }); */
+          toast.error('Khóa học đã có trong giỏ hàng',{ autoClose: 500 });
       } else {
           // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm vào giỏ hàng
           const newCart = [...cart, { ...product, quantity: 1 }];
           setCart(newCart);
           localStorage.setItem('cart', JSON.stringify(newCart));
           //alert('Đã thêm sản phẩm vào giỏ hàng')
-          toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
-
+          toast.success('Đã thêm khóa học vào giỏ hàng',{ autoClose: 500 });
       }
-    }
+  }
+/* 
 //tăng số lượng
 const increaseQuantity = (product) => {
     const updatedCart = cart.map((item) =>
@@ -70,6 +69,7 @@ const decreaseQuantity = (product) => {
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
 };
+ */
 //xóa sản phẩm
 const removeProduct = (product) => {
     const updatedCart = cart.filter((item) => item.id !== product.id);
@@ -111,7 +111,7 @@ const confirmPayment = async (orderID) => {
   console.log(cookies.user.id)
   if (cart.length === 0) {
       //alert('Giỏ hàng đang trống');
-      toast.warning('Giỏ hàng đang trống',{ autoClose: 2000 });
+      toast.warning('Giỏ hàng đang trống',{ autoClose: 500 });
       return;
   }
   try {
@@ -130,13 +130,13 @@ const confirmPayment = async (orderID) => {
     if (response.status === 201) {
       const updatedUser = { ...cookies.user, role: 'Student' };
       setCookie('user', updatedUser, { path: '/' });
-      toast.success('Thanh toán thành công', { autoClose: 2000 });
+      toast.success('Thanh toán thành công', { autoClose: 500 });
     }
     
   } catch (error) {
     console.error('Lỗi khi thanh toán:', error);
     //alert('Có lỗi khi thanh toán. Vui lòng thử lại sau.');
-    toast.warning('Có lỗi khi thanh toán. Vui lòng thử lại sau',{ autoClose: 2000 });
+    toast.warning('Có lỗi khi thanh toán. Vui lòng thử lại sau',{ autoClose: 500 });
   }
   clearCart();
 };
@@ -148,8 +148,8 @@ const value = {
     setCart, 
     addToCart, 
     totalSubject,
-    increaseQuantity, 
-    decreaseQuantity, 
+    //increaseQuantity, 
+    //decreaseQuantity, 
     removeProduct,
     totalPriceProduct,
     setTotalPriceProduct,

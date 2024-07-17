@@ -14,9 +14,16 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $role = Role::create($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'status' => 'required|integer|in:0,1'
+        ]);
+
+        $role = Role::create($validated);
+
         return response()->json($role, 201);
     }
+
 
     public function show($id)
     {
@@ -49,7 +56,13 @@ class RoleController extends Controller
 
     public function destroyAll()
     {
-        Role::truncate();
+        //Role::truncate();
+
+        $nonAdminRole = Role::where('name', '!=', 'Admin')->get();
+
+        foreach ($nonAdminRole as $role) {
+            $role->delete();
+        }
         return response()->json(['message' => 'All roles deleted'], 200);
     }
 }

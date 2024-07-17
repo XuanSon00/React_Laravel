@@ -90,7 +90,7 @@ class OrderController extends Controller
         ], 201);
     }
 
-    public function totalPrice()
+    /*     public function totalPrice()
     {
         $total = Order::sum(DB::raw('price * quantity'));
         $lastUpdatedPrice = Order::latest()->orderBy('updated_at', 'desc')->first()->updated_at;
@@ -101,11 +101,11 @@ class OrderController extends Controller
             'lastUpdatedPrice' => $formattedLastUpdatePrice
         ]);
     }
-
+ */
     public function getOrderUser()
     {
         if (!Auth::check()) {
-            return response()->json([]);
+            return response()->json(['message' => 'Vui lòng đăng nhập để xem môn học đã đăng ký']);
         }
 
         $user = Auth::user();

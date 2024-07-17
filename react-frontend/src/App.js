@@ -41,7 +41,7 @@ function App() {
       <Route path='/forgot-password' element={<SendEmail />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
       {/**********************************************/}
-      <Route path="/" element={(!cookies.user || cookies.user.role === 'Student') ? <Home /> :  <Navigate to={`/${cookies.user.role}`} />} />
+      <Route path="/" element={(!cookies.user || cookies.user.role === 'Student' || cookies.user.role === '') ? <Home /> :  <Navigate to={`/${cookies.user.role}`} />} />
       <Route path="/admin/*" element={
         <PrivateRoute allowedRoles={['Admin']}>
           <Admin />

@@ -19,8 +19,7 @@ const FormUser = ({ onClose, onSubmit, selectedAccount }) => {
     e.preventDefault();
     if (userPassword !== userConfirmPassword) {
       //alert('Mật khẩu không khớp');
-      toast.success('Đã thêm sản phẩm vào giỏ hàng',{ autoClose: 2000 });
-
+      toast.error('Mật khẩu không khớp',{ autoClose: 500 });
       return;
     }
     onSubmit({

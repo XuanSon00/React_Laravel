@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './dashboard.css'
 import { TotalUser, TotalSubject, TotalTeacher, TotalStudent, TotalPrice } from './adminData'
-import { totalUser, totalStudent, totalTeacher, totalSubject, totalPriceX } from '../../api/account'
+import { getDashboardData } from '../../api/dashboard'
 const Dashboard = () => {
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalSubjects, setTotalSubjects] = useState(0);
   const [totalStudents, setTotalStudents] = useState(0);
   const [totalTeachers, setTotalTeachers] = useState(0);
-  const [totalPrices, setTotalPrices] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [lastUpdatedUsers, setLastUpdatedUsers] = useState('');
   const [lastUpdatedSubjects, setLastUpdatedSubjects] = useState('');
   const [lastUpdatedStudents, setLastUpdatedStudents] = useState('');
@@ -18,34 +18,23 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          userResponse,
-          subjectResponse,
-          studentResponse,
-          teacherResponse,
-          priceResponse,
-        ] = await Promise.all([
-          totalUser(),
-          totalSubject(),
-          totalStudent(),
-          totalTeacher(),
-          totalPriceX(),
-        ]);
+        const response = await getDashboardData();
+        console.log(response.total)
 
-        setTotalUsers(userResponse.totalUsers);
-        setLastUpdatedUsers(userResponse.lastUpdatedUser);
+        setTotalUsers(response.totalUsers);
+        setLastUpdatedUsers(response.lastUpdatedUser);
 
-        setTotalSubjects(subjectResponse.totalSubjects);
-        setLastUpdatedSubjects(subjectResponse.lastUpdatedSubject);
+        setTotalSubjects(response.totalSubjects);
+        setLastUpdatedSubjects(response.lastUpdatedSubject);
 
-        setTotalStudents(studentResponse.totalStudents);
-        setLastUpdatedStudents(studentResponse.lastUpdatedStudent);
+        setTotalStudents(response.totalStudents);
+        setLastUpdatedStudents(response.lastUpdatedStudent);
 
-        setTotalTeachers(teacherResponse.totalTeachers);
-        setLastUpdatedTeachers(teacherResponse.lastUpdatedTeacher);
+        setTotalTeachers(response.totalTeachers);
+        setLastUpdatedTeachers(response.lastUpdatedTeacher);
 
-        setTotalPrices(priceResponse.total);
-        setLastUpdatedBill(priceResponse.lastUpdatedPrice);
+        setTotalPrice(response.totalPrice);
+        setLastUpdatedBill(response.lastUpdatedPrice);
       } catch (error) {
         console.error('Lỗi khi lấy dữ liệu:', error);
       }
@@ -54,6 +43,7 @@ const Dashboard = () => {
   fetchData();
 }, []);
 
+console.log(totalPrice);
   return (
     <>
       <div className='dashboard'>
@@ -64,7 +54,7 @@ const Dashboard = () => {
               <TotalSubject totalSubjects={totalSubjects} lastUpdated={lastUpdatedSubjects} />
               <TotalStudent totalStudents={totalStudents} lastUpdated={lastUpdatedStudents} />
               <TotalTeacher totalTeachers={totalTeachers} lastUpdated={lastUpdatedTeachers} />
-              <TotalPrice totalPrices={totalPrices} lastUpdated={lastUpdatedBill} />            </div>
+              <TotalPrice totalPrice={totalPrice} lastUpdated={lastUpdatedBill} />            </div>
             
           </div>
         </div>

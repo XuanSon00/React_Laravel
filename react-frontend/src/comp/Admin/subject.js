@@ -3,9 +3,10 @@ import AddIcon from '@mui/icons-material/Add';
 import DataTable from 'react-data-table-component';
 import FormSubject from '../../form/formSubject';
 import './subject.css';
-import { getSubjects, deleteSubject, updateSubject, createSubject,deleteAllSubjects } from '../../api/subject';
+import { getSubject, deleteSubject, updateSubject, createSubject,deleteAllSubjects } from '../../api/subject';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { toast } from 'react-toastify';
 
 const Subject = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -18,7 +19,7 @@ const Subject = () => {
 
   const loadSubjects = async () => {
     try {
-      const response = await getSubjects();
+      const response = await getSubject();
       //console.log('Dữ liệu nhận từ API:', response);
       setSubjects(response);
       setLoading(false);
@@ -29,7 +30,6 @@ const Subject = () => {
     }
   };
   
-
   useEffect(() => {
     loadSubjects();
   }, []);
@@ -163,10 +163,19 @@ const customStyles = {
     setSelectedRows([]);
   };
 
-  const handleDeleteAll = async () =>{
-      await deleteAllSubjects();
-      setSubjects([]);
-  }
+  const handleDeleteAll = async () => {
+    if (window.confirm('Bạn có chắc muốn xóa tất cả khóa học không?')) {
+      try {
+        const response = await deleteAllSubjects();
+        toast.success(response.data.message,{ autoClose: 500 });
+        setSubjects([]);
+      } catch (error) {
+        toast.error('có lỗi khi xóa',{ autoClose: 500 });
+      console.error(error);
+      }
+    }
+  };
+
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);
   };

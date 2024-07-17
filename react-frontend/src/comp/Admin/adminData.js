@@ -99,7 +99,9 @@ const TotalSubject = ({ totalSubjects, lastUpdated }) => (
     </div>
 )
 
-const TotalStudent = ({ totalStudents, lastUpdated }) => (
+const TotalStudent = ({ totalStudents, lastUpdated }) => {
+    //console.log(totalStudents)
+    return(
     <div className='total-student'>
         <div className='total-student-up'>
             <div className='total-student-up-left'>
@@ -113,7 +115,7 @@ const TotalStudent = ({ totalStudents, lastUpdated }) => (
             <p>{lastUpdated}</p>
         </div>
     </div>
-)
+)}
 
 const TotalTeacher = ({ totalTeachers, lastUpdated }) => (
     <div className='total-teacher'>
@@ -131,12 +133,14 @@ const TotalTeacher = ({ totalTeachers, lastUpdated }) => (
     </div>
 );
 
-const TotalPrice = ({ totalPrices, lastUpdated }) => (
+const TotalPrice = ({ totalPrice= 0, lastUpdated }) => {
+    //console.log(totalPrice)
+    return(
     <div className='total-price'>
         <div className='total-price-up'>
             <div className='total-price-up-left'>
                 <h3>Thanh Toán</h3>
-                <p>{totalPrices.toLocaleString()} <sup>vnđ</sup></p>
+                <p>{totalPrice.toLocaleString('vi-VN')} <sup>vnđ</sup></p>
             </div>
             <div className='total-price-up-right'><PaidIcon /></div>
         </div>
@@ -145,7 +149,7 @@ const TotalPrice = ({ totalPrices, lastUpdated }) => (
             <p>{lastUpdated}</p>
         </div>
     </div>
-);
+);}
 
 
 

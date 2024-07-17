@@ -6,6 +6,7 @@ import { getSchedule, deleteDate, deleteAllDate } from '../../api/schedule';
 import './date.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { toast } from 'react-toastify';
 
 const Date = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -71,8 +72,17 @@ const Date = () => {
   };
 
   const handleDeleteAll = async () => {
-    await deleteAllDate();
-    setSchdules([]);
+    if (window.confirm('Bạn có chắc muốn xóa tất cả lóp học?')) {
+      try {
+        const response = await deleteAllDate();
+        setSchdules([]);
+        fetchSchedules();
+        toast.success(response.data.message,{ autoClose: 500 });
+      } catch (error) {
+        toast.error('có lỗi khi xóa',{ autoClose: 500 });
+      console.error(error);
+      }
+    }
   };
 
   const handleFilterChange = (e) => {

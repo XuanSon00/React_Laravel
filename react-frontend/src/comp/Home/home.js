@@ -4,73 +4,72 @@ import { getSubjects } from '../../api/subject';
 import InfoIcon from '@mui/icons-material/Info';
 import './home.css';
 import { CartContext } from '../context/cartContext';
-import { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { getOrderUser } from '../../api/order';
 
 const Home = () => {
   const [subjects, setSubjects] = useState([]);
   const [filteredGrade, setFilteredGrade] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [searchTerm, setSearchTerm] = useState('');
-  //const [orders, setOrders] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const loadSubjects = async () => {
+  const loadSubjects = async (page = 1) => {
     try {
-      const response = await getSubjects();
+      const response = await getSubjects(page);
       console.log('Dữ liệu nhận từ API:', response);
-      setSubjects(response);
-      setFilteredGrade(response);
+      setSubjects(response.data);
+      setFilteredGrade(response.data);
+      setTotalPages(response.last_page);
     } catch (error) {
       console.error('Lỗi khi lấy danh sách môn học:', error);
       setSubjects([]);
     }
   };
-  
-/*   const loadOrders = async () => {
+
+  const loadAllSubjects = async () => {
     try {
-      const response = await getOrderUser();
-      //console.log('Dữ liệu nhận từ API:', response.data);
-      setOrders(response.data);
+      const allSubjects = [];
+      for (let p = 1; p <= totalPages; p++) {
+        const response = await getSubjects(p);
+        allSubjects.push(...response.data);
+      }
+      return allSubjects;
     } catch (error) {
-      //console.error('Lỗi khi lấy lịch sửmôn học:', error);
-      setOrders([]);
+      console.error('Lỗi khi lấy tất cả môn học:', error);
+      return [];
     }
   };
- */
-  useEffect(() => {
-    loadSubjects();
-    //loadOrders();
-  }, []);
 
-  const filterGrade = (selectedGrade) => {
-    let filtered = subjects;
+  useEffect(() => {
+    loadSubjects(page);
+  }, [page]);
+
+  const filterGrade = async (selectedGrade) => {
+    let allSubjects = await loadAllSubjects();
+    let filtered = allSubjects;
     if (selectedGrade !== "") {
-      filtered = subjects.filter(subject => subject.grade === selectedGrade);
+      filtered = allSubjects.filter(subject => subject.grade === selectedGrade);
     }
     setFilteredGrade(filtered.filter(subject =>
       subject.name.toLowerCase().includes(searchTerm.toLowerCase())
     ));
   };
-  
-  /* const filteredSubjects = subjects.filter(subject =>
-    subject.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-  ); */
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = async (e) => {
     setSearchTerm(e.target.value);
-    setFilteredGrade(subjects.filter(subject =>
+    let allSubjects = await loadAllSubjects();
+    setFilteredGrade(allSubjects.filter(subject =>
       subject.name.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
-  /* const isPurchased = (id) =>{
-    return orders.some( order => order.idSubject === id )
-  } */
 
-  
+  const handlePage = (newPage) =>{
+    setPage(newPage);
+  }
+
   return (
     <>
-  <div><Toaster position="top-center" reverseOrder={false} /></div>
       <Nav handleFilterChange={handleFilterChange} />
       <div className='home'>
         <div className='top_banner'></div>
@@ -114,12 +113,6 @@ const Home = () => {
                             <p>{Math.floor(parseFloat(subject.price.replace(/\./g, '').replace(',', '.'))).toLocaleString('vi-VN')} <sup>đ</sup></p>
                           </div>
                           <div className='addTocart'>
-                            {/* {isPurchased(subject.id) ? (
-                              <button className='btn-disable' disabled> Đã mua</button>
-                            ) :(
-                              <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
-                            )
-                            } */}
                             <button className='btn' onClick={() => addToCart(subject)}>Mua</button>
                           </div>
                         </div>
@@ -127,9 +120,19 @@ const Home = () => {
                     );
                   })}
                 </div>
+                <div className='pagination'>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index}
+                      className={`page-btn ${page === index + 1 ? 'active' : ''}`}
+                      onClick={() => handlePage(index + 1)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            
           </div>
         </div>
       </div>

@@ -13,8 +13,8 @@ import { useCookies } from 'react-cookie';
 const Cart = () => {
   const {
     cart,
-    increaseQuantity,
-    decreaseQuantity,
+    //increaseQuantity,
+    //decreaseQuantity,
     removeProduct,
     totalPriceProduct,
     confirmPayment,
@@ -75,14 +75,14 @@ const Cart = () => {
     if (success) {
       confirmPayment();
       //alert("Payment successful!!");
-      toast.success('Thanh toán thành công',{ autoClose: 2000 });
+      toast.success('Thanh toán thành công',{ autoClose: 500 });
       console.log('Order successful. Your order id is--', orderID);
     }
   }, [success]);
 
   const payButton = () =>{
     if(!cookies.user) {
-      toast.warning(' Cần đăng nhập để thực hiện thanh toán', {autoClose: 2000})
+      toast.warning(' Cần đăng nhập để thực hiện thanh toán', {autoClose: 500})
     }
   }
   return (
@@ -127,11 +127,11 @@ const Cart = () => {
                     <span>{priceA} <sup>đ</sup></span>
                   </div>
                   <div className='quantity-box'>
-                    <button onClick={() => increaseQuantity(subject)}><AddIcon /></button>
+                    {/* <button onClick={() => increaseQuantity(subject)}><AddIcon /></button> */}
                     <div className='count'>
                       <p>{quantity}</p>
                     </div>
-                    <button onClick={() => decreaseQuantity(subject)}><RemoveIcon /></button>
+                      {/* <button onClick={() => decreaseQuantity(subject)}><RemoveIcon /></button> */}
                   </div>
                   <div className='total-box'>
                     <span>{totalPriceString}<sup>đ</sup></span>

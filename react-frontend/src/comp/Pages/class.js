@@ -5,8 +5,8 @@ import './class.css'
 import { checkEnrollment, createEnroll, getEnroll,   } from '../../api/enroll';
 import { getSchedule } from '../../api/schedule';
 import { userInfo } from '../../api/account';
-import toast, { Toaster } from 'react-hot-toast';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Class = () => {
   const [schedules, setSchedules] = useState([]);
@@ -70,14 +70,14 @@ const Class = () => {
       };
       const response = await createEnroll(enrollData);
       //console.log('Đăng ký lớp học thành công', response.data);
-      toast.success('Đăng ký lớp học thành công!');
+      toast.success('Đăng ký lớp học thành công!',{ autoClose: 500 });
       loadSchedule();
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
-          toast.error('Bạn đã đăng ký lớp học này!');
+          toast.error('Bạn đã đăng ký lớp học này!',{ autoClose: 500 });
         } else if (error.response.status === 403) {
-          toast.error('Bạn chưa mua khóa học này!');
+          toast.error('Bạn chưa mua khóa học này!',{ autoClose: 500 });
         } else {
           console.error('Lỗi khi đăng ký lớp học', error);
         }
@@ -101,16 +101,15 @@ const handleLinkCheck = async (idSubject) => {
     if (response.status === 200) {
       navigate(`/online/subjects/${idSubject}`);
     } else {
-      toast.error('Bạn không có quyền truy cập vào lớp học này.');
+      toast.error('Bạn không có quyền truy cập vào lớp học này.',{ autoClose: 500 });
     }
   } catch (error) {
-    toast.error('Bạn không có quyền truy cập vào lớp học này.');
+    toast.error('Bạn không có quyền truy cập vào lớp học này.',{ autoClose: 500 });
   }
 };
 
   return (
     <>
-      <div><Toaster position="top-center" reverseOrder={false} /></div>
       <Nav handleFilterChange={handleFilterChange}/>
       <div className='class'>
         <div className='top_banner'></div>

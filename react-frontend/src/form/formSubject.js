@@ -11,6 +11,7 @@ const FormSubject = ({ onClose, onSubmit, selectedSubject }) => {
   const [subjectMaxStudents, setSubjectMaxStudents] = useState('');
   const [educationTypes, setEducationTypes]= useState([]);
   const [selectedEducationType, setSelectedEducationType] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,19 +44,35 @@ const FormSubject = ({ onClose, onSubmit, selectedSubject }) => {
     };
     reader.readAsDataURL(file);
   };
+
+  const validateForm = () => {
+    if (!subjectName.trim()) {
+      return "Vui lòng không để trống!";
+    }
+    return "";
+  };  
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({
-      name: subjectName,
-      active: subjectActive,
-      grade: subjectGrade,
-      price: subjectPrice,
-      image: imageBase64,
-      max_students: subjectMaxStudents,
-      idEducationType: selectedEducationType
-    });
-    onClose();
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    try{
+      onSubmit({
+        name: subjectName,
+        active: subjectActive,
+        grade: subjectGrade,
+        price: subjectPrice,
+        image: imageBase64,
+        max_students: subjectMaxStudents,
+        idEducationType: selectedEducationType
+      });
+      onClose();
+    } catch(error){
+      setError('Có lỗi xảy ra vui lòng thử lại sau');
+    }
   };
   
     return (
@@ -116,6 +133,7 @@ const FormSubject = ({ onClose, onSubmit, selectedSubject }) => {
                 ))}
             </select>
             </div>
+            {error && <div className='error_message' style={{color:'red', marginTop: '20px', textAlign: "center"}}>{error}</div>}
             <div className='btn_add'>
               <button className='confirmAdd' type='submit'>{selectedSubject ? 'Sửa' : 'Thêm'}</button>
             </div>

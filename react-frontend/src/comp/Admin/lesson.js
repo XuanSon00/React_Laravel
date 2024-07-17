@@ -6,58 +6,60 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { createLesson, deleteAllLessons, deleteLesson, getLesson, updateLesson } from '../../api/lesson';
 import FormLesson from '../../form/formLesson';
+import { toast } from 'react-toastify';
 
 const Lesson = () => {
-    const [selectedLesson, setSelectedLesson] = useState(null);
-    const [lessons, setLessons] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedRows, setSelectedRows] = useState([]);
-    const [AddForm, setAddForm] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [selectAll, setSelectAll] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [AddForm, setAddForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [selectAll, setSelectAll] = useState(false);
 
-    const loadLesson = async () => {
-        try {
-        const response = await getLesson();
-        //console.log('Dữ liệu nhận từ API:', response);
-        setLessons(response);
-        setLoading(false);
-        } catch (error) {
-        console.error('Lỗi khi lấy danh sách bài học:', error);
-        setLessons([]);
-        setLoading(false);
-        }
-    };
+  const loadLesson = async () => {
+    try {
+      const response = await getLesson();
+      //console.log('Dữ liệu nhận từ API:', response);
+      setLessons(response);
+      setLoading(false);
+      } catch (error) {
+      console.error('Lỗi khi lấy danh sách bài học:', error);
+      setLessons([]);
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        loadLesson();
-    }, []);
+  useEffect(() => {
+    loadLesson();
+  }, []);
 
-    const handleEdit = (lesson) => {
-        setSelectedLesson(lesson);
-        setAddForm(true);
-    };
-    const handleDelete = async (id) => {
-        await deleteLesson(id);
-        loadLesson();
-    };
+  const handleEdit = (lesson) => {
+    setSelectedLesson(lesson);
+    setAddForm(true);
+  };
 
-    const handleFormSubmit = async (lesson) => {
-        if (selectedLesson) {
-        await updateLesson(selectedLesson.id, lesson);
-        } else {
-        await createLesson(lesson);
-        }
-        setAddForm(false);
-        loadLesson();
-    };
+  const handleDelete = async (id) => {
+    await deleteLesson(id);
+    loadLesson();
+  };
 
-    const handleFormClose = () => {
-        setSelectedLesson(null);
-        setAddForm(false);
-    };
+  const handleFormSubmit = async (lesson) => {
+    if (selectedLesson) {
+      await updateLesson(selectedLesson.id, lesson);
+    } else {
+      await createLesson(lesson);
+    }
+    setAddForm(false);
+    loadLesson();
+  };
 
-    const handleSelectAll = (e) => {
+  const handleFormClose = () => {
+    setSelectedLesson(null);
+    setAddForm(false);
+  };
+
+  const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
     setSelectAll(isChecked);
     if (isChecked) {
@@ -65,141 +67,153 @@ const Lesson = () => {
     } else {
         setSelectedRows([]);
     }
-    };
-    const customStyles = {
+  };
+
+  const customStyles = {
     table: {
-        style: {
-        width: 'auto',
-        },
+      style: {
+      width: 'auto',
+      },
     },
     headCells: { 
-        style: {
-        whiteSpace: 'nowrap',
-        }
+      style: {
+      whiteSpace: 'nowrap',
+      }
     },
     cells: { 
-        style: {
-        whiteSpace: 'nowrap', 
-        }
-    },
-    };
-
-    const columns = [
-        {
-        name: <input type='checkbox' className="btncheck" checked={selectAll} onChange={handleSelectAll} />,
-        selector: row => <input type='checkbox' className="btncheck" checked={selectedRows.includes(row.id)} onChange={() => handleCheckboxChange(row.id)} />,
-        sortable: false,
-        },
-        {
-        name: 'Tên Môn học',
-        selector: row => row.subject.name,
-        sortable: true,
-        cell: row => <div>{row.subject.name} Lớp {row.subject.grade}</div>,
-        },
-        {
-        name: 'Tiêu đề',
-        selector: row => row.title,
-        sortable: true,
-        },
-        {
-        name: 'Video',
-        selector: row => row.video_url,
-        sortable: true,
-        },
-        {
-        name: 'Nội dung ',
-        selector: row =>row.content , 
-        sortable: true,
-        },
-        {
-        name: 'Ngày tạo',
-        selector: row => row.created_at,
-        sortable: true,
-        cell: row => <div>{new Date(row.created_at).toLocaleDateString('vi-VN')}</div>,
-        },
-        {
-        name: '',
-        cell: row => (
-            <>
-            <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
-            <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
-            </>
-        ),
-        sortable: false,
-        },
-    ];
-    const handleCheckboxChange = (id) => {
-        if (selectedRows.includes(id)) {
-        setSelectedRows(selectedRows.filter(rowId => rowId !== id));
-        } else {
-        setSelectedRows([...selectedRows, id]);
-        }
-    }
-
-    const filteredLesson = lessons.filter(lesson =>
-        lesson.subject.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lesson.video_url.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const handleDeleteSelected = () => {
-        selectedRows.forEach(async (id) => {
-        await handleDelete(id);
-        });
-        setSelectedRows([]);
-    };
-
-    const handleDeleteAll = async () =>{
-        await deleteAllLessons();
-        setLessons([]);
-    }
-    const handleFilterChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-  return (
-    <>
-    {AddForm &&
-        <FormLesson
-          onClose={handleFormClose}
-          onSubmit={handleFormSubmit}
-          selectedLesson={selectedLesson}
-        />
+      style: {
+      whiteSpace: 'nowrap', 
       }
-      <div className='subject'>
-        <div className='subjectData'>
-          <h3>Bài học</h3>
-          <div className='data'>
-            <div className='btnData'>
-              <div className='subjectAdd'>
-                <button onClick={() => setAddForm(true)}><AddIcon /> Thêm</button>
-              </div>
-              <div className='searchBox'>
-                <input type='text' value={searchTerm} onChange={handleFilterChange} placeholder='Tìm kiếm môn học...' />
-              </div>
-              <div className='subjectDelete'>
-                <button onClick={handleDeleteSelected}>Xóa chọn</button>
-                <button onClick={handleDeleteAll}>Xóa tất cả</button>
-              </div>
-            </div>
-            <div className='table'>
-              <DataTable
-                className='tableData'
-                columns={columns}
-                data={filteredLesson}
-                pagination
-                paginationPerPage={10}
-                progressPending={loading}
-                fixedHeader
-                highlightOnHover
-                customStyles={customStyles}
-              />
-            </div>
+    },
+  };
+
+  const columns = [
+    {
+      name: <input type='checkbox' className="btncheck" checked={selectAll} onChange={handleSelectAll} />,
+      selector: row => <input type='checkbox' className="btncheck" checked={selectedRows.includes(row.id)} onChange={() => handleCheckboxChange(row.id)} />,
+      sortable: false,
+    },
+    {
+      name: 'Tên Môn học',
+      selector: row => row.subject.name,
+      sortable: true,
+      cell: row => <div>{row.subject.name} Lớp {row.subject.grade}</div>,
+    },
+    {
+      name: 'Tiêu đề',
+      selector: row => row.title,
+      sortable: true,
+    },
+    {
+      name: 'Video',
+      selector: row => row.video_url,
+      sortable: true,
+    },
+    {
+      name: 'Nội dung ',
+      selector: row =>row.content , 
+      sortable: true,
+    },
+    {
+      name: 'Ngày tạo',
+      selector: row => row.created_at,
+      sortable: true,
+      cell: row => <div>{new Date(row.created_at).toLocaleDateString('vi-VN')}</div>,
+    },
+    {
+      name: '',
+      cell: row => (
+        <>
+          <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
+          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
+        </>
+      ),
+      sortable: false,
+    },
+  ];
+
+  const handleCheckboxChange = (id) => {
+    if (selectedRows.includes(id)) {
+      setSelectedRows(selectedRows.filter(rowId => rowId !== id));
+    } else {
+      setSelectedRows([...selectedRows, id]);
+    }
+  }
+
+  const filteredLesson = lessons.filter(lesson =>
+      lesson.subject.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lesson.video_url.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleDeleteSelected = () => {
+    selectedRows.forEach(async (id) => {
+      await handleDelete(id);
+    });
+    setSelectedRows([]);
+  };
+
+  const handleDeleteAll = async () => {
+    if (window.confirm('Bạn có chắc muốn xóa tất cả bài học không?')) {
+      try {
+        const response = await deleteAllLessons();
+        setLessons([]);
+        loadLesson();
+        toast.success(response.data.message,{ autoClose: 500 });
+      } catch (error) {
+        toast.error('có lỗi khi xóa',{ autoClose: 500 });
+      console.error(error);
+      }
+    }
+  };
+  
+  const handleFilterChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+return (
+  <>
+  {AddForm &&
+    <FormLesson
+      onClose={handleFormClose}
+      onSubmit={handleFormSubmit}
+      selectedLesson={selectedLesson}
+    />
+  }
+  <div className='subject'>
+    <div className='subjectData'>
+      <h3>Bài học</h3>
+      <div className='data'>
+        <div className='btnData'>
+          <div className='subjectAdd'>
+            <button onClick={() => setAddForm(true)}><AddIcon /> Thêm</button>
+          </div>
+          <div className='searchBox'>
+            <input type='text' value={searchTerm} onChange={handleFilterChange} placeholder='Tìm kiếm môn học...' />
+          </div>
+          <div className='subjectDelete'>
+            <button onClick={handleDeleteSelected}>Xóa chọn</button>
+            <button onClick={handleDeleteAll}>Xóa tất cả</button>
           </div>
         </div>
+        <div className='table'>
+          <DataTable
+            className='tableData'
+            columns={columns}
+            data={filteredLesson}
+            pagination
+            paginationPerPage={10}
+            progressPending={loading}
+            fixedHeader
+            highlightOnHover
+            customStyles={customStyles}
+          />
+        </div>
       </div>
-    </>
-  )
+    </div>
+  </div>
+</>
+)
 }
 
 export default Lesson

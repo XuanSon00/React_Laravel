@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { deleteUser, deleteAllUser, getUsers, updateUser } from '../../api/account';
+import { deleteUser, deleteAllUser, getUsers, updateUser, userInfo } from '../../api/account';
 import DataTable from 'react-data-table-component';
 import FormAccount from '../../form/formAccount';
 import './account.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { toast } from 'react-toastify';
 
 
 const Account = () => {
@@ -14,7 +15,7 @@ const Account = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [editForm, setEditForm] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [currentUser, setCurrentUser] = useState(null);
   const loadUser = async () => {
     try {
       const response = await getUsers();
@@ -28,8 +29,19 @@ const Account = () => {
     }
   };
 
+  const loadCurrentUser = async () => {
+    try {
+      const response = await userInfo();
+      console.log('Dữ liệu nhận từ API:', response);
+      setCurrentUser(response);
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách môn học:', error);
+    }
+  };
+
   useEffect(() => {
     loadUser();
+    loadCurrentUser();
   }, []);
 
   const handleEdit = (user) => {
@@ -41,11 +53,20 @@ const Account = () => {
     await deleteUser(id);
     loadUser();
   };
-
+  
   const handleDeleteAll = async () => {
-    await deleteAllUser();
-    setUsers([]);
+    if (window.confirm('Bạn có chắc muốn xóa tất cả người dùng không phải Admin không?',)) {
+      try {
+        const response = await deleteAllUser();
+        loadUser();
+        toast.success(response.data.message,{ autoClose: 500 });
+      } catch (error) {
+        toast.error('Không còn người dùng khác ngoài Admin',{ autoClose: 500 });
+      console.error(error);
+      }
+    }
   };
+
 
   const handleFormSubmit = async (user) => {
     if (selectedAccount) {
@@ -63,8 +84,10 @@ const Account = () => {
   const columns = [
     {
       name: '',
-      selector: (row) => <input type='checkbox' className='btncheck' onChange={() => handleCheckboxChange(row.id)} />,
-      sortable: false,
+      selector: row => currentUser && row.id !== currentUser.id 
+      ? <input type='checkbox' className="btncheck" onChange={() => handleCheckboxChange(row.id)} /> 
+      : null,
+    sortable: false,
     },
     {
       name: 'Tên',
@@ -125,9 +148,9 @@ const Account = () => {
     const role = user.role || '';
   
     return (
-      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      role.toLowerCase().includes(searchTerm.toLowerCase())
+      name && name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email && email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      role && role.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
   

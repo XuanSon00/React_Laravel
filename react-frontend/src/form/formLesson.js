@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import './formSubject.css'
-import { getSubjects } from '../api/subject';
+import { getSubject } from '../api/subject';
 
 const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
   const [subjects, setSubjects] = useState([]);
@@ -9,16 +9,17 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
   const [title, setTitle] = useState('');
   const [video, setVideo] = useState('');
   const [content, setContent] = useState('');
+  const [error, setError] = useState('');
 
-    useEffect(() => {
-        const loadSubject = async () => {
-            try {
-                const response = await getSubjects();
-                setSubjects(response);
-            } catch (error) {
-                console.error('Lỗi lấy dữ liệu:', error);
-                setSubjects([]);
-        }
+  useEffect(() => {
+    const loadSubject = async () => {
+      try {
+        const response = await getSubject();
+        setSubjects(response);
+      } catch (error) {
+        console.error('Lỗi lấy dữ liệu:', error);
+        setSubjects([]);
+      }
     };
 
     loadSubject();
@@ -30,9 +31,21 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
         setContent(selectedLesson.content);
     }
 }, [selectedLesson]);
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
+
+const validateForm = () => {
+  if (!title.trim() || !video.trim() || !content.trim()) {
+    return "Vui lòng không để trống!";
+  }
+  return "";
+};
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const validationError = validateForm();
+  if (validationError) {
+    setError(validationError);
+    return;
+  }
+  try{
     onSubmit({
       idSubject: selectedSubject,
       title: title,
@@ -40,6 +53,9 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
       content: content,
     });
     onClose();
+    } catch (error) {
+      setError('Có lỗi xảy ra vui lòng thử lại sau')
+    }
 };
   
     return (
@@ -51,7 +67,7 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
           <form className='form' onSubmit={handleSubmit}>
             <div className='input_name'>
                 <label htmlFor='subject' className='label'>Môn học: </label>
-                <select id="subject" required value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} >
+                <select id="subject" className='subject-lesson'required value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} >
                     <option value="">--</option>
                     {subjects.map((subject) => (
                     <option key={subject.id} value={subject.id}>{subject.name} {subject.grade}</option>
@@ -70,6 +86,7 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
               <label htmlFor='content' className='label'>Nội dung: </label>
               <input type='text' name='content' className='input' value={content} onChange={(e) => setContent(e.target.value)} />
             </div>
+            {error && <div className='error_message' style={{color:'red', marginTop: '20px', textAlign: "center"}}>{error}</div>}
             <div className='btn_add'>
               <button className='confirmAdd' type='submit'>{selectedLesson ? 'Sửa' : 'Thêm'}</button>
             </div>

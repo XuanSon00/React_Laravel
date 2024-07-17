@@ -6,10 +6,10 @@
 
 .account .accountData
 {
-    width: 90%;
+    width: 100%;
     padding: 20px 20px;
     background-color: #fff;
-    height: 800px;
+    height: fit-content;
 }
 
 .account .accountData h3

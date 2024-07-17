@@ -21,14 +21,11 @@ const SendEmail = () => {
                 <input type="email"  placeholder="nhập email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label htmlFor ="email">Email</label>
             </div>
-            {errors.email && <span style={{color:'red'}}>{errors.email[0]}</span>}
+            {errors && <div className="error" style={{color:'red'}}>{errors}</div>}
             <button type="submit" className="btn">Gửi</button>
         </form>
-        {message && <p style={{color:'red'}}>{message}</p>}
-        <div className="links">
-        <p>Đã có tài khoản</p>
-        <Link to='/login'>Đăng nhập</Link>
-        </div>
+        {message && <p style={{color:'red', marginTop: "15px", textAlign:"center"}}>{message}</p>}
+
     </div>
     </>
   )

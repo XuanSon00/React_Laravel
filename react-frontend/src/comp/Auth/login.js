@@ -30,7 +30,7 @@ const Login = () => {
         <input type="password" name='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <label htmlFor ="password">Password</label>
       </div>
-      {errors && <p className="error-message" style={{color:"red"}}>{errors}</p>}
+      {errors && <p className="error-message" style={{color:"red", marginBottom: "15px", textAlign: "center"}}>{errors}</p>}
       <p className="recover">
         <Link to='/forgot-password'>Quên Mật Khẩu</Link>
       </p>
@@ -40,7 +40,7 @@ const Login = () => {
       ----------or--------
     </p>
     <div className="links">
-      <p>Không có mật khẩu?</p>
+      <p>Không có tài khoản ?</p>
       <Link to='/register'>Đăng ký</Link>
     </div>
   </div>

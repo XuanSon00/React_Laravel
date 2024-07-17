@@ -9,16 +9,15 @@ const Account = () => {
   const [editForm, setEditForm] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
 
-    const fetchUser = async () => {
-      try {
-        const data = await userInfo();
-        setUser(data);
-      } catch (error) {
-        console.error('Lỗi khi lấy thông tin người dùng:', error);
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const data = await userInfo();
+      setUser(data);
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin người dùng:', error);
+    }
+  };
 
-    
 
 
   useEffect(() => {

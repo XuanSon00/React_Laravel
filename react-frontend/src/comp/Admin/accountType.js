@@ -6,6 +6,7 @@ import { createRole, deleteAllRoles, deleteRole, getRoles, updateRole } from '..
 import DataTable from 'react-data-table-component';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { toast } from 'react-toastify';
 const AccountType = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [roles, setRoles] = useState([]);
@@ -40,13 +41,19 @@ const handleDelete = async (id) => {
 };
 
 const handleFormSubmit = async (role) => {
+  try{
     if (selectedRole) {
-        await updateRole(selectedRole.id, role);
+      await updateRole(selectedRole.id, role);
     } else {
         await createRole(role);
     }
     setAddFormVisible(false);
     loadRoles();
+  } catch (error){
+    console.error('Error :', error);
+
+  }
+    
 };
 
 const handleFormClose = () => {
@@ -97,10 +104,14 @@ const handleCheckboxChange = (id) => {
       setSelectedRows([...selectedRows, id]);
   }
 };
+const roleStatus = roles.map(role =>({
+  ...role,
+  statusText:role.status === 0 ? "Đang đóng" : 'Đang hoạt động'
+}));
 
-const filteredRoles = roles.filter(role =>
+const filteredRoles = roleStatus.filter(role =>
   role.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  role.status.toLowerCase().includes(searchTerm.toLowerCase())
+  role.statusText.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
 const handleDeleteSelected = async () => {
@@ -110,8 +121,16 @@ const handleDeleteSelected = async () => {
 };
 
 const handleDeleteAll = async () => {
-  await deleteAllRoles();
-  setRoles([]);
+  if (window.confirm('Bạn có chắc muốn xóa tất cả loại tài khoản trừ Admin không?')) {
+    try {
+      const response = await deleteAllRoles();
+      loadRoles();
+      toast.success(response.data.message,{ autoClose: 500 });
+    } catch (error) {
+      toast.error('Loại tài khoản Admin không thể xóa',{ autoClose: 500 });
+    console.error(error);
+    }
+  }
 };
 
 const handleFilterChange = (e) => {

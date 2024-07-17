@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import './formDate.css';
-import { getSubjects, getTeachers, createDate, updateDate } from '../api/schedule';
+import { getSubject, getTeachers, createDate, updateDate } from '../api/schedule';
 import { addDays, format } from 'date-fns'; 
 
 const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
@@ -19,7 +19,7 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const subjectsData = await getSubjects();
+        const subjectsData = await getSubject();
         setSubjects(subjectsData.data);
         const teachersData = await getTeachers();
         setTeachers(teachersData.data);

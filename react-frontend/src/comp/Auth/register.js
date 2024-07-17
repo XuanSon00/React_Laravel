@@ -18,6 +18,9 @@ const Register = () => {
     if (password !== confirmPassword) {
       setErrors('Mật khẩu không khớp');
       return;
+    } else if(password.length < 8) {
+      setErrors('Mật khẩu phải có ít nhất 8 ký tự');
+      return
     }
     register(email, password);
   }
