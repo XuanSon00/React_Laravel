@@ -14,6 +14,10 @@ class Order extends Model
         return $this->belongsTo(Subject::class, 'idSubject');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'idUser');
+    }
     /* public function subjectScheduled()
     {
         return $this->hasOneThrough(Schedule::class, Subject::class, 'id', 'idSubject', 'idSubject', 'id');

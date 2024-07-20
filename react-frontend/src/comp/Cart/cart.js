@@ -7,8 +7,8 @@ import { CartContext } from '../context/cartContext';
 import './cart.css';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from 'react-toastify';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+// import AddIcon from '@mui/icons-material/Add';
+// import RemoveIcon from '@mui/icons-material/Remove';
 import { useCookies } from 'react-cookie';
 const Cart = () => {
   const {
@@ -168,7 +168,7 @@ const Cart = () => {
                     <button onClick={() => setShowPayPal(true)}>Thanh toán</button>
                     {showPayPal && (
                       <PayPalButtons
-                        style={{ layout: "vertical" }}
+                        className="paypal-button"
                         createOrder={createOrder}
                         onApprove={onApprove}
                         onError={onError}

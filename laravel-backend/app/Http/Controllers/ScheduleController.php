@@ -14,11 +14,22 @@ class ScheduleController extends Controller
 {
     public function index()
     {
+        /* $schedules = Schedule::with('subject.educationType', 'teacher')
+            ->whereHas('subject.educationType', function ($query) {
+                $query->where('type', 'Online');
+            })->get(); */
+
+        $schedules = Schedule::with('subject.educationType', 'teacher')
+            ->whereHas('subject.educationType')->get();
+        return response()->json($schedules);
+    }
+
+    public function classOnline()
+    {
         $schedules = Schedule::with('subject.educationType', 'teacher')
             ->whereHas('subject.educationType', function ($query) {
                 $query->where('type', 'Online');
-            })
-            ->get();
+            })->get();
 
         return response()->json($schedules);
     }

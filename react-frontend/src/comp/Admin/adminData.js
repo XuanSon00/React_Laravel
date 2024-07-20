@@ -60,6 +60,11 @@ const SidebarData = [
         link: '/admin/list'
     },
     {
+        title: "Mã đơn",
+        icon: <ReceiptIcon />,
+        link: '/admin/bill'
+    },
+    {
         title: "Logout",
         icon: <LogoutIcon />,
         action: 'logout'

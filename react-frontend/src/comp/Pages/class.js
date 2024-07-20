@@ -3,7 +3,7 @@ import Nav from '../Home/nav'
 import InfoIcon from '@mui/icons-material/Info';
 import './class.css'
 import { checkEnrollment, createEnroll, getEnroll,   } from '../../api/enroll';
-import { getSchedule } from '../../api/schedule';
+import { classOnline } from '../../api/schedule';
 import { userInfo } from '../../api/account';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const Class = () => {
 
   const loadSchedule = async () => {
     try {
-      const response = await getSchedule();
+      const response = await classOnline();
       //console.log('Dữ liệu nhận từ API:', response.data);
       setSchedules(response.data);
       setFilteredGrade(response.data);

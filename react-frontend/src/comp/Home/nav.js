@@ -12,7 +12,7 @@ import { UserContext } from '../context/useContext';
 import { CartContext } from '../context/cartContext';
 import { useCookies } from 'react-cookie';
 
-const Nav = ({handleFilterChange }) => {
+const Nav = ({isSearching, handleFilterChange }) => {
   const { totalSubject } = useContext(CartContext)
   const { logout } = useContext(UserContext)
   const [open, setOpen] = useState(false)
@@ -28,6 +28,11 @@ if (userRole === 'Admin') {
   linkPath = '/teacher';
 }
 
+const handleEnter = (e) =>{
+  if (e.key === 'Enter') {
+    handleFilterChange(e);
+  }
+}
 
   return (
   <>
@@ -105,9 +110,9 @@ if (userRole === 'Admin') {
       <div className='logo'>
         <Link to='/'><img src='img/logo.jpg' alt=''/></Link>
       </div>
-      <div className='searchBox'>
-            <input type='text' onChange={handleFilterChange} placeholder='Tìm kiếm môn học...' />
-          </div>
+      <div className={`searchBox ${isSearching ? 'active' : ''}`}>
+        <input type="text" onKeyDown={handleEnter} placeholder="Tìm kiếm môn học..." />
+      </div>
       <div className='cartList'>
         <Link to='/cart' ><ShoppingBasketIcon style={{ fontSize: 40, color: '#27aae2' }}/></Link>
         <sup><span>{totalSubject}</span></sup>

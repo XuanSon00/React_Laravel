@@ -124,6 +124,7 @@ const customStyles = {
       name: 'Loại hình giáo dục',
       selector: row =>row.education_type.type , 
       sortable: true,
+      cell: row => <div style={{ color: row.education_type.type === 'Classroom' ? 'orange' : 'green' }}>{row.education_type.type}</div>,
     },
     {
       name: 'Ngày tạo',

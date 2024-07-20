@@ -10,7 +10,16 @@ const getToken = () => {
     };
   };
 
-  
+  const getAllRecipt = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/recipt', getAuthHeaders());
+        return response;
+    } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+        throw error;
+    }
+};
+
   
   const getOrderHistory = async () => {
     try {
@@ -45,4 +54,4 @@ const getOrderUser = async () => {
 
   
 
-export { getOrderHistory,getRecipt, getOrderUser }
+export { getOrderHistory,getRecipt, getOrderUser,getAllRecipt}

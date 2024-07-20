@@ -121,9 +121,15 @@ const updateUserInfo = async () => {
       throw error;
   }
 }; */
-
-
-
-
+//chọn ra id admin làm superadmin
+const getIdAdmin = async () => {
+  try {
+    const response = await axios.get('http://localhost:8000/api/admin/super-admins', getAuthHeaders());
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi gọi API:', error);
+    throw error;
+  }
+};
   
-  export { getUsers, deleteUser, deleteAllUser, updateUser ,userInfo,updateUserInfo }
+  export { getUsers, deleteUser, deleteAllUser, updateUser ,userInfo,updateUserInfo, getIdAdmin }

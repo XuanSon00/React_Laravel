@@ -9,11 +9,7 @@ class Bill extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'items', 'email', 'bill', 'price'
-    ];
+    protected $fillable = ['items', 'email', 'bill', 'price'];
 
-    protected $casts = [
-        'items' => 'array'
-    ];
+    protected $casts = ['items' => 'array'];
 }

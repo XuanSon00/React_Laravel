@@ -13,13 +13,24 @@ class DashboardController extends Controller
     //Tổng số tài khoản
     public function totalUser()
     {
-        $totalUsers = User::count();
-        $lastUpdatedUser = User::latest()->orderBy('updated_at', 'desc')->first()->updated_at;
-        $formattedLastUpdateTeacher = date('d/m/Y H:i:s', strtotime($lastUpdatedUser));
+        $totalUsers = DB::table('users')
+            ->join('roles', 'users.idRole', '=', 'roles.id')
+            ->where('roles.name', 'Student')
+            ->count();
+
+        $lastUpdatedUser = DB::table('users')
+            ->join('roles', 'users.idRole', '=', 'roles.id')
+            ->where('roles.name', 'Student')
+            ->latest('users.updated_at')
+            ->first()?->updated_at;
+
+        $formattedLastUpdateUser = $lastUpdatedUser
+            ? date('d/m/Y H:i:s', strtotime($lastUpdatedUser))
+            : null;
 
         return [
             'totalUsers' => $totalUsers,
-            'lastUpdatedUser' => $formattedLastUpdateTeacher
+            'lastUpdatedUser' => $formattedLastUpdateUser,
         ];
     }
     //tổng số môn học
@@ -48,15 +59,27 @@ class DashboardController extends Controller
     // tổng người dùng có role = "Teacher"
     public function totalTeacher()
     {
-        $totalTeachers = User::where('role', 'Teacher')->count();
-        $lastUpdatedTeacher = User::where('role', 'Teacher')->orderBy('updated_at', 'desc')->first()->updated_at;
-        $formattedLastUpdateTeacher = date('d/m/Y H:i:s', strtotime($lastUpdatedTeacher));
+        $totalTeachers = DB::table('users')
+            ->join('roles', 'users.idRole', '=', 'roles.id')
+            ->where('roles.name', 'Teacher')
+            ->count();
+
+        $lastUpdatedTeacher = DB::table('users')
+            ->join('roles', 'users.idRole', '=', 'roles.id')
+            ->where('roles.name', 'Teacher')
+            ->latest('users.updated_at')
+            ->first()?->updated_at;
+
+        $formattedLastUpdateTeacher = $lastUpdatedTeacher
+            ? date('d/m/Y H:i:s', strtotime($lastUpdatedTeacher))
+            : null;
 
         return [
             'totalTeachers' => $totalTeachers,
-            'lastUpdatedTeacher' => $formattedLastUpdateTeacher
+            'lastUpdatedTeacher' => $formattedLastUpdateTeacher,
         ];
     }
+
     //tổng tiền đã thanh toán
     public function totalPrice()
     {

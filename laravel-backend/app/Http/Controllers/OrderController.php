@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $lesson = Order::with('user', 'subject')->get();
+
+        return response()->json($lesson);
+    }
+
     public function getCurrentRecipts()
     {
         $idUser = Auth::id();
@@ -41,8 +48,7 @@ class OrderController extends Controller
             'payment_status' => 'required|string',
             //'orderID' => 'required|string',
         ]);
-
-        $totalPrice = 0;
+        /* $totalPrice = 0;
         foreach ($validatedData['items'] as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
             $subject = Subject::find($item['idSubject']);
@@ -60,36 +66,32 @@ class OrderController extends Controller
                 return response()->json(['message' => 'Khóa học không khả dụng'], 400);
             }
         }
-        /* $totalPrice = collect($validatedData['items'])->sum(fn ($item) => $item['price'] * $item['quantity']);
-        $orders = collect($validatedData['items'])
-            ->filter(fn ($item) => Subject::find($item['idSubject']))
-            ->map(function ($item) use ($validatedData) {
-                return [
-                    'idUser' => $validatedData['idUser'],
-                    'idSubject' => $item['idSubject'],
-                    'price' => $item['price'],
-                    'quantity' => $item['quantity'],
-                    'payment_method' => $validatedData['payment_method'],
-                    'payment_status' => $validatedData['payment_status'],
-                ];
-            })->toArray();
+ */
+        $subjectIds = collect($validatedData['items'])->pluck('idSubject');
+        $subjects = Subject::findMany($subjectIds);
 
-        if ($orders->isEmpty()) {
-            return response()->json(['message' => 'Khóa học không khả dụng'], 400);
-        } */
+        // Tạo dữ liệu cho các đơn hàng từ items và subjects
+        $orderData = collect($validatedData['items'])->map(function ($item) use ($subjects, $validatedData) {
+            $subject = $subjects->firstWhere('id', $item['idSubject']);
+            return [
+                'idUser' => $validatedData['idUser'],
+                'idSubject' => $item['idSubject'],
+                'price' => $item['price'],
+                'quantity' => $item['quantity'],
+                'payment_method' => $validatedData['payment_method'],
+                'payment_status' => $validatedData['payment_status'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        })->toArray();
 
-        //Order::insert($orders);
-        $user = User::find($validatedData['idUser']);
-        $user->role = "Student";
-        $user->save();
+        Order::insert($orderData);
 
-        return response()->json([
-            'message' => 'Đơn hàng tạo thành công',
-            //'orderID' => $validatedData['orderID'],
-            //'total_price' => $totalPrice,
-        ], 201);
+        // Cập nhật vai trò của người dùng thành "Student"
+        User::where('id', $validatedData['idUser'])->update(['role' => 'Student']);
+
+        return response()->json(['message' => 'Đơn hàng tạo thành công'], 201);
     }
-
     /*     public function totalPrice()
     {
         $total = Order::sum(DB::raw('price * quantity'));

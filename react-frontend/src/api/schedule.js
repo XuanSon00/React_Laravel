@@ -41,6 +41,17 @@ const getSchedule = async () => {
     }
 };
 
+const classOnline = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/classOnline',getAuthHeaders());
+        return response;
+    } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+        throw error;
+    }
+}
+
+
 const createDate = async (data) => {
     try {
         const response = await axios.post('http://localhost:8000/api/schedules', data, getAuthHeaders());
@@ -110,4 +121,4 @@ const getScheduleStudent = async () => {
     }
 };
 
-export { getTeachers, getSchedule,getSubject, createDate, deleteDate,updateDate, deleteAllDate, getScheduleTeacher,getStudentsBySchedule,getScheduleStudent };
+export { getTeachers, getSchedule,classOnline,getSubject, createDate, deleteDate,updateDate, deleteAllDate, getScheduleTeacher,getStudentsBySchedule,getScheduleStudent };

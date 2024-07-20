@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', [UserController::class, 'getCurrentUser']); //thông tin người dùng đăng nhập
     //lịch
     Route::get('/schedules', [ScheduleController::class, 'index']);
+    Route::get('/classOnline', [ScheduleController::class, 'classOnline']);
     Route::get('/schedule/students', [ScheduleController::class, 'getStudentsScheduleList']);
     Route::post('/schedules', [ScheduleController::class, 'store']);
     Route::put('/schedules/{id}', [ScheduleController::class, 'update']);
@@ -71,12 +72,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('schedules', [ScheduleController::class, 'destroyAll']);
     Route::get('/getScheduleTeacher', [ScheduleController::class, 'getScheduleTeacher']); // lấy lịch giảng dạy 
     Route::get('/teacher/students/{idSchedule}', [ScheduleController::class, 'getStudentsBySchedule']); //lấy danh sách học sinh
-    //thanh toán(paypal)
-    //Route::get('/orders', [OrderController::class, 'totalPrice']);
     //lịch sử thanh toán
     Route::get('/orders/history', [OrderController::class, 'getOrderHistory']);
     //hóa đơn
     Route::get('/order/recipt', [OrderController::class, 'getCurrentRecipts']);
+    Route::get('/recipt', [OrderController::class, 'index']);
     //Đăng ký lớp học
     Route::post('/enroll', [enrollConrtoller::class, 'store']);
     Route::get('/enroll', [enrollConrtoller::class, 'index']);
@@ -90,10 +90,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/lessons', [LessonController::class, 'store']);
     Route::put('/lessons/{id}', [LessonController::class, 'update']);
     Route::delete('/lessons/{id}', [LessonController::class, 'destroy']);
-    //chi tiết (online)
+    //chi tiết lớp học(online)
     Route::get('/online/subjects/{id}', [LessonController::class, 'show']);
     //thông tin dashboard
     Route::get('/dashboard-data', [DashboardController::class, 'getDashboardData']);
+    //chọn ra id admin-super
+    Route::get('/admin/super-admins', [UserController::class, 'getSuperAdmin']);
 });
 
 //thanh toán(paypal)

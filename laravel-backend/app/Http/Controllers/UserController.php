@@ -43,6 +43,16 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    //chọn ra id Admin 
+    public function getSuperAdmin()
+    {
+        $adminId = 14; //danh sách Admin(chính)
+
+        $admin = User::find($adminId);
+
+        return response()->json($admin);
+    }
+    //xóa
     public function destroy($id)
     {
         $user = User::find($id);
@@ -55,14 +65,19 @@ class UserController extends Controller
 
     public function destroyAll()
     {
-        //User::truncate();
-        $nonAdminUsers = User::where('role', '!=', 'Admin')->get();
 
-        foreach ($nonAdminUsers as $user) {
-            $user->delete();
+        $currentUser = Auth::user();
+        $allowedIds = [14]; //danh sách Admin(chính)
+
+        if ($currentUser->role === 'Admin' && $currentUser->id === in_array($currentUser->id, $allowedIds)) {
+            User::where('role', '!=', 'Admin')->delete();
+
+            return response()->json(['message' => 'Xóa tất cả người dùng không phải Admin thành công'], 200);
+        } else if ($currentUser->role === 'Admin') {
+            User::where('role', '!=', 'Admin')->delete();
+
+            return response()->json(['message' => 'Xóa tất cả người dùng không phải Admin thành công'], 200);
         }
-
-        return response()->json(['message' => 'Xóa thành công'], 200);
     }
     /*     //Tổng số tài khoản
     public function totalUser()

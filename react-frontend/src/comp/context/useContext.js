@@ -28,6 +28,7 @@ const register = async (email, password) => {
       toast.success('Đăng ký thành công!',{ autoClose: 500 });
       setTimeout(() => {
         navigate('/login');
+        window.location.reload();
       }, 2000); 
     }
   } catch (error) {
@@ -35,7 +36,8 @@ const register = async (email, password) => {
       const errorMessage = error.response.data.message || 'Đăng ký không thành công';
       switch (error.response.status) {
         case 400:
-          setErrors('Yêu cầu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
+          //setErrors('Yêu cầu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
+          setErrors('Email đã tồn tại!');
           break;
         case 401:
           setErrors('Email hoặc mật khẩu không đúng.');

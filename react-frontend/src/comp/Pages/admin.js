@@ -10,6 +10,7 @@ import List from '../Admin/list';
 import './admin.css';
 import EducationType from '../Admin/educationType';
 import Lesson from '../Admin/lesson';
+import Bill from '../Admin/bill';
 
 const Admin = () => {
   return (
@@ -28,6 +29,7 @@ const Admin = () => {
           <Route path="/lesson" element={<Lesson />} />
           <Route path="/date" element={<Date />} />
           <Route path="/list" element={<List />} />
+          <Route path="/bill" element={<Bill />} />
         </Routes>
       </div>
     </div>

@@ -126,13 +126,10 @@ const Date = () => {
       sortable: true,
     },
     {
-      name: 'Số lượng chỗ còn lại',
-      selector: row => (
-        <span>
-          <span style={{ color: 'red' }}>{row.available_seats}</span> / <span>{row.subject.max_students}</span>
-        </span>
-      ),
+      name: 'Loại hình giáo dục',
+      selector: row =>row.subject.education_type.type , 
       sortable: true,
+      cell: row => <div style={{ color: row.subject.education_type.type === 'Classroom' ? 'orange' : 'green' }}>{row.subject.education_type.type}</div>,
     },
     {
       name: '',

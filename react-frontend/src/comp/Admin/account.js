@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { deleteUser, deleteAllUser, getUsers, updateUser, userInfo } from '../../api/account';
+import { deleteUser, deleteAllUser, getUsers, updateUser, userInfo, getIdAdmin } from '../../api/account';
 import DataTable from 'react-data-table-component';
 import FormAccount from '../../form/formAccount';
 import './account.css';
@@ -16,6 +16,7 @@ const Account = () => {
   const [editForm, setEditForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [idAdmin, setIdAdmin] = useState([]);
   const loadUser = async () => {
     try {
       const response = await getUsers();
@@ -25,6 +26,19 @@ const Account = () => {
     } catch (error) {
       console.error('Lỗi khi lấy danh sách môn học:', error);
       setUsers([]);
+      setLoading(false);
+    }
+  };
+
+  const loadIdAdmin = async () => {
+    try {
+      const response = await getIdAdmin();
+      //console.log('Dữ liệu nhận từ API:', response);
+      setIdAdmin(response);
+      setLoading(false);
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách môn học:', error);
+      setIdAdmin([]);
       setLoading(false);
     }
   };
@@ -42,6 +56,7 @@ const Account = () => {
   useEffect(() => {
     loadUser();
     loadCurrentUser();
+    loadIdAdmin()
   }, []);
 
   const handleEdit = (user) => {
@@ -55,7 +70,7 @@ const Account = () => {
   };
   
   const handleDeleteAll = async () => {
-    if (window.confirm('Bạn có chắc muốn xóa tất cả người dùng không phải Admin không?',)) {
+    if (window.confirm('Bạn có chắc muốn xóa tất cả người dùng ?',)) {
       try {
         const response = await deleteAllUser();
         loadUser();
@@ -66,7 +81,6 @@ const Account = () => {
       }
     }
   };
-
 
   const handleFormSubmit = async (user) => {
     if (selectedAccount) {
@@ -81,25 +95,39 @@ const Account = () => {
     setEditForm(false);
   };
 
+  const RowStyle = [
+    {
+      when: row => currentUser && row.id === currentUser.id,
+      style: {
+        backgroundColor: '#e0f2f1',
+      },
+    },
+  ];
+
   const columns = [
     {
       name: '',
-      selector: row => currentUser && row.id !== currentUser.id 
-      ? <input type='checkbox' className="btncheck" onChange={() => handleCheckboxChange(row.id)} /> 
-      : null,
-    sortable: false,
+      selector: row => {
+        if (currentUser && row.id !== currentUser.id && row.id !== idAdmin.id) {
+          return (
+            <input type='checkbox' className="btncheck" onChange={() => handleCheckboxChange(row.id)} />
+          );
+        }
+        return null;
+      },
+      sortable: false,
     },
     {
       name: 'Tên',
       selector: (row) => row.name,
       sortable: true,
-      cell: (row) => <div>{row.name}</div>,
+      cell: (row) => <div >{row.name}</div>,
     },
     {
       name: 'Email',
       selector: (row) => row.email,
       sortable: true,
-      cell: (row) => <div>{row.email}</div>,
+      cell: (row) => <div style={{ }}>{row.email}</div>,
     },
     {
       name: 'Trạng thái',
@@ -123,14 +151,33 @@ const Account = () => {
     },
     {
       name: '',
-      cell: (row) => (
+      selector: row => (
         <>
-          <button className='editForm' onClick={() => handleEdit(row)}><EditIcon /></button>
-          <button className='deleteBtn' onClick={() => handleDelete(row.id)}><DeleteIcon /></button>
+          {/* Hiển thị EditIcon */}
+          {currentUser && currentUser.role === "Admin" &&
+            (row.id !== idAdmin.id) && // Không hiển thị cho admin chính idAdmin.id
+            (row.id === currentUser.id || row.id !== currentUser.id) && // Hiển thị cho admin phụ và cho tài khoản đang đăng nhập
+            (
+              <button className='editForm' onClick={() => handleEdit(row)}>
+                <EditIcon />
+              </button>
+            )
+          }
+          {/* Hiển thị DeleteIcon */}
+          {currentUser && currentUser.role === "Admin" &&
+            (row.id !== idAdmin.id) && // Không hiển thị cho admin chính
+            (row.id !== currentUser.id) && // Không hiển thị cho tài khoản đang đăng nhập
+            (
+              <button className='deleteBtn' onClick={() => handleDelete(row.id)}>
+                <DeleteIcon />
+              </button>
+            )
+          }
         </>
       ),
       sortable: false,
-    },
+    }
+    
   ];
 
   const handleCheckboxChange = (id) => {
@@ -195,9 +242,10 @@ const Account = () => {
                 columns={columns}
                 data={filteredAccount}
                 pagination
-                paginationPerPage={5}
+                paginationPerPage={10}
                 progressPending={loading}
                 highlightOnHover
+                conditionalRowStyles={RowStyle}
               />
             </div>
           </div>

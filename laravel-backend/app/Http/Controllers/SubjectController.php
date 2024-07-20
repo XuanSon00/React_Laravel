@@ -12,13 +12,20 @@ class SubjectController extends Controller
 {
     public function index(Request $request)
     {
-        // $subjects = Subject::with('educationType')->get();
+        $grade = $request->query('grade');
+        $searchTerm = $request->query('searchTerm', '');
 
-        // return response()->json($subjects);
+        $query = Subject::with('educationType');
 
-        $limit = $request->input('limit', 10);
-        $subjects = Subject::with('educationType')->paginate($limit);
+        if ($grade) {
+            $query->where('grade', $grade);
+        }
 
+        if ($searchTerm) {
+            $query->where('name', 'LIKE', "%$searchTerm%");
+        }
+
+        $subjects = $query->paginate(10);
         return response()->json($subjects);
     }
 
@@ -122,13 +129,4 @@ class SubjectController extends Controller
 
         return response()->json(['message' => 'Bạn có quyền truy cập.'], 200);
     }
-
-    //tìm kiếm môn học
-    /*     public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $subjects = Subject::where('name', 'LIKE', "%{$query}%")->get();
-        return response()->json($subjects);
-    }
- */
 }
