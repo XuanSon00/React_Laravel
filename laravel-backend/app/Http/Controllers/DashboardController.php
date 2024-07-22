@@ -49,8 +49,9 @@ class DashboardController extends Controller
     public function totalStudent()
     {
         $totalStudents = User::where('role', 'Student')->count();
-        $lastUpdatedStudent = User::where('role', 'Student')->orderBy('updated_at', 'desc')->first()->updated_at;
-        $formattedLastUpdateStudent = date('d/m/Y H:i:s', strtotime($lastUpdatedStudent));
+        $lastUpdatedStudent = User::where('role', 'Student')->orderBy('updated_at', 'desc')->first()->updated_at ?? null;
+
+        $formattedLastUpdateStudent = $lastUpdatedStudent ? date('d/m/Y H:i:s', strtotime($lastUpdatedStudent)) : null;
         return [
             'totalStudents' => $totalStudents,
             'lastUpdatedStudent' => $formattedLastUpdateStudent
@@ -68,7 +69,7 @@ class DashboardController extends Controller
             ->join('roles', 'users.idRole', '=', 'roles.id')
             ->where('roles.name', 'Teacher')
             ->latest('users.updated_at')
-            ->first()?->updated_at;
+            ->first()?->updated_at ?? null;
 
         $formattedLastUpdateTeacher = $lastUpdatedTeacher
             ? date('d/m/Y H:i:s', strtotime($lastUpdatedTeacher))
