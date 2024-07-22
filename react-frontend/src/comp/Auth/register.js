@@ -5,7 +5,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import axios from 'axios';
 import { UserContext } from '../context/useContext';
-import { Toaster } from 'react-hot-toast';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -26,8 +25,8 @@ const Register = () => {
   }
   return (
   <>
-  <div><Toaster position="top-center" reverseOrder={false} /></div>
-  <div className="containerRegister" id="register">
+{/*   <div><Toaster position="top-center" reverseOrder={false} /></div>
+ */}  <div className="containerRegister" id="register">
     <h3>Đăng ký</h3>
     <form onSubmit={handleSubmit}>
       <div className="register-input">

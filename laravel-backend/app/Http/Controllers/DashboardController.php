@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $totalUsers = DB::table('users')
             ->join('roles', 'users.idRole', '=', 'roles.id')
-            ->where('roles.name', 'Student')
+            // ->where('roles.name', 'Student')
             ->count();
 
         $lastUpdatedUser = DB::table('users')
@@ -84,14 +84,17 @@ class DashboardController extends Controller
     public function totalPrice()
     {
         $total = Order::sum(DB::raw('price * quantity'));
-        $lastUpdatedPrice = Order::latest()->orderBy('updated_at', 'desc')->first()->updated_at;
-        $formattedLastUpdatePrice = date('d/m/Y H:i:s', strtotime($lastUpdatedPrice));
+
+        $lastUpdatedPrice = Order::latest()->orderBy('updated_at', 'desc')->first()->updated_at ?? null;
+
+        $formattedLastUpdatePrice = $lastUpdatedPrice ? date('d/m/Y H:i:s', strtotime($lastUpdatedPrice)) : null;
 
         return [
             'total' => $total,
             'lastUpdatedPrice' => $formattedLastUpdatePrice
         ];
     }
+
 
     public function getDashboardData()
     {

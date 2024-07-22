@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Role;
 use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\User;
@@ -88,7 +89,11 @@ class OrderController extends Controller
         Order::insert($orderData);
 
         // Cập nhật vai trò của người dùng thành "Student"
-        User::where('id', $validatedData['idUser'])->update(['role' => 'Student']);
+        $roleId = Role::where('name', 'Student')->value('id');
+
+        User::where('id', $validatedData['idUser'])->update(['idRole' => $roleId]);
+
+        //User::where('id', $validatedData['idUser'])->update(['role' => 'Student']);
 
         return response()->json(['message' => 'Đơn hàng tạo thành công'], 201);
     }

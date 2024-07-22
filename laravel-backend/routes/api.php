@@ -96,6 +96,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/dashboard-data', [DashboardController::class, 'getDashboardData']);
     //chọn ra id admin-super
     Route::get('/admin/super-admins', [UserController::class, 'getSuperAdmin']);
+
+    Route::get('/totalTeacher', [DashboardController::class, 'totalTeacher']);
 });
 
 //thanh toán(paypal)
