@@ -52,14 +52,16 @@ const handleFormSubmit = async (role) => {
   try{
     if (selectedRole) {
       await updateRole(selectedRole.id, role);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
     } else {
         await createRole(role);
+        toast.success('Thêm mới thành công!', { autoClose: 500 });
     }
     setAddFormVisible(false);
     loadRoles();
   } catch (error){
     console.error('Error :', error);
-
+    toast.error('Đã xảy ra lỗi khi thêm/sửa!', { autoClose: 500 });
   }
     
 };

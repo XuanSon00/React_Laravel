@@ -60,8 +60,10 @@ const Lesson = () => {
   const handleFormSubmit = async (lesson) => {
     if (selectedLesson) {
       await updateLesson(selectedLesson.id, lesson);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
     } else {
       await createLesson(lesson);
+      toast.success('Thêm mới thành công!', { autoClose: 500 });
     }
     setAddForm(false);
     loadLesson();

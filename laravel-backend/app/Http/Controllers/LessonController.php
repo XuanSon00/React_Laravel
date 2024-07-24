@@ -33,6 +33,7 @@ class LessonController extends Controller
             $validatedData['video_url'] = asset('storage/videos/' . $videoName);
         }
 
+
         $lesson = Lesson::create($validatedData);
         $lesson->video_url = asset('storage/' . $lesson->video_url);
 
@@ -44,6 +45,10 @@ class LessonController extends Controller
         $subject = Subject::with('lessons', 'educationType')->findOrFail($id);
         if (!$subject) {
             return response()->json(['message' => 'không tìm được bài học'], 404);
+        }
+        foreach ($subject->lessons as $lesson) {
+            //$lesson->video_url = public_path('videos/' . $lesson->video_url);
+            $lesson->video_url = asset('storage/videos') . '/' . $lesson->video_url;
         }
         return response()->json($subject);
     }

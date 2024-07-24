@@ -56,12 +56,13 @@ const Subject = () => {
     }
   };
   
-
   const handleFormSubmit = async (subject) => {
     if (selectedSubject) {
       await updateSubject(selectedSubject.id, subject);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
     } else {
       await createSubject(subject);
+      toast.success('Thêm mới thành công!', { autoClose: 500 });
     }
     setAddForm(false);
     loadSubjects();

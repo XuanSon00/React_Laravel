@@ -15,7 +15,7 @@ const ClassOnline = () => {
             setSubject(response.data);
             setLoading(false);
         } catch (error) {
-            console.error('Lỗi khi lấy môn học:', error);
+            //console.error('Lỗi khi lấy môn học:', error);
             setSubject(null);
             setLoading(false);
         }
@@ -69,10 +69,9 @@ const ClassOnline = () => {
                                 subject.lessons.map((lesson, index) => (
                                     <div key={index} className='lesson-info'>
                                         <h3>{lesson.title}</h3>
-                                        <p>Video URL:</p>
+                                        <p>Video URL: {}</p>
                                         <video width="600" controls>
                                         <source src={lesson.video_url} type="video/mp4" />
-                                        Your browser does not support the video tag.
                                     </video>
                                         <p>Nội dung: {lesson.content}</p>
                                     </div>

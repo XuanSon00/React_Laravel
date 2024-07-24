@@ -3,6 +3,7 @@ import './account.css';
 import { updateUserInfo, userInfo } from '../../api/account';
 import SettingsIcon from '@mui/icons-material/Settings';
 import FormUser from '../../form/formUser';
+import { toast } from 'react-toastify';
 const Account = () => {
   const [user, setUser] = useState([]);
   const [editForm, setEditForm] = useState(false);
@@ -34,6 +35,7 @@ const Account = () => {
     try{
       const data = await updateUserInfo(updatedUser);
       setUser(data);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
       handleFormClose();
     }catch(error){
       console.error('lỗi cập nhật ' , error)

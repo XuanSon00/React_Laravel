@@ -56,8 +56,10 @@ const EducationType = () => {
   const handleFormSubmit = async (type) => {
     if (selectedType) {
       await updateEducation(selectedType.id, type);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
     } else {
       await createEducation(type);
+      toast.success('Thêm mới thành công!', { autoClose: 500 });
     }
     setAddFormVisible(false);
     loadTypes();

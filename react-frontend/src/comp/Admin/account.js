@@ -94,6 +94,7 @@ const Account = () => {
   const handleFormSubmit = async (user) => {
     if (selectedAccount) {
       await updateUser(selectedAccount.id, user);
+      toast.success('Cập nhật thành công!', { autoClose: 500 });
     }
     setEditForm(false);
     loadUser();

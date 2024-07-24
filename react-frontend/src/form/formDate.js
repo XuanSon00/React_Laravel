@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import './formDate.css';
 import { getSubject, getTeachers, createDate, updateDate } from '../api/schedule';
 import { addDays, format } from 'date-fns'; 
+import { toast } from 'react-toastify';
 
 const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
   const [subjects, setSubjects] = useState([]);
@@ -66,8 +67,10 @@ const FormDate = ({ onClose, setLoading, selectedDate, fetchSchedules }) => {
       setLoading(true);
       if (selectedDate) {
         await updateDate(selectedDate.id, formData);
+        toast.success('Cập nhật thành công!', { autoClose: 500 });
       } else {
         await createDate(formData);
+        toast.success('Thêm mới thành công!', { autoClose: 500 });
       }
       fetchSchedules();
       onClose();
