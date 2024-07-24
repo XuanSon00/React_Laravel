@@ -73,7 +73,7 @@ const Bill = () => {
     <>
       <div className='account'>
         <div className='accountData'>
-          <h3>Tài khoản</h3>
+          <h3>Hóa đơn</h3>
           <div className='data'>
             <div className='btnData'>
               <div className='searchBox'>

@@ -19,7 +19,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await getDashboardData();
-        console.log(response.total)
+        //console.log(response.total)
 
         setTotalUsers(response.totalUsers);
         setLastUpdatedUsers(response.lastUpdatedUser);

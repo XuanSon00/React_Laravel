@@ -93,7 +93,7 @@ class OrderController extends Controller
 
         User::where('id', $validatedData['idUser'])->update(['idRole' => $roleId]);
 
-        //User::where('id', $validatedData['idUser'])->update(['role' => 'Student']);
+        User::where('id', $validatedData['idUser'])->update(['role' => 'Student']);
 
         return response()->json(['message' => 'Đơn hàng tạo thành công'], 201);
     }

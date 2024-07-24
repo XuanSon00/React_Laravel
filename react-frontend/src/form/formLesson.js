@@ -7,7 +7,7 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [title, setTitle] = useState('');
-  const [video, setVideo] = useState('');
+  const [video, setVideo] = useState(null);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
 
@@ -27,37 +27,40 @@ const FormLesson = ({ onClose, onSubmit, selectedLesson }) => {
     if (selectedLesson) {
         setSelectedSubject(selectedLesson.idSubject);
         setTitle(selectedLesson.title);
-        setVideo(selectedLesson.video_url);
+        setVideo(null);
         setContent(selectedLesson.content);
     }
 }, [selectedLesson]);
 
 const validateForm = () => {
-  if (!title.trim() || !video.trim() || !content.trim()) {
+  if (!title.trim() || !content.trim() || !video) {
     return "Vui lòng không để trống!";
   }
   return "";
 };
-const handleSubmit = (e) => {
+
+const handleSubmit = async (e) => {
   e.preventDefault();
   const validationError = validateForm();
   if (validationError) {
-    setError(validationError);
-    return;
+      setError(validationError);
+      return;
   }
-  try{
-    onSubmit({
-      idSubject: selectedSubject,
-      title: title,
-      video_url: video,
-      content: content,
-    });
-    onClose();
-    } catch (error) {
-      setError('Có lỗi xảy ra vui lòng thử lại sau')
-    }
+  try {
+      const formData = new FormData();
+      formData.append('idSubject', selectedSubject);
+      formData.append('title', title);
+      formData.append('video_url', video);
+      formData.append('content', content);
+
+      await onSubmit(formData);
+      onClose();
+  } catch (error) {
+      setError('Có lỗi xảy ra vui lòng thử lại sau');
+  }
 };
-  
+
+
     return (
       <div className='form_detail'>
         <div className='burForm' onClick={onClose}></div>
@@ -80,7 +83,7 @@ const handleSubmit = (e) => {
             </div>
             <div className='input_name'>
               <label htmlFor='video' className='label'>Video: </label>
-              <input type='text' name='video' className='input' value={video} onChange={(e) => setVideo(e.target.value)} required />
+              <input type='file' name='video' className='input' onChange={(e) => setVideo(e.target.files[0])} required />
             </div>
             <div className='input_name'>
               <label htmlFor='content' className='label'>Nội dung: </label>

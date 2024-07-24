@@ -39,9 +39,22 @@ const Lesson = () => {
     setAddForm(true);
   };
 
-  const handleDelete = async (id) => {
+  /* const handleDelete = async (id) => {
     await deleteLesson(id);
     loadLesson();
+  }; */
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+      try {
+        await deleteLesson(id);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadLesson();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa:', error);
+        toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+      }
+    }
   };
 
   const handleFormSubmit = async (lesson) => {
@@ -146,11 +159,23 @@ const Lesson = () => {
       lesson.video_url.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteSelected = () => {
-    selectedRows.forEach(async (id) => {
-      await handleDelete(id);
-    });
-    setSelectedRows([]);
+  const handleDeleteSelected = async () => {
+    if (selectedRows.length === 0) {
+      toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+      return;
+    }
+  
+    if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+      try {
+        await Promise.all(selectedRows.map(id => deleteLesson(id)));
+        setSelectedRows([]);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadLesson();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+        toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+      }
+    }
   };
 
   const handleDeleteAll = async () => {

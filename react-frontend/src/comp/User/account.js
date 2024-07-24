@@ -18,8 +18,6 @@ const Account = () => {
     }
   };
 
-
-
   useEffect(() => {
     fetchUser();
   }, []);

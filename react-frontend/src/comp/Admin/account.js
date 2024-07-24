@@ -17,6 +17,7 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
   const [idAdmin, setIdAdmin] = useState([]);
+
   const loadUser = async () => {
     try {
       const response = await getUsers();
@@ -65,8 +66,16 @@ const Account = () => {
   };
 
   const handleDelete = async (id) => {
-    await deleteUser(id);
-    loadUser();
+    if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+      try {
+        await deleteUser(id);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadUser();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+        toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+      }
+    }
   };
   
   const handleDeleteAll = async () => {
@@ -203,11 +212,27 @@ const Account = () => {
   
 
   const handleDeleteSelected = async () => {
-    await Promise.all(selectedRows.map(async (id) => {
-      await handleDelete(id);
+    if (selectedRows.length === 0) {
+      toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+      return;
+    }
+    /* await Promise.all(selectedRows.map(async (id) => {
+      await deleteUser(id);
     }));
-    setSelectedRows([]);
-  };
+    setSelectedRows([])
+ */
+    if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+      try {
+        await Promise.all(selectedRows.map(id => deleteUser(id)));
+        setSelectedRows([]);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadUser();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+        toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+      }
+    }
+  }; 
 
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);

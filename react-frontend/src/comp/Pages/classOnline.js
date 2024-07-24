@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './detail.css';
 import { lessonOnline } from '../../api/lesson';
 
@@ -7,11 +7,11 @@ const ClassOnline = () => {
     const { id } = useParams();
     const [subject, setSubject] = useState(null);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-
+    
     const loadSubjectDetail = async () => {
         try {
             const response = await lessonOnline(id);
+            //console.log(response.data)
             setSubject(response.data);
             setLoading(false);
         } catch (error) {
@@ -20,7 +20,6 @@ const ClassOnline = () => {
             setLoading(false);
         }
     };
-
 
     useEffect(() => {
         loadSubjectDetail();
@@ -49,11 +48,7 @@ const ClassOnline = () => {
                             <p>Lớp: {subject.grade}</p>
                             <p>Tối đa: {subject.max_students} người</p>
                             <p>Loại hình giảng dạy: 
-                                <span style={{
-                                    padding: "5px", 
-                                    borderRadius: '10px', 
-                                    color:"#fff", 
-                                    marginLeft:"5px",
+                                <span style={{padding: "5px", borderRadius: '10px', color:"#fff", marginLeft:"5px",
                                     background: subject.education_type.type === "Classroom" ? "orange" : "blue"
                                 }}>{subject.education_type.type}</span>
                             </p>
@@ -74,7 +69,11 @@ const ClassOnline = () => {
                                 subject.lessons.map((lesson, index) => (
                                     <div key={index} className='lesson-info'>
                                         <h3>{lesson.title}</h3>
-                                        <p>Video URL: <a href={lesson.video_url} target="_blank" rel="noopener noreferrer">{lesson.video_url}</a></p>
+                                        <p>Video URL:</p>
+                                        <video width="600" controls>
+                                        <source src={lesson.video_url} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
                                         <p>Nội dung: {lesson.content}</p>
                                     </div>
                                 ))

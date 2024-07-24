@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'; // lấy id từ URL
 import { detailSubject } from '../../api/subject';
 import './detail.css'
 import { CartContext } from '../context/cartContext';
-import { getOrderUser } from '../../api/order';
 const SubjectDetail = () => {
     const { id } = useParams();
     const [subject, setSubject] = useState(null);

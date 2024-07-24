@@ -120,11 +120,24 @@ const login = async (email, password) => {
       }, 1000);
   }
   } catch (error) {
-    if (error.response && error.response.data) {
-      setErrors(error.response.data.message || 'Đăng nhập không thành công');
-    } else {
-      setErrors('Đăng nhập không thành công');
+    let errorMessage = 'Đăng nhập không thành công';
+
+    switch (error.response?.status) {
+      case 400:
+        errorMessage = 'Dữ liệu không hợp lệ';
+        break;
+      case 401:
+        errorMessage = 'Tài khoản hoặc mật khẩu không đúng';
+        break;
+      case 403:
+        errorMessage = 'Tài khoản đang bị khóa!';
+        break;
+      default:
+        errorMessage = 'Có lỗi xảy ra, vui lòng thử lại sau';
+        break;
     }
+    setErrors(errorMessage);
+    //console.error('Lỗi đăng nhập:', error);
   }
 };
 //Đăng xuất

@@ -35,9 +35,22 @@ const EducationType = () => {
   setAddFormVisible(true);
   };
 
-  const handleDelete = async (id) => {
+  /* const handleDelete = async (id) => {
     await deleteEducation(id);
     loadTypes();
+  };
+ */
+  const handleDelete = async (id) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+      try {
+        await deleteEducation(id);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadTypes();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa:', error);
+        toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+      }
+    }
   };
 
   const handleFormSubmit = async (type) => {
@@ -113,9 +126,22 @@ const EducationType = () => {
   );
 
   const handleDeleteSelected = async () => {
-    await Promise.all(selectedRows.map(id => deleteEducation(id)));
-    setSelectedRows([]);
-    loadTypes();
+    if (selectedRows.length === 0) {
+      toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+      return;
+    }
+  
+    if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+      try {
+        await Promise.all(selectedRows.map(id => deleteEducation(id)));
+        setSelectedRows([]);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadTypes();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+        toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+      }
+    }
   };
 
   const handleDeleteAll = async () => {

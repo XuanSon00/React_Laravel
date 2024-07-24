@@ -61,6 +61,10 @@ class AuthController extends Controller
             return response()->json(['message' => 'Tài khoản hoặc mật khẩu không đúng'], 401);
         }
 
+        if ($user->status == 0) {
+            return response()->json(['message' => 'Tài khoản đang bị khóa'], 403);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([

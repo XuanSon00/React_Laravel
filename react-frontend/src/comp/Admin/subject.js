@@ -38,10 +38,24 @@ const Subject = () => {
     setSelectedSubject(subject);
     setAddForm(true);
   };
-  const handleDelete = async (id) => {
+  /* const handleDelete = async (id) => {
     await deleteSubject(id);
     loadSubjects();
+  }; */
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+      try {
+        await deleteSubject(id);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadSubjects();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa:', error);
+        toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+      }
+    }
   };
+  
 
   const handleFormSubmit = async (subject) => {
     if (selectedSubject) {
@@ -157,11 +171,30 @@ const customStyles = {
     subject.active.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
-  const handleDeleteSelected = () => {
+  /* const handleDeleteSelected = () => {
     selectedRows.forEach(async (id) => {
       await handleDelete(id);
     });
     setSelectedRows([]);
+  }; */
+
+  const handleDeleteSelected = async () => {
+    if (selectedRows.length === 0) {
+      toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+      return;
+    }
+  
+    if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+      try {
+        await Promise.all(selectedRows.map(id => deleteSubject(id)));
+        setSelectedRows([]);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        loadSubjects();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+        toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+      }
+    }
   };
 
   const handleDeleteAll = async () => {

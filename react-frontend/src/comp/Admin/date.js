@@ -39,11 +39,15 @@ const Date = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await deleteDate(id);
-      fetchSchedules();
-    } catch (error) {
-      console.error('Lỗi khi xóa lịch giảng dạy:', error);
+    if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+      try {
+        await deleteDate(id);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        fetchSchedules();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa:', error);
+        toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+      }
     }
   };
 
@@ -60,7 +64,7 @@ const Date = () => {
     }
   };
 
-  const handleDeleteSelected = async () => {
+  /* const handleDeleteSelected = async () => {
     try {
       for (const id of selectedRows) {
         await handleDelete(id);
@@ -68,6 +72,25 @@ const Date = () => {
       setSelectedRows([]);
     } catch (error) {
       console.error('Error deleting selected items:', error);
+    }
+  }; */
+
+  const handleDeleteSelected = async () => {
+    if (selectedRows.length === 0) {
+      toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+      return;
+    }
+  
+    if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+      try {
+        await Promise.all(selectedRows.map(id => deleteDate(id)));
+        setSelectedRows([]);
+        toast.success('Xóa thành công.',{ autoClose: 500 });
+        fetchSchedules();
+      } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa', error);
+        toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+      }
     }
   };
 

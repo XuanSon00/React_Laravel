@@ -36,8 +36,16 @@ const handleEdit = (role) => {
 };
 
 const handleDelete = async (id) => {
-    await deleteRole(id);
-    loadRoles();
+  if (window.confirm('Bạn có chắc chắn muốn xóa mục này không?')) {
+    try {
+      await deleteRole(id);
+      toast.success('Xóa thành công.',{ autoClose: 500 });
+      loadRoles();
+    } catch (error) {
+      console.error('Đã xảy ra lỗi khi xóa:', error);
+      toast.error('Đã xảy ra lỗi khi xóa.',{ autoClose: 500 });
+    }
+  }
 };
 
 const handleFormSubmit = async (role) => {
@@ -115,9 +123,22 @@ const filteredRoles = roleStatus.filter(role =>
 );
 
 const handleDeleteSelected = async () => {
-  await Promise.all(selectedRows.map(id => deleteRole(id)));
-  setSelectedRows([]);
-  loadRoles();
+  if (selectedRows.length === 0) {
+    toast.warning('Bạn phải chọn ít nhất một mục để xóa.',{ autoClose: 500 });
+    return;
+  }
+
+  if (window.confirm('Bạn có chắc chắn muốn xóa các mục đã chọn không?',)) {
+    try {
+      await Promise.all(selectedRows.map(id => deleteRole(id)));
+      setSelectedRows([]);
+      toast.success('Xóa thành công.',{ autoClose: 500 });
+      loadRoles();
+    } catch (error) {
+      console.error('Đã xảy ra lỗi khi xóa vai trò:', error);
+      toast.error('Đã xảy ra lỗi khi xóa!',{ autoClose: 500 });
+    }
+  }
 };
 
 const handleDeleteAll = async () => {
