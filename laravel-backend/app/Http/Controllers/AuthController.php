@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -28,10 +29,14 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $randomString = Str::random(rand(3, 5));
+        $userName = 'user-' . $randomString;
+
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'idRole' => null,
+            'name' => $userName,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

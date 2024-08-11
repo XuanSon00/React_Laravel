@@ -11,6 +11,7 @@ import { Link, } from 'react-router-dom';
 import { UserContext } from '../context/useContext';
 import { CartContext } from '../context/cartContext';
 import { useCookies } from 'react-cookie';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Nav = ({isSearching, handleFilterChange }) => {
   const { totalSubject } = useContext(CartContext)
@@ -46,6 +47,7 @@ const handleEnter = (e) =>{
         {
           userEmail ?
           <div className='userDropdown'>
+            <MenuIcon className='menu-icon' onClick={()=> setOpen(!open)}/>
             <div className='userImg' onClick={()=> setOpen(!open)}>
               <img src='/img/user-1.png' alt='avatar'/>
               <h3>{userEmail}</h3>

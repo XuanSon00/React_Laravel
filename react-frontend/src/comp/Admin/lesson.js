@@ -184,15 +184,16 @@ const Lesson = () => {
     if (window.confirm('Bạn có chắc muốn xóa tất cả bài học không?')) {
       try {
         const response = await deleteAllLessons();
-        setLessons([]);
+        //setLessons();
         loadLesson();
-        toast.success(response.data.message,{ autoClose: 500 });
+        toast.success('Xóa thành công.',{ autoClose: 500 });
       } catch (error) {
         toast.error('có lỗi khi xóa',{ autoClose: 500 });
       console.error(error);
       }
     }
   };
+  
   
   const handleFilterChange = (e) => {
     setSearchTerm(e.target.value);

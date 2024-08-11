@@ -60,7 +60,7 @@ class DashboardController extends Controller
     // tổng người dùng có role = "Teacher"
     public function totalTeacher()
     {
-        $totalTeachers = DB::table('users')
+        /* $totalTeachers = DB::table('users')
             ->join('roles', 'users.idRole', '=', 'roles.id')
             ->where('roles.name', 'Teacher')
             ->count();
@@ -69,7 +69,10 @@ class DashboardController extends Controller
             ->join('roles', 'users.idRole', '=', 'roles.id')
             ->where('roles.name', 'Teacher')
             ->latest('users.updated_at')
-            ->first()?->updated_at ?? null;
+            ->first()?->updated_at ?? null; */
+
+        $totalTeachers = User::where('role', 'Teacher')->count();
+        $lastUpdatedTeacher = User::where('role', 'Teacher')->orderBy('updated_at', 'desc')->first()->updated_at ?? null;
 
         $formattedLastUpdateTeacher = $lastUpdatedTeacher
             ? date('d/m/Y H:i:s', strtotime($lastUpdatedTeacher))

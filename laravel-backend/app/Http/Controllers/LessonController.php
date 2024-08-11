@@ -30,12 +30,13 @@ class LessonController extends Controller
             $videoFile = $request->file('video_url');
             $videoName = $videoFile->getClientOriginalName(); // lấy tên file gốc
             $videoPath = $videoFile->storeAs('videos', $videoName, 'public'); // lưu video với tên gốc
-            $validatedData['video_url'] = asset('storage/videos/' . $videoName);
+            //$validatedData['video_url'] = asset('storage/videos/' . $videoName);
+            $validatedData['video_url'] = $videoName;
         }
 
 
         $lesson = Lesson::create($validatedData);
-        $lesson->video_url = asset('storage/' . $lesson->video_url);
+        //$lesson->video_url = asset('storage/' . $lesson->video_url);
 
         return response()->json($lesson, 201);
     }

@@ -147,7 +147,7 @@
     color: rgba(255, 255, 255, 0.9); 
     padding: 5px;
     border-radius: 10px; 
-    z-index: 10;
+    z-index: 1;
 }
 
 .home .trending .container .left_box .subject .container .box:hover .img_box .icon
@@ -433,5 +433,14 @@
     .home .trending .container .left_box .header h3
     {
         font-size: 15px;
+    }
+}
+
+@media (max-width: 575px) 
+{
+    /**nav**/
+    .header .top_header .info
+    {
+        word-break:keep-all;
     }
 }

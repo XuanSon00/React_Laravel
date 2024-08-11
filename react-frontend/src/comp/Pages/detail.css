@@ -157,6 +157,7 @@
 
 .detail-product .container .class-online .lesson-info
 {
+    padding: 20px;
 }
 
 .detail-product .container .class-online .lesson-info h3
@@ -182,6 +183,14 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 1220px) 
+{
+    .detail-product .container .class-online
+    {
+        display: block;
+    }
 }
 
 

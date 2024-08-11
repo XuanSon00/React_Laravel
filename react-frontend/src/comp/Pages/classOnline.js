@@ -70,7 +70,7 @@ const ClassOnline = () => {
                                     <div key={index} className='lesson-info'>
                                         <h3>{lesson.title}</h3>
                                         <p>Video URL: {}</p>
-                                        <video width="600" controls>
+                                        <video width="550" controls>
                                         <source src={lesson.video_url} type="video/mp4" />
                                     </video>
                                         <p>Nội dung: {lesson.content}</p>

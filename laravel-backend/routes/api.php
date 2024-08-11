@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/lessons', [LessonController::class, 'store']);
     Route::put('/lessons/{id}', [LessonController::class, 'update']);
     Route::delete('/lessons/{id}', [LessonController::class, 'destroy']);
+    Route::delete('/lessons', [LessonController::class, 'destroyAll']);
     //chi tiết lớp học(online)
     Route::get('/online/subjects/{id}', [LessonController::class, 'show']);
     //thông tin dashboard
